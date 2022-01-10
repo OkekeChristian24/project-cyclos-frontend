@@ -1,0 +1,126 @@
+.nav {
+  &__inner {
+    display: flex;
+    align-items: center;
+    &-link {
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 138.5%;
+      letter-spacing: 1px;
+      color: $white;
+      margin-right: 30px;
+    }
+  }
+}
+.burger {
+  display: none;
+}
+@mixin nav-xlg-xxlg {
+  body.active {
+    overflow: hidden;
+  }
+  .nav {
+    position: fixed;
+    top: 75.33px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 75.33px);
+    z-index: 100;
+    background: rgba($color: #000000, $alpha: 0.4);
+    transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    -o-transform: translateX(100%);
+    @include transition;
+    &.active {
+      @include transformReset;
+    }
+    &__inner {
+      flex-direction: column;
+      -ms-flex-direction: column;
+      position: absolute;
+      justify-content: unset;
+      align-items: unset;
+      top: 0;
+      right: 0;
+      width: 250px;
+      padding: 0;
+      z-index: 1;
+      padding: 20px;
+      height: calc(100% - 40px);
+      overflow-y: auto;
+      background: $bgcolor;
+      &-link {
+        border: none;
+        padding: 15px;
+        display: block;
+        text-align: left;
+        width: unset;
+        color: $title;
+        margin-right: 0;
+        font-size: 16px;
+        line-height: 1;
+      }
+    }
+    .button {
+      margin: 15px;
+      text-align: center;
+      padding: 15px 0;
+      justify-content: center;
+      display: flex;
+      align-items: center;
+    }
+  }
+  .body.active {
+    overflow: hidden;
+  }
+  .burger {
+    display: block;
+    position: relative;
+    width: 30px;
+    height: 30px;
+    &::before {
+      top: 20%;
+      width: calc(100% - 0.4rem);
+      height: 4px;
+      background-color: $main;
+      border-radius: 0.125rem;
+      transition: all 0.3s ease;
+      content: "";
+      position: absolute;
+      left: 50%;
+      @include transformX;
+    }
+    &::after {
+      bottom: 20%;
+      width: calc(100% - 0.4rem);
+      height: 4px;
+      background-color: $main;
+      border-radius: 0.125rem;
+      transition: all 0.3s ease;
+      content: "";
+      position: absolute;
+      left: 50%;
+      @include transformX;
+    }
+    &.active {
+      &::before {
+        top: 50%;
+        -webkit-transform: translate(-50%, -50%) rotate(45deg);
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+      &::after {
+        bottom: 50%;
+        -webkit-transform: translate(-50%, 50%) rotate(-45deg);
+        transform: translate(-50%, 50%) rotate(-45deg);
+      }
+    }
+  }
+}
+@mixin nav-xsm-sm {
+  .nav {
+    top: 60px;
+    height: calc(100% - 60px);
+  }
+}

@@ -1,0 +1,53 @@
+.input {
+  &__row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -13px;
+  }
+  &__outer {
+    margin: 20px 13px;
+    width: calc(33.3% - 26px);
+    label {
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 1;
+      color: $title;
+      opacity: 0.7;
+      display: block;
+      margin-bottom: 12px;
+    }
+    input {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 16px 24px;
+      color: $title;
+      font-weight: normal;
+      font-size: 18px;
+      line-height: 1;
+      color: $title;
+      background: $input-bg;
+      border-radius: 10px;
+      &::placeholder {
+        opacity: 0.4;
+      }
+    }
+  }
+}
+@mixin input-lg-xlg {
+  .input {
+    &__outer {
+      width: calc(50% - 26px);
+    }
+  }
+}
+@mixin input-md-lg {
+  .input {
+    &__row {
+      margin: 0;
+    }
+    &__outer {
+      width: 100%;
+      margin: 10px 0;
+    }
+  }
+}

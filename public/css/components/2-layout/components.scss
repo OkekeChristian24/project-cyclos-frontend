@@ -1,0 +1,221 @@
+h1 {
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 138.5%;
+  letter-spacing: 1px;
+  color: $main;
+}
+h2 {
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 138.5%;
+  letter-spacing: 1px;
+  color: $main;
+}
+h3 {
+  font-weight: 600;
+  font-size: 35px;
+  line-height: 138.5%;
+  color: $main;
+}
+h4 {
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 138.5%;
+  letter-spacing: 1px;
+  color: $main;
+}
+h5 {
+  font-weight: bold;
+  font-size: 25px;
+  line-height: 40px;
+  color: $title;
+}
+p {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 36px;
+  color: $main-light;
+  &.bg {
+    font-weight: 500;
+    font-size: 25px;
+    line-height: 47px;
+    color: $main-light;
+  }
+  &.sm {
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 25px;
+    color: $main-light;
+  }
+}
+.button {
+  padding: 22px 70px;
+  font-weight: bold;
+  font-size: 23px;
+  font-family: $primary-font;
+  line-height: 28px;
+  cursor: pointer;
+  display: inline-block;
+  color: #ffffff;
+  border-radius: 50px;
+  @include transition;
+  &:hover {
+    opacity: 0.8;
+  }
+  &.primary {
+    background: $btn-primary;
+    box-shadow: $btn-primary-shadow;
+  }
+  &.secondary {
+    background: $btn-secondary;
+    box-shadow: $btn-secondary-shadow;
+  }
+  &.extra {
+    background: $bgcolor;
+    border: 1px solid #04bad5;
+    box-shadow: 0px 14px 30px rgba(21, 227, 240, 0.21);
+    color: $title;
+    padding: 16px 75px;
+  }
+  &.connect {
+    padding: 18px 30px;
+    background: linear-gradient(
+        180deg,
+        $white -38.55%,
+        rgba(186, 222, 255, 0.81) 178.84%
+      ),
+      $white;
+    border: 0.858855px solid $white;
+    box-shadow: 0px 41.2251px 77.0875px rgba(36, 36, 36, 0.2),
+      inset 0px 3.43542px 17.1771px $white;
+    color: $black;
+    font-size: 20px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    img {
+      width: 18px;
+      margin-right: 5px;
+    }
+  }
+  &.add {
+    padding: 19px;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 30px;
+    color: $button-add;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.22);
+    box-shadow: 0px 30.0153px 45px rgba(21, 43, 240, 0.16);
+    border-radius: 50px;
+    position: relative;
+    z-index: 1;
+    background: none;
+    &::before {
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      z-index: -2;
+      width: 100%;
+      border-radius: 50px;
+      height: 100%;
+      background: linear-gradient(118.63deg, #68e2e1 2.25%, #c479ff 83.88%),
+        #0094a4;
+    }
+    &:after {
+      position: absolute;
+      content: "";
+      width: calc(100% - 2px);
+      z-index: -1;
+      top: 1px;
+      left: 1px;
+      border-radius: 50px;
+      height: calc(100% - 2px);
+      background: $bgcolor;
+    }
+    img {
+      margin-right: 12px;
+      width: 20px;
+    }
+  }
+}
+.switch {
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: $diffRGB;
+  overflow: hidden;
+  @include transition;
+  z-index: 100;
+  &:hover {
+    background: $diffRGB;
+  }
+
+  input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0;
+    cursor: pointer;
+
+    &:checked ~ label::before {
+      opacity: 0;
+    }
+
+    &:checked ~ label::after {
+      opacity: 1;
+    }
+  }
+
+  label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+
+    &::before {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 60%;
+      height: 60%;
+      @include transform;
+      content: "";
+
+      background: url(../images/icons/day.svg);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      @include transition;
+    }
+
+    &::after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      @include transform;
+      width: 60%;
+      @include transition;
+      height: 60%;
+      content: "";
+      opacity: 0;
+
+      background: url(../images/icons/night.svg);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+    }
+  }
+}

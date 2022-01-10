@@ -1,0 +1,129 @@
+// 1340px mdeia
+@include xxlg-xxxlg {
+  .auto__container {
+    padding: 0 30px;
+  }
+  @include header-xxlg-xxxlg;
+  @include hero-xxlg-xxxlg;
+
+  @include intro-xxlg-xxxlg;
+  @include purchase-xxlg-xxxlg;
+  @include banner-xxlg-xxxlg;
+}
+// 1180px mdeia
+@include xlg-xxlg {
+  @include nav-xlg-xxlg;
+  @include header-xlg-xxlg;
+  @include footer-xlg-xxlg;
+  @include hero-xlg-xxlg;
+  // index page start
+  @include purchase-xlg-xxlg;
+  @include intro-xlg-xxlg;
+  // index page end
+  // shop page start
+  @include products-xlg-xxlg;
+  @include search-xlg-xxlg;
+  @include bill-xlg-xxlg;
+  // shop page end
+  // cart page start
+  @include cart-xlg-xxlg;
+
+  // cart page end
+
+  .button {
+    padding: 15px 45px;
+    font-size: 18px;
+    line-height: 1;
+    &.add {
+      font-size: 16px;
+      line-height: 1;
+      img {
+        width: 16px;
+        margin-right: 6px;
+      }
+    }
+  }
+  h1 {
+    font-size: 35px;
+  }
+  h2 {
+    font-size: 35px;
+  }
+  h3 {
+    font-size: 30px;
+  }
+  h4 {
+    font-size: 25px;
+  }
+  h5 {
+    font-size: 20px;
+    line-height: 25px;
+  }
+  p {
+    font-size: 18px;
+    line-height: 24px;
+    &.bg {
+      font-size: 20px;
+      line-height: 30px;
+    }
+    &.sm {
+      font-size: 16px;
+      line-height: 20px;
+    }
+  }
+}
+// 900px
+@include lg-xlg {
+  @include footer-lg-xlg;
+
+  @include purchase-lg-xlg;
+  @include pay-lg-xlg;
+
+  // bill page start
+  @include input-lg-xlg;
+  // bill page end
+}
+// 800px
+@include md-lg {
+  @include hero-md-lg;
+
+  @include intro-md-lg;
+  @include banner-md-lg;
+  // shop page start
+  @include products-md-lg;
+  @include search-md-lg;
+  // shop page end
+
+  // bill page start
+  @include input-md-lg;
+  @include bill-md-lg;
+  // bill page end
+
+  // cart page start
+  @include cart-md-lg;
+  // cart page end
+}
+// 600px
+@include xsm-sm {
+  .switch {
+    right: 20px;
+    bottom: 20px;
+  }
+  .auto__container {
+    padding: 0 15px;
+  }
+  @include header-xsm-sm;
+  @include nav-xsm-sm;
+
+  @include intro-xsm-sm;
+  @include purchase-xsm-sm;
+  @include slider-xsm-sm;
+  @include banner-xsm-sm;
+
+  @include footer-xsm-sm;
+  @include hero-xsm-sm;
+
+  // cart page start
+  @include cart-xsm-sm;
+  // cart page end
+}

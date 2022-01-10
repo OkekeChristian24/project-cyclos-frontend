@@ -1,0 +1,87 @@
+$bgcolor: var(--bgcolor);
+$bgcolor-2: var(--bgcolor-2);
+$bgcolor-3: var(--bgcolor-3);
+$bgcolor-tricky: var(--bgcolor-tricky);
+$search-color: var(--search-color);
+$search-border: var(--search-border);
+$search-bg: var(--search-bg);
+$button-add: var(--button-add);
+$input-bg: var(--input-bg);
+$total-color: var(--total-color);
+$border: var(--border);
+
+$sticky-color: var(--sticky-color);
+$main: var(--main);
+$main-light: var(--main-light);
+$title: var(--title);
+$arrow: var(--arrow);
+
+$btn-primary: var(--btn-primary);
+$btn-secondary: var(--btn-secondary);
+
+$btn-primary-shadow: var(--btn-primary-shadow);
+$btn-secondary-shadow: var(--btn-secondary-shadow);
+
+$diffRGB: var(--diffRGB);
+$white: #fff;
+$black: #000;
+$gray: #ededed;
+
+:root {
+  --bgcolor: #fff;
+  --bgcolor-2: #edf1fb;
+  --bgcolor-3: #f1f7ff;
+  --bgcolor-tricky: #fff;
+  --search-color: #90a2bd;
+  --search-bg: #fff;
+  --search-border: #eeeeee;
+  --button-add: #2b2d53;
+  --input-bg: #faf8ff;
+  --total-color: #4b5c98;
+  --sticky-color: #48b3e4;
+  --main: #293b7a;
+  --main-light: #5e6b8e;
+  --title: #111c42;
+  --arrow: #fff;
+  --border: #828282;
+
+  --btn-primary: linear-gradient(118.63deg, #68e2e1 2.25%, #97aae9 83.88%),
+    #04bad5;
+  --btn-secondary: linear-gradient(0deg, #8f87ff, #8f87ff),
+    rgba(255, 255, 255, 0.22);
+  --btn-primary-shadow: 0px 24px 50px rgba(154, 172, 234, 0.63),
+    inset 0px 4px 20px rgba(255, 255, 255, 0.55),
+    inset 0px 1px 5px rgba(255, 255, 255, 0.33);
+  --btn-secondary-shadow: 0px 24px 40px rgba(143, 135, 255, 0.46);
+
+  --diffRGB: #100a21;
+}
+
+[data-theme="dark"] {
+  --bgcolor: #100a21;
+  --bgcolor-2: #241f31;
+  --bgcolor-3: #252627;
+  --bgcolor-tricky: #241f31;
+  --search-color: #fff;
+  --search-bg: #241f31;
+  --search-border: #252627;
+  --button-add: #fff;
+  --input-bg: #241f31;
+  --total-color: #fff;
+  --border: #3c3e3f;
+
+  --sticky-color: #100a21;
+  --main: #fff;
+  --diffRGB: #fff;
+  --title: #fff;
+  --arrow: #8f87ff;
+
+  --main-light: #888888;
+  --btn-primary: linear-gradient(148.64deg, #043838 18.93%, #362b49 122.88%);
+  --btn-secondary: linear-gradient(0deg, #36335a, #494392), rgba(0, 0, 0, 0.22);
+  --btn-primary-shadow: 0px 24px 50px rgba(0, 0, 0, 0.63),
+    inset 0px 4px 20px rgba(0, 0, 0, 0.55),
+    inset 0px 1px 5px rgba(255, 255, 255, 0.33);
+  --btn-secondary-shadow: 0px 24px 40px rgba(0, 0, 0, 0.46);
+}
+$primary-font: "Poppins", sans-serif;

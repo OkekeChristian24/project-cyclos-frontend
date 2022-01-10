@@ -1,0 +1,153 @@
+.slider {
+  &__outer {
+    padding: 100px 0;
+  }
+  .slick-slide {
+    & > div {
+      padding: 0 40px 70px 40px;
+      background: $bgcolor;
+      box-shadow: 8px 24px 50px rgba(49, 89, 211, 0.12);
+      border-radius: 24px;
+      margin-right: 20px;
+    }
+  }
+  &__item {
+    &-icon {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: #8f87ff;
+      box-shadow: 0px 12.1003px 48.4011px rgba(143, 135, 255, 0.42);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: -45px;
+      margin-bottom: 40px;
+    }
+    p {
+      margin-bottom: 50px;
+    }
+    &-info {
+      display: flex;
+      align-items: center;
+      &-avatar {
+        width: 70px;
+        height: 70px;
+        margin-right: 30px;
+        border-radius: 50%;
+        img {
+          @include fullImage;
+        }
+      }
+      &-text {
+        width: calc(100% - 100px);
+        p {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+  .slick-list {
+    overflow: unset;
+  }
+  .slick-dotted.slick-slider {
+    margin-bottom: 0;
+  }
+  .slick-dots {
+    bottom: -80px;
+    li {
+      opacity: 0.5;
+      height: 8px;
+      background: #092853;
+      width: 20px;
+      border-radius: 5px;
+      @include transition;
+      button {
+        padding: 0;
+        &::before {
+          display: none;
+        }
+      }
+      &.slick-active {
+        background: #8f87ff;
+        opacity: 1;
+      }
+    }
+  }
+  .prev {
+    position: absolute;
+    bottom: -100px;
+    left: 0;
+    cursor: pointer;
+    width: 82px;
+    height: 82px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $arrow;
+    box-shadow: 14px 41px 100px rgba(41, 74, 177, 0.26);
+    z-index: 2;
+    @include transition;
+    img {
+      width: 12px;
+      pointer-events: none;
+    }
+    &:hover {
+      opacity: 0.4;
+    }
+  }
+  .next {
+    position: absolute;
+    bottom: -100px;
+    right: 0;
+    z-index: 2;
+    cursor: pointer;
+    width: 82px;
+    height: 82px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $arrow;
+    box-shadow: 14px 41px 100px rgba(41, 74, 177, 0.26);
+    @include transition;
+    img {
+      width: 12px;
+      pointer-events: none;
+    }
+    &:hover {
+      opacity: 0.4;
+    }
+  }
+}
+@mixin slider-xsm-sm {
+  .slider {
+    .slick-slide {
+      & > div {
+        padding: 0 20px 40px 20px;
+      }
+    }
+    &__item {
+      &-info {
+        &-avatar {
+          margin-right: 15px;
+        }
+        &-text {
+          width: calc(100% - 85px);
+        }
+      }
+    }
+    .prev,
+    .next {
+      width: 40px;
+      height: 40px;
+      bottom: unset;
+      top: 50%;
+      @include transformY;
+      img {
+        width: 6px;
+      }
+    }
+  }
+}

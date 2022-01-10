@@ -1,0 +1,619 @@
+.intro {
+  position: relative;
+  box-sizing: border-box;
+  padding-top: 220px;
+  margin-bottom: 100px;
+  &__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 620px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      @include fullImage;
+    }
+  }
+  &__wave {
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      width: 100%;
+      fill: $bgcolor;
+    }
+  }
+  &__shape {
+    position: absolute;
+    bottom: -10%;
+    left: 2%;
+    width: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      width: 100%;
+    }
+  }
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 50px;
+    position: relative;
+    z-index: 1;
+    perspective: 600px;
+    &::before {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      content: "";
+      transform-style: preserve-3d;
+      transform: rotateY(357deg) translateZ(0) translateX(-5%);
+      background: $bgcolor;
+      border-radius: 40px;
+      z-index: -1;
+      box-shadow: 14px 41px 100px rgba(49, 89, 211, 0.12);
+    }
+    &::after {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      content: "";
+      transform-style: preserve-3d;
+      transform: rotateY(-357deg) translateZ(-100px) translateX(0%)
+        translateY(12%);
+      background: $bgcolor-2;
+      border-radius: 40px;
+      backdrop-filter: blur(9.60224px);
+      z-index: -2;
+      box-shadow: 14px 41px 100px rgba(49, 89, 211, 0.12);
+    }
+    &-content {
+      width: 50%;
+    }
+    &-image {
+      width: calc(50% - 50px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      img {
+        width: 100%;
+      }
+    }
+  }
+  h1 {
+    margin-bottom: 24px;
+  }
+  p {
+    margin-bottom: 34px;
+  }
+}
+@mixin intro-xxlg-xxxlg {
+  .intro {
+    padding-top: 160px;
+    &__bg {
+      height: 550px;
+    }
+    &__inner {
+      &::before {
+        transform: rotateY(357deg) translateZ(0) translateX(-2%);
+      }
+      &::after {
+        transform: rotateY(-357deg) translateZ(-100px) translateX(0%)
+          translateY(16%);
+      }
+    }
+  }
+}
+@mixin intro-xlg-xxlg {
+  .intro {
+    &__bg {
+      height: 450px;
+    }
+    &__inner {
+      padding: 0 25px;
+    }
+    h1 {
+      margin-bottom: 16px;
+    }
+    p {
+      margin-bottom: 24px;
+    }
+  }
+}
+@mixin intro-md-lg {
+  .intro {
+    padding-top: 100px;
+    margin-bottom: 50px;
+    &__bg {
+      height: 350px;
+    }
+    &__inner {
+      padding: 50px;
+      &-content {
+        width: 100%;
+      }
+      &-image {
+        display: none;
+      }
+    }
+  }
+}
+@mixin intro-xsm-sm {
+  .intro {
+    &__inner {
+      padding: 25px;
+    }
+  }
+}
+// ressponsive  start
+// changing it
+.purchase {
+  padding: 50px 0;
+  margin-bottom: 100px;
+  overflow: hidden;
+  position: relative;
+  &__shape {
+    position: absolute;
+    right: 10%;
+    bottom: 0%;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(-90deg);
+    img {
+      height: 100%;
+    }
+  }
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &-cards {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 -3.5px;
+      position: relative;
+      z-index: 2;
+      width: 50%;
+    }
+    &-card {
+      width: calc(50% - 14px);
+      margin: 7px;
+      background: $bgcolor-3;
+      padding: 50px 35px;
+      box-sizing: border-box;
+      border-radius: 18px;
+      position: relative;
+      z-index: 1;
+      @include transition;
+      &:nth-of-type(odd) {
+        top: -30px;
+      }
+      &:hover {
+        background: $bgcolor-tricky;
+        box-shadow: 14px 41px 100px rgba(49, 89, 211, 0.15);
+      }
+      &-icon {
+        width: 75px;
+        height: 75px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin-bottom: 36px;
+
+        svg {
+          fill: $white;
+        }
+      }
+      .num {
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 1;
+        color: $main;
+        margin-left: 20px;
+      }
+      p {
+        margin-bottom: 0 !important;
+      }
+      &-rate {
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+      }
+      &:nth-child(1) {
+        .purchase__inner-card-icon {
+          background: #7483e7;
+          box-shadow: -4.55275px 13.6583px 27.3165px rgba(0, 97, 142, 0.301961),
+            inset 0px 3.6422px 18.211px rgba(255, 255, 255, 0.55),
+            inset 0px 1.62851px 8.14256px rgba(255, 255, 255, 0.33);
+        }
+      }
+      &:nth-child(2) {
+        .purchase__inner-card-icon {
+          background: #4ab0e5;
+          box-shadow: -4.55275px 13.6583px 27.3165px rgba(0, 97, 142, 0.301961),
+            inset 0px 3.6422px 18.211px rgba(255, 255, 255, 0.55),
+            inset 0px 1.62851px 8.14256px rgba(255, 255, 255, 0.33);
+        }
+      }
+      &:nth-child(3) {
+        .purchase__inner-card-icon {
+          background: #05dfe9;
+          box-shadow: -4.55275px 13.6583px 27.3165px rgba(20, 225, 234, 0.37),
+            inset 0px 3.6422px 18.211px rgba(255, 255, 255, 0.55),
+            inset 0px 1.62851px 8.14256px rgba(255, 255, 255, 0.33);
+        }
+      }
+      &:nth-child(4) {
+        .purchase__inner-card-icon {
+          background: #95aee9;
+          box-shadow: -4.55275px 13.6583px 27.3165px rgba(0, 97, 142, 0.301961),
+            inset 0px 3.6422px 18.211px rgba(255, 255, 255, 0.55),
+            inset 0px 1.62851px 8.14256px rgba(255, 255, 255, 0.33);
+        }
+      }
+    }
+    &-content {
+      width: calc(50% - 100px);
+      position: relative;
+      z-index: 1;
+      &-bg {
+        z-index: -1;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        @include transform;
+        width: 750px;
+        height: 750px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+  h5 {
+    margin-bottom: 14px;
+  }
+  h2 {
+    margin-bottom: 24px;
+  }
+  p {
+    margin-bottom: 58px;
+  }
+}
+@mixin purchase-xxlg-xxxlg {
+  .purchase {
+    margin-bottom: 50px;
+    &__inner {
+      &-card {
+        padding: 30px 20px;
+      }
+      &-content {
+        width: calc(50% - 50px);
+      }
+    }
+  }
+}
+@mixin purchase-xlg-xxlg {
+  .purchase {
+    margin-bottom: 0;
+    &__inner {
+      &-cards {
+        width: 60%;
+      }
+      &-content {
+        width: calc(40% - 20px);
+      }
+    }
+    h2 {
+      margin-bottom: 16px;
+    }
+    p {
+      margin-bottom: 24px;
+    }
+  }
+}
+@mixin purchase-lg-xlg {
+  .purchase {
+    &__inner {
+      flex-direction: column;
+      &-cards {
+        width: 100%;
+        order: 2;
+        margin: 0 -7px;
+      }
+      &-card {
+        &:nth-of-type(odd) {
+          top: unset;
+        }
+      }
+      &-content {
+        order: 1;
+        width: 100%;
+        margin-bottom: 20px;
+      }
+    }
+  }
+}
+@mixin purchase-xsm-sm {
+  .purchase {
+    &__inner {
+      &-card {
+        width: calc(100% - 14px);
+      }
+    }
+  }
+}
+.pay {
+  position: relative;
+  padding: 100px 0 150px 0;
+  &__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  &__inner {
+    &-row {
+      display: flex;
+      align-items: center;
+      max-width: 450px;
+      margin: 0 auto 58px auto;
+      .button {
+        text-align: center;
+        padding: 18px 0;
+        margin: 0 3px;
+        width: calc(50% - 6px);
+      }
+    }
+    &-wallet {
+      margin: 0 auto;
+      box-sizing: border-box;
+      max-width: 480px;
+      padding: 20px 20px 70px 20px;
+      position: relative;
+      z-index: 1;
+      &::before {
+        position: absolute;
+        content: "";
+        border-radius: 40px;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        box-shadow: 14px 41px 100px rgba(49, 89, 211, 0.12);
+        background: $bgcolor;
+        z-index: -1;
+      }
+      &::after {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        top: 9%;
+        left: 0;
+        background: $bgcolor;
+        box-sizing: border-box;
+        box-shadow: 14px 41px 100px rgba(49, 89, 211, 0.12);
+        border-radius: 40px;
+        z-index: -2;
+        transform: scale(0.9);
+      }
+      &-center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      &-icon {
+        width: 100%;
+        height: 300px;
+        border: 1px solid $gray;
+        border-radius: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 35px;
+        img {
+          height: 90%;
+        }
+      }
+    }
+  }
+  h2 {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  h5 {
+    text-align: center;
+  }
+  hr {
+    display: block;
+    margin: 30px auto;
+    background: #069ec8;
+    height: 1px;
+    max-width: 80px;
+  }
+  p {
+    margin: 0 auto 38px auto;
+    max-width: 300px;
+    text-align: center;
+  }
+}
+@mixin pay-lg-xlg {
+  .pay {
+    padding: 50px 0 80px 0;
+  }
+}
+.banner {
+  position: relative;
+  padding: 140px 0 300px 0;
+  overflow: hidden;
+  &__shape {
+    position: absolute;
+    bottom: 0;
+    right: -100px;
+    width: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    img {
+      width: 100%;
+    }
+  }
+  &__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      @include fullImage;
+    }
+  }
+  &__wave {
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      width: 100%;
+      fill: $bgcolor;
+    }
+  }
+  &__inner {
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 50px;
+    position: relative;
+    z-index: 1;
+    &::before {
+      position: absolute;
+      content: "";
+      border-radius: 40px;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      box-shadow: 14px 41px 100px rgba(49, 89, 211, 0.12);
+      background: $bgcolor;
+      z-index: -1;
+    }
+    &::after {
+      position: absolute;
+      content: "";
+      width: 100%;
+      height: 100%;
+      top: 9%;
+      left: 0;
+      background: $bgcolor;
+      box-sizing: border-box;
+      box-shadow: 14px 41px 100px rgba(49, 89, 211, 0.12);
+      border-radius: 40px;
+      z-index: -2;
+      transform: scale(0.9);
+      opacity: 0.8;
+    }
+    &-video {
+      &-outer {
+        position: relative;
+        height: 0;
+        padding-bottom: 50%;
+        border-radius: 20px;
+        overflow: hidden;
+      }
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      iframe {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
+@mixin banner-xxlg-xxxlg {
+  .banner {
+    padding: 100px 0 200px 0;
+  }
+}
+@mixin banner-md-lg {
+  .banner {
+    padding: 50px 0 100px 0;
+    &__shape {
+      width: 100px;
+      right: -50px;
+    }
+  }
+}
+@mixin banner-xsm-sm {
+  .banner {
+    .auto__container {
+      padding: 0;
+    }
+    &__inner {
+      padding: 5px;
+      border-radius: 15px;
+      background: $bgcolor;
+      &::before {
+        display: none;
+      }
+    }
+  }
+}
+.reviews {
+  overflow: hidden;
+  position: relative;
+  &__shape {
+    position: absolute;
+    width: 600px;
+    left: 10%;
+    top: 50%;
+    @include transformY;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      width: 100%;
+      transform: rotate(180deg);
+    }
+  }
+  h2 {
+    text-align: center;
+  }
+}

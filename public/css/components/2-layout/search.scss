@@ -1,0 +1,49 @@
+.search {
+  position: relative;
+  input {
+    background: $search-bg;
+    border: 1px solid $search-border;
+    box-sizing: border-box;
+    box-shadow: 14px 41px 100px rgba(49, 89, 211, 0.12);
+    border-radius: 50px;
+    font-family: $primary-font;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 160%;
+    color: $search-color;
+    padding: 36px 250px 36px 70px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .button {
+    position: absolute;
+    top: 50%;
+    right: 18px;
+    @include transformY;
+    cursor: pointer;
+  }
+}
+@mixin search-xlg-xxlg {
+  .search {
+    input {
+      box-shadow: 7px 20px 50px rgba(49, 89, 211, 0.12);
+      padding: 20px 170px 20px 40px;
+      font-size: 16px;
+    }
+  }
+}
+@mixin search-md-lg {
+  .search {
+    input {
+      padding: 20px 15px;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+    .button {
+      position: unset;
+      @include transformReset;
+      width: 100%;
+    }
+  }
+}
