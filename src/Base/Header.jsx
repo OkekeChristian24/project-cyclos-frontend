@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 export default function Header() {
   const [menu, setMenu] = useState(false);
   var links = document.querySelectorAll(".nav__inner-link");
@@ -40,17 +41,20 @@ export default function Header() {
           </div>
           <nav className={"nav " + (menu ? "active" : "")} id="menu">
             <div className="nav__inner">
-              <a href="#" className="nav__inner-link">
-                Shop
+              <a href="" className="nav__inner-link">
+              <Link to="/"> Home</Link>
               </a>
               <a href="#" className="nav__inner-link">
-                Pricing
+              
+                <Link to="/shop">   Shop</Link>
               </a>
               <a href="#" className="nav__inner-link">
-                Tokens
+                
+                <Link to="/cart"> Cart</Link>
               </a>
               <a href="#" className="nav__inner-link">
-                NFTs
+              
+               <Link to="/bill"> Bill</Link>
               </a>
 
               <a href="#" className="nav__inner-link">

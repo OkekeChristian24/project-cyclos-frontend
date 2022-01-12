@@ -23,13 +23,13 @@ export default function Intro() {
       <div className="auto__container">
         <div className="intro__inner">
           <div className="intro__inner-content">
-            <h1>Live in Crypto</h1>
+            <h1>Crypto made Easy</h1>
             <p className="bg">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry.
+            Bridging The Crypto-Retail Divide.  
+To make a purchase, look through our catalogue.
             </p>
             <a href="#" className="button primary">
-              Search
+              Explore
             </a>
           </div>
           <div className="intro__inner-image">

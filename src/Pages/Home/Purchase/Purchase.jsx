@@ -13,7 +13,7 @@ export default function Purchase() {
               <div className="purchase__inner-card-icon">
                 <img src="images/icons/bell.svg" alt="bell" />
               </div>
-              <h5>Phone</h5>
+              <h5>IOS/Android Phone</h5>
               <div className="purchase__inner-card-rate">
                 <div className="star">
                   <div className="star__empty">
@@ -29,15 +29,15 @@ export default function Purchase() {
               </div>
 
               <p className="sm">
-                There many variations passages of Lorem Ipsum majority some by
-                words which don't look .
+              Craving for a device with  newest technology that enables wireless charging, clear, detailed, high resolution images; thin, sleek and of lightweight, and uninteruppted 5G connectivity?
+<strong>Check out the new iPhone SE 2022 smartphone - $500,000</strong>
               </p>
             </div>
             <div className="purchase__inner-card">
               <div className="purchase__inner-card-icon">
                 <img src="images/icons/bell.svg" alt="" />
               </div>
-              <h5>Games</h5>
+              <h5>Sports Car (Gadgets)</h5>
               <div className="purchase__inner-card-rate">
                 <div className="star">
                   <div className="star__empty">
@@ -53,15 +53,15 @@ export default function Purchase() {
               </div>
 
               <p className="sm">
-                There many variations passages of Lorem Ipsum majority some by
-                words which don't look .
+              Going for that city tour, looking for a machine produced with greater acceleration, top speed, lighter, quicker, more agile and of good investment?
+<strong>Try the Lamborghini 2021 series - $3,300,000</strong>
               </p>
             </div>
             <div className="purchase__inner-card">
               <div className="purchase__inner-card-icon">
                 <img src="images/icons/bell.svg" alt="" />
               </div>
-              <h5>Sporting Goods</h5>
+              <h5>Luxury Wristwatch</h5>
               <div className="purchase__inner-card-rate">
                 <div className="star">
                   <div className="star__empty">
@@ -77,15 +77,16 @@ export default function Purchase() {
               </div>
 
               <p className="sm">
-                There many variations passages of Lorem Ipsum majority some by
-                words which don't look .
+              In search of a timepiece, built-to-last, exudes class, coupled with innovative technology, ensures longevity and can be passed down to generations. 
+<strong>Try the Graff Diamonds, the Fascination Watch – $40 Million
+Don’t sleep on it. Add to Cart now.</strong>
               </p>
             </div>
             <div className="purchase__inner-card">
               <div className="purchase__inner-card-icon">
                 <img src="images/icons/bell.svg" alt="" />
               </div>
-              <h5>Team Accounts</h5>
+              <h5>Luxury Jewelry</h5>
               <div className="purchase__inner-card-rate">
                 <div className="star">
                   <div className="star__empty">
@@ -101,8 +102,8 @@ export default function Purchase() {
               </div>
 
               <p className="sm">
-                There many variations passages of Lorem Ipsum majority some by
-                words which don't look .
+              Thinking of the best way to express your feelings to a her?  She would say YES, to a high value, crystal-clear gem stone, made with the purest materials of precious metals.
+<strong>Try The Apollo Blue diamond earrings - $42,000,000</strong>
               </p>
             </div>
           </div>
@@ -110,13 +111,13 @@ export default function Purchase() {
             <div className="purchase__inner-content-bg">
               <img src="images/index/oval.svg" alt="" />
             </div>
-            <h2>Purchase Things</h2>
+            <h2> Procure with Crypto</h2>
+          
             <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry.
+            Add goods to your shopping cart. Remember to take advantage of the discount!
             </p>
             <a href="#" className="button primary">
-              Get Started
+             Place Order
             </a>
           </div>
         </div>
