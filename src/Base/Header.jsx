@@ -6,22 +6,22 @@ import { GlobalContext } from "../Context/GlobalContext";
 import { formatWallet } from "../Helpers/helperFunctions";
 import NetOptions from "../Components/NetOptions";
 import netSwitchOrAdd from "../Helpers/netSwitchOrAdd";
+import detectEthereumProvider from "@metamask/detect-provider";
 const chainIDs = ["Fantom Opera", "Binance Smart Chain"];
 
 export default function Header() {
 
   // From GlobalContext
-  const { supportedNet, web3Installed, web3Info, detectedProvider, connectWallet, disconnectWallet } = useContext(GlobalContext);
+  const { supportedNet, web3Installed, web3Info, connectWallet, disconnectWallet } = useContext(GlobalContext);
 
   const cart = JSON.parse(window.localStorage.getItem(process.env.REACT_APP_CART_NAME));
-  console.log("Header cart: ", cart);
   console.log("Header web3Info: ", web3Info);
-  console.log("Header supportedNet: ", supportedNet);
 
   // Component local states
   const [menu, setMenu] = useState(false);
   const [showNetOptions, setShowNetOptions] = useState(false);
   const [selectedValue, setSelectedValue] = useState(chainIDs[0]);
+  const [metaMaskProvider, setMetaMaskProvider] = useState({});
 
 
 
@@ -56,15 +56,15 @@ export default function Header() {
   };
 
   const handleNetShowClose = async(value) => {
-    console.log("detectedProvider: ", detectedProvider);
     setShowNetOptions(false);
     setSelectedValue(value);
-    const response = await netSwitchOrAdd(detectedProvider, value);
+    const response = await netSwitchOrAdd(metaMaskProvider, value);
     if(response.success){
-      await connectWalletHandler();
-      // await connectWallet()
-      (() => toast.success(response.message))();
-    }else{
+      console.log("On handleNetShowClose after network switch");
+      // await connectWalletHandler();
+      await connectWallet(response.chainID);
+      // (() => toast.success(response.message))();
+    }else if(response.success === false){
       (() => toast.error(response.message))();
     }
   };
@@ -100,6 +100,13 @@ export default function Header() {
       document.body.removeEventListener("click", menuClose);
     }
   }, [menu]);
+
+  useEffect(() => {
+    (async() => {
+      const MetaMProvider = await detectEthereumProvider();
+      setMetaMaskProvider(MetaMProvider);
+    })();
+  }, []);
 
   const tOptions = {
     error: {

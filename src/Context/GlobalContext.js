@@ -26,10 +26,11 @@ import {
 
 import { 
   ADD_TO_CART,
+  GET_STORED_CART, 
   UPDATE_CART,
-  REMOVE_ITEM,
   DELETE_CART,
-  GET_STORED_CART 
+  UPDATE_ITEM,
+  REMOVE_ITEM
 } from './ActionTypes/cartTypes';
 
 import {
@@ -38,6 +39,8 @@ import {
   subscribeProvider
 } from "../Helpers/helperFunctions";
 import toast from 'react-hot-toast';
+
+import { getChainData } from "../Helpers/helperFunctions"
 
 class CustomError extends Error {
   constructor(message) {
@@ -115,7 +118,6 @@ export const GlobalContext = createContext();
 
 // Provider component
 export const GlobalProvider = ({ children }) => {
-  console.log("Injected web3: ", window.ethereum ? window.ethereum : window.web3);
 
   // Provider Local States
   const localWeb3Info =  useRef({});
@@ -131,7 +133,6 @@ export const GlobalProvider = ({ children }) => {
 
   
   // Global States and Dispatches
-  console.log(typeof initialWeb3Info);
   const [web3Info, web3InfoDispatch] = useReducer(web3InfoReducer, initialWeb3Info);
   const [products, productDispatch] = useReducer(productReducer, initialProducts);
   const [cart, cartDispatch] = useReducer(cartReducer, initialCartState);
@@ -148,7 +149,6 @@ export const GlobalProvider = ({ children }) => {
   // Initialize web3modal
   const initWeb3Modal = async() => {
     const MetaMProvider = await detectEthereumProvider();
-    console.log("MetaMProvider: ", MetaMProvider);
     const web3Modal = new Web3Modal({
       network: web3Info.chainID && getNetwork(web3Info.chainID),
       cacheProvider: true,
@@ -170,10 +170,10 @@ export const GlobalProvider = ({ children }) => {
       search_term: searchTerm
     };
     try {
-      const res = await axios.post('/api/products', term, config);
+      const res = await axios.post('http://localhost:5000/api/products', term, config);
       
-      // Check if res is a success
-
+      console.log("searchProduct: ", res);
+      
       const products = res.data.data.search_results;
       productDispatch({type: SEARCH_PRODUCT, payload: products});
     } catch (error) {
@@ -187,7 +187,6 @@ export const GlobalProvider = ({ children }) => {
   const getCart = () => {
     try{
       const productCart = JSON.parse(window.localStorage.getItem(process.env.REACT_APP_CART_NAME));
-      console.log("GlobalContext:getCart(), ", productCart);
       if(productCart){
         cartDispatch({type: GET_STORED_CART, payload: { productCart }});
       }
@@ -196,9 +195,16 @@ export const GlobalProvider = ({ children }) => {
       console.log(error);
     }
   };
-  const addToCart = (product) => {
-    cartDispatch({type: ADD_TO_CART, payload: { product }});
-    
+  const addToCart = (productToAdd) => {
+    const productCart = JSON.parse(window.localStorage.getItem(process.env.REACT_APP_CART_NAME));
+    if(productCart){
+      const index = productCart.products.findIndex(product => product.asin === productToAdd.asin);
+      if(index !== -1){
+        return false;
+      }
+    }
+    cartDispatch({type: ADD_TO_CART, payload: { product: productToAdd }});
+    return true;
   };
   const updateCart = (updatedState) => {
     cartDispatch({type: UPDATE_CART, payload: { updatedState }});
@@ -209,6 +215,10 @@ export const GlobalProvider = ({ children }) => {
   };
   const removeItem = (asin) => {
     cartDispatch({type: REMOVE_ITEM, payload: { asin }});
+  };
+
+  const updateItem = (productToUpdate) => {
+    cartDispatch({type: UPDATE_ITEM, payload: { product: productToUpdate }});
   };
 
 
@@ -234,22 +244,43 @@ export const GlobalProvider = ({ children }) => {
   };
 
   const chainChangeCallBack = async(chainID) => {
-    const { web3 } = localWeb3Info.current;
+    const { web3 } = localWeb3Info.current || web3Info;
+    
     const networkID = await web3.eth.net.getId();
     web3InfoDispatch({type: CHAIN_CHANGE,  payload: {chainID, networkID}});
-    window.location.reload();
+    if(getNetwork(chainID) === ""){
+      // (() => toast.error(`Chain ID ${chainID} is Not Supported!`))();
+      window.location.reload();
+      // return;
+    }
+    // const chainName = getChainData(chainID).chain;
+    // (() => toast.success(`You Are Connected To ${chainName}`))();
   };
   
   const netChangeCallBack = async(networkID) => {
-    const { web3 } = localWeb3Info.current;
+    const { web3 } = localWeb3Info.current || web3Info;
     const chainID = await web3.eth.chainId();
     web3InfoDispatch({type: NETWORK_CHANGE,  payload: {chainID, networkID}});
-    window.location.reload();
+    if(getNetwork(chainID) === ""){
+      (() => toast.error(`Chain ID ${chainID} is Not Supported!`))();
+      window.location.reload();
+      return;
+    }
+    const chainName = getChainData(chainID).chain;
+    (() => toast.success(`You Are Connected To ${chainName}`))();
   };
 
   // Wallet action
-  const connectWallet = async() => {
-    if(getNetwork(detectedProvider.chainId) === ""){
+  const connectWallet = async(chainid="") => {
+    console.log("web3Info", web3Info);
+    console.log("detectedProvider", detectedProvider);
+    let idToCheck = "";
+    if(chainid !== ""){
+      idToCheck = chainid;
+    }else{
+      idToCheck = detectedProvider.chainId;
+    }
+    if(getNetwork(idToCheck) === ""){
       // Check if it's MetaMask
       if(detectedProvider.isMetaMask){
         // Show network options modal
@@ -335,7 +366,6 @@ export const GlobalProvider = ({ children }) => {
       web3Info,
       products,
       cart,
-      detectedProvider,
       web3Installed,
       supportedNet,
       connectWallet,
@@ -345,7 +375,8 @@ export const GlobalProvider = ({ children }) => {
       getCart,
       updateCart,
       removeItem,
-      deleteCart
+      deleteCart,
+      updateItem
     }}>
       {children}
     </GlobalContext.Provider>

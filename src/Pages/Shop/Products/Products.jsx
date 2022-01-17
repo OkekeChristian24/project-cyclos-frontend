@@ -2,7 +2,10 @@ import React from "react";
 import ProductsItem from "./ProductsItem";
 import { ProductsModul } from "./ProductsModul";
 
-export default function Products() {
+export default function Products({ products }) {
+
+  
+  
   return (
     <div className="products__outer">
       <div className="products__outer-bg">
@@ -16,13 +19,14 @@ export default function Products() {
           {ProductsModul.map((ProductsItems) => {
             return (
               <ProductsItem
-                id={ProductsItems.id}
+                asin={ProductsItems.asin}
                 image={ProductsItems.image}
                 alt={ProductsItems.alt}
                 name={ProductsItems.name}
-                desc={ProductsItems.desc}
+                description={ProductsItems.description}
                 discount={ProductsItems.discount}
                 price={ProductsItems.price}
+                link={ProductsItems.link}
               />
             );
           })}

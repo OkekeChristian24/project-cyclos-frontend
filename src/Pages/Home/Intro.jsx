@@ -31,8 +31,6 @@ To make a purchase, look through our catalogue.
             </p>
             <a href="#" className="button primary">
             <Link to="/shop"> Explore</Link>
-
-              
             </a>
           </div>
           <div className="intro__inner-image">

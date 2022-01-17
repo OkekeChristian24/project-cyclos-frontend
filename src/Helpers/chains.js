@@ -193,7 +193,7 @@ const supportedChains = [
   {
     name: "Binance Smart Chain",
     short_name: "bsc",
-    chain: "smartchain",
+    chain: "SmartChain",
     network: "mainnet",
     chain_id_hex: "0x38",
     chain_id: 56,

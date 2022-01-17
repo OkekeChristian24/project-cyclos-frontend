@@ -41,7 +41,7 @@ const netSwitchOrAdd = async(MetaMProvider, chainID) => {
         if(isSwitched !== null){
             throw new CustomError("Network Switch Error");
         }
-        return {success: true, message: `Switched To ${mainnetConfig.chainName}`};                
+        return {success: true, chainID, message: `Switched To ${mainnetConfig.chainName}`};                
     }catch(switchError){
         
         if(switchError.code === -32603){
@@ -54,7 +54,7 @@ const netSwitchOrAdd = async(MetaMProvider, chainID) => {
                 if(isAdded !== null){
                     throw new CustomError("Network Add Error");
                 }
-                return {success: true, message: `${mainnetConfig.chainName} Added`};                
+                return {success: true, chainID, message: `${mainnetConfig.chainName} Added`};                
             } catch (addError) {
                 if(addError.code === 4001){
                     return {success: false, message: "Network Add Error"};
@@ -71,7 +71,7 @@ const netSwitchOrAdd = async(MetaMProvider, chainID) => {
                 if(isAdded !== null){
                     throw new CustomError("Network Add Error");
                 }
-                return {success: true, message: `${mainnetConfig.chainName} Added`};                
+                return {success: true, chainID, message: `${mainnetConfig.chainName} Added`};                
 
                 
             } catch (addError) {

@@ -13,9 +13,7 @@ import AddIcon from '@mui/icons-material/Add';
 import Typography from '@mui/material/Typography';
 import { blue } from '@mui/material/colors';
 
-
-const chains = [{name: "Fantom Opera", chainId: "0xfa"}, {name: "Binance Smart Chain", chainId: "0x38"}];
-
+import supportedChains from '../Helpers/chains';
 
 export default function NetOptions(props) {
     const { onClose, selectedValue, open } = props;
@@ -32,8 +30,8 @@ export default function NetOptions(props) {
     <Dialog onClose={handleClose} open={open}>
       <DialogTitle>Choose A Network</DialogTitle>
       <List sx={{ pt: 0 }}>
-        {chains.map((chain) => (
-          <ListItem button onClick={() => handleListItemClick(chain.chainId)} key={chain.chainId}>
+        {supportedChains.map((chain) => (
+          <ListItem button onClick={() => handleListItemClick(chain.chain_id_hex)} key={chain.chain_id_hex}>
             <ListItemAvatar>
               <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
                 <PersonIcon />

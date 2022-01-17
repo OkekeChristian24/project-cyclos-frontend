@@ -1,9 +1,10 @@
 import { 
     ADD_TO_CART,
+    GET_STORED_CART,
     UPDATE_CART,
-    REMOVE_ITEM,
     DELETE_CART,
-    GET_STORED_CART 
+    REMOVE_ITEM,
+    UPDATE_ITEM
   } from "../ActionTypes/cartTypes";
   
 const initCart = {
@@ -45,12 +46,16 @@ const cartReducer = (state = {}, action) => {
             }
             return state;
         case UPDATE_CART:
-            return {
+
+            const newState_UPDATE_CART = {
                 ...state,
                 totalQty: action.payload.updatedState.totalQty,
                 totalPrice: action.payload.updatedState.totalPrice,
                 products: [...action.payload.updatedState.products]
             };
+            window.localStorage.setItem(process.env.REACT_APP_CART_NAME, JSON.stringify(newState_UPDATE_CART));
+            return newState_UPDATE_CART;
+
 
         case REMOVE_ITEM:
             const itemIndex = state.products.findIndex(product => product.asin === action.payload.asin);
@@ -67,6 +72,29 @@ const cartReducer = (state = {}, action) => {
             };
             window.localStorage.setItem(process.env.REACT_APP_CART_NAME, JSON.stringify(newState_REMOVE_ITEM));
             return newState_REMOVE_ITEM;
+        
+        case UPDATE_ITEM:
+            const updateItemIndex = state.products.findIndex(product => product.asin === action.payload.product.asin);
+            if(updateItemIndex !== -1){
+                const itemToUpdate = state.products[updateItemIndex];
+                const filteredProducts = state.products.filter(product => product.asin !== itemToUpdate.asin);
+                const filteredState = {
+                    ...state,
+                    totalQty: (state.totalQty - itemToUpdate.quantity),
+                    totalPrice: (state.totalPrice - (itemToUpdate.quantity * itemToUpdate.price)),
+                    products: filteredProducts
+                };
+                const newState_UPDATE_ITEM = {
+                    ...filteredState,
+                    totalQty: (filteredState.totalQty + action.payload.product.quantity),
+                    totalPrice: (filteredState.totalPrice + (action.payload.product.quantity * action.payload.product.price)),
+                    products: [action.payload.product, ...filteredState.products]
+                };
+                window.localStorage.setItem(process.env.REACT_APP_CART_NAME, JSON.stringify(newState_UPDATE_ITEM));
+                return newState_UPDATE_ITEM;
+            }
+
+            return state;
 
         case DELETE_CART:
             window.localStorage.removeItem(process.env.REACT_APP_CART_NAME);
