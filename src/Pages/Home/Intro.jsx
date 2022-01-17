@@ -33,7 +33,8 @@ To make a purchase, look through our catalogue.
             </a>
           </div>
           <div className="intro__inner-image">
-            <img src="images/index/illustration.svg" alt="" />
+            {/* <img src="images/index/illustration.svg" alt="" /> */}
+            
           </div>
         </div>
         
