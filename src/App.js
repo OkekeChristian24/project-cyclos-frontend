@@ -7,6 +7,8 @@ import Cart from "./Pages/Cart/Cart";
 import Home from "./Pages/Home/Home";
 import Shop from "./Pages/Shop/Shop";
 
+import { GlobalProvider } from "./Context/GlobalContext";
+
 export default function App() {
   const initTheme =
     localStorage.getItem("lightMode") === "true"
@@ -25,29 +27,33 @@ export default function App() {
       localStorage.setItem("lightMode", false);
     }
   }, [lightMode]);
-  return (
-    <BrowserRouter>
-      <div className="switch">
-        <input
-          defaultChecked={initTheme}
-          type="checkbox"
-          onChange={() => {
-            setLightMode(!lightMode);
-          }}
-        />
-        <label></label>
-      </div>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/bill" element={<Bill />} />
-        <Route path="/cart" element={<Cart></Cart>} />
 
-        {/* 
-        <Route path="/cards-group" element={<CardGroup></CardGroup>} /> */}
-      </Routes>
-      <Footer />
-    </BrowserRouter>
+
+  return (
+    <GlobalProvider>
+      <BrowserRouter>
+        <div className="switch">
+          <input
+            defaultChecked={initTheme}
+            type="checkbox"
+            onChange={() => {
+              setLightMode(!lightMode);
+            }}
+          />
+          <label></label>
+        </div>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/bill" element={<Bill />} />
+          <Route path="/cart" element={<Cart></Cart>} />
+
+          {/* 
+          <Route path="/cards-group" element={<CardGroup></CardGroup>} /> */}
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    </GlobalProvider>
   );
 }
