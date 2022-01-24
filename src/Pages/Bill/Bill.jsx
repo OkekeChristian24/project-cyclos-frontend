@@ -1,9 +1,98 @@
-import React from "react";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Box } from "@mui/system";
+import React, { useContext, useEffect, useState } from "react";
+import toast from 'react-hot-toast';
+// import Select from "react-select";
 import Hero from "../../Base/Hero";
+import { GlobalContext } from "../../Context/GlobalContext";
+import { supportedTokens } from "../../Helpers/addresses";
+import tokenABI from "../../Helpers/tokenABI";
 import Autocomplete from "./Autocomplete";
 import { City } from "./Autocomplete/City";
 import { Country } from "./Autocomplete/Country";
+
+
+
 export default function Bill() {
+
+
+  // Global state
+  const { makePayment, cart, supportedNet, web3Installed, web3Info} = useContext(GlobalContext);
+  
+  // Local component state
+  const [tokenIndex, setTokenIndex] = useState(null);
+  const [userBalance, setUserBalance] = useState(0);
+  const [email, setEmail] = useState();
+
+  /**
+   * email,
+   * phone,
+   * street,
+   * town,
+   * state,
+   * country,
+   * postalcode
+   * 
+   */
+
+  const handleChange = async(event) => {
+    setTokenIndex(event.target.value);
+  };
+
+  const handlePayment = () => {
+    if(web3Info.connected !== undefined && web3Info.connected){
+      if(tokenIndex == null){
+        (() => toast.error(`Please Select Payment Token`))();
+        return;
+      }
+      if(cart.totalQty > userBalance){
+        (() => toast.error(`Insufficient Token Balance`))();
+        return;
+      }
+      makePayment(tokenIndex, cart, web3Info.address);
+    }else{
+      (() => toast.error(`Please Connect Wallet`))();
+      
+    }
+  };
+
+  const getWalletBalance = async() => {
+    if(web3Info.connected !== undefined && web3Info.connected && tokenIndex !== null){
+      console.log(supportedTokens[web3Info.chainID]);
+      const tokenAddrress = supportedTokens[web3Info.chainID][tokenIndex - 1].address;
+      const tokenContract = new web3Info.web3.eth.Contract(tokenABI, tokenAddrress);
+      const tokenBal = await tokenContract.methods.balanceOf(web3Info.address).call();
+      const tokenBalance = web3Info.web3.utils.toBN(Number((parseFloat(tokenBal)/10**18).toFixed(5)));
+      setUserBalance(tokenBalance);
+    }
+  };
+
+  useEffect(() => {
+    (async() => {
+      await getWalletBalance();
+    })();
+  }, [tokenIndex]);
+  
+  
+  // Payment Styling
+  const payStyling = {
+    width: "100%",
+    marginBottom: "12px",
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "center"
+
+  };
+  const balanceStyling = {
+    color: "black",
+    margin: "0 5px",
+    marginLeft: "10px"
+
+  };
+
+  console.log("chainID: ", web3Info.chainID);
+  console.log("Supported chain tokens: ", supportedTokens[web3Info.chainID]);
+
   return (
     <Hero>
       <div className="bill">
@@ -25,8 +114,12 @@ export default function Bill() {
           </div>
         </div>
         <form className="bill__body">
-          <h3>Billing details</h3>
+          <h3>Shipping details</h3>
           <div className="input__row">
+            <div className="input__outer">
+              <label htmlFor="">Email</label>
+              <input type="email" placeholder="Email" />
+            </div>
             <div className="input__outer">
               <label htmlFor="">Phone number</label>
               <input type="number" placeholder="Phone" />
@@ -53,8 +146,38 @@ export default function Bill() {
             </div>
           </div>
         </form>
+
+        <div style={payStyling}>
+
+          {
+          web3Info.connected !== undefined
+          &&
+          web3Info.connected
+          &&
+          <Box sx={{ maxWidth: 200, minWidth: 160 }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Payment Token</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={tokenIndex ?? " "}
+                label="Payment Token"
+                onChange={handleChange}
+              >
+                {
+                  
+                  supportedTokens[web3Info.chainID].map(
+                    (token) => <MenuItem key={token.index} name={token.name} value={token.index}><h5>{token.name}</h5></MenuItem>
+                  )
+                }
+              </Select>
+            </FormControl>
+          </Box>
+          }
+          <h5 style={balanceStyling}>{tokenIndex !== null ? "$" + userBalance : ""}</h5>
+        </div>
         <div className="bill__footer">
-          <button className="button primary">Submit</button>
+          <button onClick={handlePayment} className="button primary">Make Payment</button>
         </div>
       </div>
     </Hero>

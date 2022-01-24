@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import {
   CONNECT_WALLET,
   DISCONNECT_WALLET,
@@ -18,6 +19,8 @@ import {
   };
 
  */
+
+
 
 const web3InfoReducer = (state = {}, action) => {
       switch(action.type){
@@ -43,6 +46,7 @@ const web3InfoReducer = (state = {}, action) => {
               ...state,
               chainID: action.payload.chainID,
               networkID: action.payload.networkID
+
             };
           case NETWORK_CHANGE:
             return {

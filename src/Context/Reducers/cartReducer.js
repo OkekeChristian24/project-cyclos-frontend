@@ -26,7 +26,7 @@ const cartReducer = (state = {}, action) => {
                 const newState_ADD_TO_CART = {
                     ...state,
                     totalQty: action.payload.product.quantity,
-                    totalPrice: (action.payload.product.quantity * action.payload.product.price),
+                    totalPrice: (action.payload.product.quantity * action.payload.product.price).toFixed(20),
                     products: [action.payload.product]
                 };
 
@@ -38,7 +38,7 @@ const cartReducer = (state = {}, action) => {
                 const newState_ADD_TO_CART = {
                     ...state,
                     totalQty: (state.totalQty + action.payload.product.quantity),
-                    totalPrice: (state.totalPrice + (action.payload.product.quantity * action.payload.product.price)),
+                    totalPrice: (state.totalPrice + (action.payload.product.quantity * action.payload.product.price)).toFixed(20),
                     products: [action.payload.product, ...state.products]
                 };
                 window.localStorage.setItem(process.env.REACT_APP_CART_NAME, JSON.stringify(newState_ADD_TO_CART));
@@ -50,7 +50,7 @@ const cartReducer = (state = {}, action) => {
             const newState_UPDATE_CART = {
                 ...state,
                 totalQty: action.payload.updatedState.totalQty,
-                totalPrice: action.payload.updatedState.totalPrice,
+                totalPrice: action.payload.updatedState.totalPrice.toFixed(20),
                 products: [...action.payload.updatedState.products]
             };
             window.localStorage.setItem(process.env.REACT_APP_CART_NAME, JSON.stringify(newState_UPDATE_CART));
@@ -67,7 +67,7 @@ const cartReducer = (state = {}, action) => {
             const newState_REMOVE_ITEM =  {
                 ...state,
                 totalQty: state.totalQty - item.quantity,
-                totalPrice: state.totalPrice - (item.quantity * item.price),
+                totalPrice: (state.totalPrice - (item.quantity * item.price)).toFixed(20),
                 products: state.products.filter(product => product.asin !== item.asin)
             };
             window.localStorage.setItem(process.env.REACT_APP_CART_NAME, JSON.stringify(newState_REMOVE_ITEM));
@@ -81,13 +81,13 @@ const cartReducer = (state = {}, action) => {
                 const filteredState = {
                     ...state,
                     totalQty: (state.totalQty - itemToUpdate.quantity),
-                    totalPrice: (state.totalPrice - (itemToUpdate.quantity * itemToUpdate.price)),
+                    totalPrice: (state.totalPrice - (itemToUpdate.quantity * itemToUpdate.price)).toFixed(20),
                     products: filteredProducts
                 };
                 const newState_UPDATE_ITEM = {
                     ...filteredState,
                     totalQty: (filteredState.totalQty + action.payload.product.quantity),
-                    totalPrice: (filteredState.totalPrice + (action.payload.product.quantity * action.payload.product.price)),
+                    totalPrice: (Number(filteredState.totalPrice) + (Number(action.payload.product.quantity) * Number(action.payload.product.price))).toFixed(20),
                     products: [action.payload.product, ...filteredState.products]
                 };
                 window.localStorage.setItem(process.env.REACT_APP_CART_NAME, JSON.stringify(newState_UPDATE_ITEM));

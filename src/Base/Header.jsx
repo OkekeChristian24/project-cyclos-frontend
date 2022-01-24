@@ -15,7 +15,6 @@ export default function Header() {
   const { supportedNet, web3Installed, web3Info, connectWallet, disconnectWallet } = useContext(GlobalContext);
 
   const cart = JSON.parse(window.localStorage.getItem(process.env.REACT_APP_CART_NAME));
-  console.log("Header web3Info: ", web3Info);
 
   // Component local states
   const [menu, setMenu] = useState(false);
@@ -60,7 +59,6 @@ export default function Header() {
     setSelectedValue(value);
     const response = await netSwitchOrAdd(metaMaskProvider, value);
     if(response.success){
-      console.log("On handleNetShowClose after network switch");
       // await connectWalletHandler();
       await connectWallet(response.chainID);
       // (() => toast.success(response.message))();
@@ -71,6 +69,9 @@ export default function Header() {
 
   useEffect(() => {
     window.addEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   const start = 300;
@@ -78,7 +79,9 @@ export default function Header() {
     if (window.scrollY > start) {
       document.getElementById("header").classList.add("sticky");
     } else {
-      document.getElementById("header").classList.remove("sticky");
+      if(document.getElementById("header") !== undefined){
+        document.getElementById("header").classList.remove("sticky");
+      }
     }
   };
 

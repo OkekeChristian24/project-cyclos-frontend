@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import Hero from "../../Base/Hero";
 import { GlobalContext } from "../../Context/GlobalContext";
 import CartLineItem from "./CartLine/CartLineItem";
@@ -7,7 +8,6 @@ import { CartLineModul } from "./CartLine/CartLineModul";
 export default function Cart() {
 
   const { cart, deleteCart } = useContext(GlobalContext);
-  // const cart = JSON.parse(window.localStorage.getItem(process.env.REACT_APP_CART_NAME));
 
   const handleCartDelete = () => {
     deleteCart();
@@ -68,7 +68,7 @@ export default function Cart() {
                 <button className="button primary">Apply coupon</button>
               </div>
               <div className="cart__table-footer-row">
-                <button className="button secondary">Update cart</button>
+                <button onClick={handleCartDelete} className="button secondary">Clear cart</button>
               </div>
             </div>
             </>
@@ -95,7 +95,7 @@ export default function Cart() {
               </div>
               <div className="total__inner-row">
                 <h4>Subtotal</h4>
-                <span>{`$${cart.totalPrice}`}</span>
+                <span>{`$${cart.totalPrice.toFixed(5)}`}</span>
               </div>
               <div className="total__inner-row">
                 <h4>Shipping</h4>
@@ -103,10 +103,14 @@ export default function Cart() {
               </div>
               <div className="total__inner-row">
                 <h4>Total</h4>
-                <span>{`$${cart.totalPrice}`}</span>
+                <span>{`$${cart.totalPrice.toFixed(5)}`}</span>
               </div>
               <div className="total__inner-submit">
-                <button className="button primary">Proceed to checkout</button>
+                <button className="button primary">
+                  <Link to="/bill">
+                    Proceed to checkout
+                  </Link>
+                </button>
               </div>
             </div>
           </div>
