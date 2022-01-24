@@ -27,6 +27,7 @@ export default function Products({ products }) {
                 discount={ProductsItems.discount}
                 price={ProductsItems.price}
                 link={ProductsItems.link}
+                itemWeight={ProductsItems.itemWeight}
               />
             );
           })}

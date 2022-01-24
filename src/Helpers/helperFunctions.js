@@ -79,6 +79,7 @@ export const getNetwork = (chainID) => {
   
 };
 
+
 export const subscribeProvider = (
   provider, 
   closeCallBack,

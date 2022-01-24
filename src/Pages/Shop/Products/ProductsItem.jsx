@@ -30,6 +30,7 @@ export default function ProductsItem(props) {
       price: props.price,
       image: props.image,
       link: props.link,
+      itemWeight: props.itemWeight,
       quantity: 1
     };
 

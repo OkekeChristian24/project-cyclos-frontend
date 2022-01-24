@@ -7,6 +7,7 @@ export const CartLineModul = [
     value: "2",
     price: "199.99",
     subtotal: "199.9 ",
+    itemWeight: "23.3"
   },
   {
     alt: "product-2",
@@ -16,6 +17,7 @@ export const CartLineModul = [
     value: "3",
     price: "555.99",
     subtotal: "555.9 ",
+    itemWeight: "23.3"
   },
   {
     alt: "product-3",
@@ -25,6 +27,8 @@ export const CartLineModul = [
     value: "1",
     price: "222.99",
     subtotal: "222.9 ",
+    itemWeight: "23.3"
+
   },
   {
     alt: "product-4",
@@ -34,5 +38,6 @@ export const CartLineModul = [
     value: "4",
     price: "444.99",
     subtotal: "444.9 ",
+    itemWeight: "23.3"
   },
 ];

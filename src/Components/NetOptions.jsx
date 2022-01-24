@@ -41,14 +41,6 @@ export default function NetOptions(props) {
           </ListItem>
         ))}
 
-        {/* <ListItem autoFocus button onClick={() => handleListItemClick('addAccount')}>
-          <ListItemAvatar>
-            <Avatar>
-              <AddIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary="Add account" />
-        </ListItem> */}
       </List>
     </Dialog>
   );
@@ -60,34 +52,3 @@ NetOptions.propTypes = {
   selectedValue: PropTypes.string.isRequired,
 };
 
-
-// export function NetOptionsDemo() {
-//   const [open, setOpen] = React.useState(false);
-//   const [selectedValue, setSelectedValue] = React.useState(chainIDs[1]);
-
-//   const handleClickOpen = () => {
-//     setOpen(true);
-//   };
-
-//   const handleClose = (value) => {
-//     setOpen(false);
-//     setSelectedValue(value);
-//   };
-
-//   return (
-//     <div>
-//       <Typography variant="subtitle1" component="div">
-//         Selected: {selectedValue}
-//       </Typography>
-//       <br />
-//       <Button variant="outlined" onClick={handleClickOpen}>
-//         Open simple dialog
-//       </Button>
-//       <NetOptions
-//         selectedValue={selectedValue}
-//         open={open}
-//         onClose={handleClose}
-//       />
-//     </div>
-//   );
-// }
