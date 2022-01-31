@@ -38,12 +38,13 @@ export default function Header() {
       await connectWallet();
       (() => toast.success("Wallet Connected"))();
     } catch (error) {
+
       if(error.isMetaMask){
-        // Show network connect options
-        // (() => toast.error("This is MetaMask"))();
         if(!showNetOptions){
           setShowNetOptions(true);
         }
+      }else if(error.code === -32603){
+        (() => toast.error("Wallet Connect Error"))();
       }else{
         (() => toast.error(error.message))();
       }

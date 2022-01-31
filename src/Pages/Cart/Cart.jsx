@@ -95,7 +95,7 @@ export default function Cart() {
               </div>
               <div className="total__inner-row">
                 <h4>Subtotal</h4>
-                <span>{`$${cart.totalPrice.toFixed(5)}`}</span>
+                <span>{`${Number(cart.totalPrice).toFixed(5)}`}</span>
               </div>
               <div className="total__inner-row">
                 <h4>Shipping</h4>
@@ -103,7 +103,7 @@ export default function Cart() {
               </div>
               <div className="total__inner-row">
                 <h4>Total</h4>
-                <span>{`$${cart.totalPrice.toFixed(5)}`}</span>
+                <span>{`${Number(cart.totalPrice).toFixed(5)}`}</span>
               </div>
               <div className="total__inner-submit">
                 <button className="button primary">

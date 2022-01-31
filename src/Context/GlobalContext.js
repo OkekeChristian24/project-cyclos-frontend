@@ -12,7 +12,7 @@ import Web3 from "web3";
 import BigNumber from "bignumber.js";
 import detectEthereumProvider from '@metamask/detect-provider';
 import toast from 'react-hot-toast';
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuidv4 } from 'uuid';
 
 import { SEARCH_PRODUCT } from "./ActionTypes/productTypes";
 import web3InfoReducer from "./Reducers/web3InfoReducer";
@@ -48,20 +48,11 @@ import { getChainData } from "../Helpers/helperFunctions"
 import { supportedTokens, paymentAddresses } from "../Helpers/addresses"
 import tokenABI from "../Helpers/tokenABI";
 import paymentABI from "../Helpers/paymentABI";
+import { PRICE_MULTIPLIER } from "../Helpers/multipliers";
+import { serverHost, axiosConfig} from "../Helpers/backendHost";
+import { awaitBlockConsensus } from '../Helpers/awaitTxn';
+import { CustomError } from "../Helpers/customError";
 
-class CustomError extends Error {
-  constructor(message) {
-    super(message);
-    this.custom = true;
-  }
-}
-
-// Axios config
-const config = {
-  headers: {
-    'Content-Type': 'application/json'
-  }
-}
 
 // Initialize web3
 function initWeb3(provider) {
@@ -176,135 +167,8 @@ export const GlobalProvider = ({ children }) => {
   /* == ACTIONS == */
 
   // == Payment actions == //
-  const makePayment = async(tokenIndex, cart, buyer) => {
-    //let decimals = web3.utils.toBN(18);
-    //let amount = web3.utils.toBN(100);
-    //et value = amount.mul(web3.utils.toBN(10).pow(decimals));
-    //
-    try {
-      //
-      const web3 = initWeb3(window.detectedProvider);
-      // const decimals = web3.utils.toBN(18);
-      const decimals = 18;
-      const chainID = await web3.eth.chainId();
-      const paymentAddr = paymentAddresses[chainID];
-      if(!paymentAddr){
-        throw {custom: true, message: `${chainID} Is NOT A Supported Chain`};
-      }
-      console.log("makePayment supportedTokens with tokenIndex: ", supportedTokens[chainID][tokenIndex - 1]);
-      const tokenAddress = supportedTokens[chainID][tokenIndex - 1].address;
-      const tokenContract = new web3.eth.Contract(tokenABI, tokenAddress);
-      const paymentContract = new web3.eth.Contract(paymentABI, paymentAddr);
-      /*
-      var decimals = 12;
-      var value = (0.001*(10**decimals)).toString();
-      var amount = web3.utils.toBN(value);
-
-      x = new BigNumber(456.789)
-      x.toString()
-      */
-      const priceValue = ((cart.totalPrice*(10**decimals)).toFixed(20));
-      // const priceValue = new BigNumber((cart.totalPrice*(10**decimals))).toString();
-      console.log("typeof priceValue: ", typeof priceValue);
-      console.log("priceValue: ", Number(priceValue).toFixed(20));
-      // const totalPrice = web3.utils.toBN(Number(priceValue)).toString();
-      const totalPrice = priceValue;
-      const approvalReceipt = await tokenContract.methods.approve(paymentAddr, priceValue).send({from: buyer});
-      console.log(approvalReceipt.events.Approval);
-      if(typeof approvalReceipt.events.Approval === undefined){
-        throw {custom: true, message: "Approve Contract To Make Payment"};
-      }
-
-      const totalQty = cart.totalQty;
-      const products = [];
-      for(let i=0; i<cart.products.length; i++){
-        const product = {
-          asin: cart.products[i].asin,
-          price: cart.products[i].price,
-          quantity: cart.products[i].quantity
-        };
-        products.push(product);
-      }
-
-      if(products.length <= 0){
-        throw {custom: true, message: "No products were selected"};
-      }
-      
-      if (!Date.now) {
-        Date.now = function() { return new Date().getTime(); }
-      }
-      const timeStampInMs = window.performance && window.performance.now && window.performance.timing && window.performance.timing.navigationStart ? window.performance.now() + window.performance.timing.navigationStart : Date.now();
-      const orderID = uuidv4() + buyer + timeStampInMs.toString();
-      console.log("Order ID: ", orderID);
-      const paymentReceipt = await paymentContract.methods.makePayment(orderID, tokenIndex, totalPrice, totalQty, products).send({from: buyer});
-      console.log(paymentReceipt.events.TransactionMade);
-      console.log(paymentReceipt.events.TransactionMade.returnValues.orderID);
-      console.log(paymentReceipt.events.TransactionMade.returnValues.paymentID);
-      if(typeof paymentReceipt.events.TransactionMade === "undefined"){
-        throw {custom: true, message: "Transaction Failed"};
-      }
-
-      paymentDispatch(
-        {
-          type: MAKE_PAYMENT,
-          payload: {
-            paymentID: paymentReceipt.events.TransactionMade.returnValues.paymentID,
-            orderID: paymentReceipt.events.TransactionMade.returnValues.orderID,
-            buyer: paymentReceipt.events.TransactionMade.returnValues.buyer
-          }
-        }
-      );
-
-      // Send txn info to the backend
-      // using axios
-      ///api/order
-      /*
-      * buyer (string)
-      * totalPrice (int)
-      * totalQty (int)
-      * paymentID (string)
-      * orderID (string)
-
-      * txnHash (string)
-
-      * tokenIndex (int)
-
-      * products[i].productLink (string)
-      * products[i].quantity (int)
-      * itemWeight (int)
-      * price (int)
-      */
-
-      const orderBody = {
-        buyer: buyer,
-        totalPrice: cart.totalPrice,
-        totalQty: 0,
-        paymentID: paymentReceipt.events.TransactionMade.returnValues.paymentID,
-        orderID: orderID,
-        txnHash: paymentReceipt.events.TransactionMade.returnValues.paymentID,
-        tokenIndex: tokenIndex,
-        products: products
-      };
-      const res = await axios.post('http://localhost:5000/api/order', orderBody, config);
-      if(res.data.success === 1){
-        return {success: true, message: "Transaction Successful"};
-      }
-      
-      return {success: false, message: res.data.message};
-      
-    } catch (error) {
-      console.log(error);
-      if(error.custom){
-        paymentDispatch({type: PAYMENT_ERROR, payload: error.message});
-        return {success: false, message: error.message};
-      }
-      paymentDispatch({type: PAYMENT_ERROR, payload: "Payment Unsuccessful"});
-      return {success: false, message: "Payment Unsuccessful"};
-
-    }
-      
-
-  };
+  
+  
 
   const GetOrderDetails = async (buyer, orderID, chainID) => {
     try {
@@ -328,11 +192,12 @@ export const GlobalProvider = ({ children }) => {
       search_term: searchTerm
     };
     try {
-      const res = await axios.post('http://localhost:5000/api/products', term, config);
+      const res = await axios.post(`${serverHost}/api/products`, term, axiosConfig);
       
       console.log("searchProduct: ", res);
       
-      const products = res.data.data.search_results;
+      const responseProducts = res.data.data.search_results;
+      const products = responseProducts.filter(product => product.price !== undefined);
       productDispatch({type: SEARCH_PRODUCT, payload: products});
     } catch (error) {
       console.log(error);
@@ -404,9 +269,19 @@ export const GlobalProvider = ({ children }) => {
   const chainChangeCallBack = async(chainID) => {
     // const { web3 } = localWeb3Info.current || web3Info;
     const web3 = initWeb3(window.detectedProvider);
+    web3.eth.extend({
+      methods: [
+        {
+          name: "chainId",
+          call: "eth_chainId",
+          outputFormatter: web3.utils.hexToNumber
+        }
+      ]
+    });
+  
     const networkID = await web3.eth.net.getId();
     web3InfoDispatch({type: CHAIN_CHANGE,  payload: {chainID, networkID}});
-    web3InfoDispatch({type: CHAIN_CHANGE,  payload: {chainID}});
+    // web3InfoDispatch({type: CHAIN_CHANGE,  payload: {chainID}});
     if(getNetwork(chainID) === ""){
       // (() => toast.error(`Chain ID ${chainID} is Not Supported!`))();
       window.location.reload();
@@ -419,6 +294,16 @@ export const GlobalProvider = ({ children }) => {
   const netChangeCallBack = async(networkID) => {
     // const { web3 } = localWeb3Info.current || web3Info;
     const web3 = initWeb3(window.detectedProvider);
+    web3.eth.extend({
+      methods: [
+        {
+          name: "chainId",
+          call: "eth_chainId",
+          outputFormatter: web3.utils.hexToNumber
+        }
+      ]
+    });
+  
     const chainID = await web3.eth.chainId();
     web3InfoDispatch({type: NETWORK_CHANGE,  payload: {chainID, networkID}});
 
@@ -437,7 +322,7 @@ export const GlobalProvider = ({ children }) => {
     if(chainid !== ""){
       idToCheck = chainid;
     }else{
-      idToCheck = detectedProvider.chainId;
+      idToCheck = window.detectedProvider.chainId;
     }
     if(getNetwork(idToCheck) === ""){
       // Check if it's MetaMask
@@ -467,6 +352,16 @@ export const GlobalProvider = ({ children }) => {
     );
 
     const web3 = initWeb3(provider);
+    web3.eth.extend({
+      methods: [
+        {
+          name: "chainId",
+          call: "eth_chainId",
+          outputFormatter: web3.utils.hexToNumber
+        }
+      ]
+    });
+  
     const accounts = await web3.eth.getAccounts();
     const address = accounts[0];
     const networkID = await web3.eth.net.getId();
@@ -485,6 +380,7 @@ export const GlobalProvider = ({ children }) => {
     web3InfoDispatch({type: CONNECT_WALLET,  payload: details});
 
   };
+
   const disconnectWallet = () => {
 
     web3InfoDispatch({type: DISCONNECT_WALLET});
@@ -536,8 +432,7 @@ export const GlobalProvider = ({ children }) => {
       updateCart,
       removeItem,
       deleteCart,
-      updateItem,
-      makePayment
+      updateItem
     }}>
       {children}
     </GlobalContext.Provider>
