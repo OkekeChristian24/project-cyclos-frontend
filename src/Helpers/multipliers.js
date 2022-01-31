@@ -1,0 +1,1 @@
+export const PRICE_MULTIPLIER = 10**8;

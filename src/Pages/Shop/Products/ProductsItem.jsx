@@ -30,7 +30,6 @@ export default function ProductsItem(props) {
       price: props.price,
       image: props.image,
       link: props.link,
-      itemWeight: props.itemWeight,
       quantity: 1
     };
 
@@ -40,20 +39,19 @@ export default function ProductsItem(props) {
 
   };
 
-  // console.log(props.link);
-
   return (
     <div className="products" key={props.asin}>
       <div className="products__header">
-        <img src={props.image} alt={props.alt} />
+        <img style={{borderRadius: "12px"}} src={props.image} alt={props.alt} />
       </div>
       <div className="products__body">
-        <h5>{props.name}</h5>
+        {/* <h5>{props.name}</h5> */}
         <hr />
-        <p>{props.desc}</p>
+        <p>{props.description}</p>
       </div>
       <div className="products__footer">
-        <div className="discount">Discount: {props.discount}</div>
+        {/* <div className="discount">{props.discount == null ? "" : `Discount: ${props.discount}`}</div> */}
+        {props.discount == null ? "" : <div className="discount">{`Discount: ${props.discount}`}</div>}
         <div className="price">${props.price}</div>
         <div className="products__footer-submit">
           <a href={props.link} target="_blank" rel="noreferrer noopener" className="button add">

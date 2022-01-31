@@ -5,8 +5,11 @@
 
 // Created TestUSD on Fantom net = 0x7d0dFC3A87243B11B831721fC5285b698D9c9ee4
 
-const fantomHex = 0xfa;
-const bscHex = 0x38;
+// 0xfa represents 250(decimal) in hexdecimal
+// 0x38 represents 56(decimal) in hexdecimal
+const fantomHex = "0xfa";
+const bscHex = "0x38";
+
 
 export const supportedTokens = {
     250: [
@@ -14,15 +17,17 @@ export const supportedTokens = {
             index: 1,
             name: "USDT",
             image: "",
-            address: "0x7d0dFC3A87243B11B831721fC5285b698D9c9ee4"
+            address: "0x7d0dFC3A87243B11B831721fC5285b698D9c9ee4",
+            decimals: 18
         }
     ],
-    fantomHex: [
+    "0xfa": [
         {
             index: 1,
             name: "USDT",
             image: "",
-            address: "0x049d68029688eabf473097a2fc38ef61633a3c7a"
+            address: "0x7d0dFC3A87243B11B831721fC5285b698D9c9ee4",
+            decimals: 18
         }
     ],
     56: [
@@ -30,27 +35,31 @@ export const supportedTokens = {
             index: 1,
             name: "USDT",
             image: "",
-            address: "0x55d398326f99059ff775485246999027b3197955"
+            address: "0x55d398326f99059ff775485246999027b3197955",
+            decimals: 18
         },
         {
             index: 2,
             name: "BUSD",
             image: "",
-            address: "0xe9e7cea3dedca5984780bafc599bd69add087d56"
+            address: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+            decimals: 18
         }
     ],
-    bscHex: [
+    "0x38": [
         {
             index: 1,
             name: "USDT",
             image: "",
-            address: "0x55d398326f99059ff775485246999027b3197955"
+            address: "0x55d398326f99059ff775485246999027b3197955",
+            decimals: 18
         },
         {
             index: 2,
             name: "BUSD",
             image: "",
-            address: "0xe9e7cea3dedca5984780bafc599bd69add087d56"
+            address: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+            decimals: 18
         }
     ]
 };
@@ -78,5 +87,7 @@ export const supportedTokens = {
 
 export const paymentAddresses = {
     250: "0xf7FD0dBA3410A28cB3de622d37Ee066C5cBACc6B",
-    56: "not-yet-deployed"
+    "0xfa": "0xf7FD0dBA3410A28cB3de622d37Ee066C5cBACc6B",
+    56: "not-yet-deployed",
+    "0x38": "not-yet-deployed"
 };
