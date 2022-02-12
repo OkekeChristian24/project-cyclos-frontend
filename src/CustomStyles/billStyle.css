@@ -1,0 +1,11 @@
+:root {
+    --PhoneInputCountrySelectArrow-color: ;
+    /* --PhoneInputCountryFlag-height: blue; */
+    --PhoneInputCountryFlag-borderColor: blue !important;
+    --PhoneInputCountryFlag-border: 2px solid blue !important;
+    --PhoneInputCountrySelectArrow-color: rgb(68, 68, 224);
+    --PhoneInputCountrySelectArrow-opacity: blue;
+    --PhoneInput-color--focus: blue;
+    --PhoneInput-backgroundColor--focus: blue;
+}
+

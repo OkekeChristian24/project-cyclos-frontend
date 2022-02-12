@@ -167,9 +167,6 @@ export const GlobalProvider = ({ children }) => {
   /* == ACTIONS == */
 
   // == Payment actions == //
-  
-  
-
   const GetOrderDetails = async (buyer, orderID, chainID) => {
     try {
       const web3 = initWeb3(window.detectedProvider);
@@ -266,52 +263,42 @@ export const GlobalProvider = ({ children }) => {
     web3InfoDispatch({type: ACCOUNT_CHANGE,  payload: accounts[0]});
   };
 
-  const chainChangeCallBack = async(chainID) => {
+  const chainChangeCallBack = async(chainId) => {
     // const { web3 } = localWeb3Info.current || web3Info;
     const web3 = initWeb3(window.detectedProvider);
-    web3.eth.extend({
-      methods: [
-        {
-          name: "chainId",
-          call: "eth_chainId",
-          outputFormatter: web3.utils.hexToNumber
-        }
-      ]
-    });
-  
+    const chainID = web3.utils.isHex(chainId) ? web3.utils.hexToNumber(chainId) : chainId;
+    
     const networkID = await web3.eth.net.getId();
-    web3InfoDispatch({type: CHAIN_CHANGE,  payload: {chainID, networkID}});
+    console.log("chainChangeCallBack, chainID: ", chainID);
+    console.log("chainChangeCallBack, networkID: ", networkID);
     // web3InfoDispatch({type: CHAIN_CHANGE,  payload: {chainID}});
     if(getNetwork(chainID) === ""){
       // (() => toast.error(`Chain ID ${chainID} is Not Supported!`))();
       window.location.reload();
-      // return;
+      return;
     }
+    web3InfoDispatch({type: CHAIN_CHANGE,  payload: {chainID, networkID}});
     // const chainName = getChainData(chainID).chain;
     // (() => toast.success(`You Are Connected To ${chainName}`))();
   };
   
   const netChangeCallBack = async(networkID) => {
-    // const { web3 } = localWeb3Info.current || web3Info;
     const web3 = initWeb3(window.detectedProvider);
-    web3.eth.extend({
-      methods: [
-        {
-          name: "chainId",
-          call: "eth_chainId",
-          outputFormatter: web3.utils.hexToNumber
-        }
-      ]
-    });
   
-    const chainID = await web3.eth.chainId();
-    web3InfoDispatch({type: NETWORK_CHANGE,  payload: {chainID, networkID}});
+    const chainId = await web3.eth.chainId();
+    web3.utils.isHex(chainId);
+    const chainID = web3.utils.isHex(chainId) ? web3.utils.hexToNumber(chainId) : chainId;
+    console.log("netChangeCallBack, chainID: ", chainID);
+    console.log("netChangeCallBack, networkID: ", networkID);
+    
 
     if(getNetwork(chainID) === ""){
       (() => toast.error(`Chain ID ${chainID} is Not Supported!`))();
       window.location.reload();
       return;
     }
+    web3InfoDispatch({type: NETWORK_CHANGE,  payload: {chainID, networkID}});
+
     const chainName = getChainData(chainID).chain;
     (() => toast.success(`You Are Connected To ${chainName}`))();
   };
@@ -325,7 +312,9 @@ export const GlobalProvider = ({ children }) => {
       idToCheck = window.detectedProvider.chainId;
     }
     if(getNetwork(idToCheck) === ""){
-      // Check if it's MetaMask
+      // Check if it's 
+      // window.detectedProvider.chainId
+      // detectedProvider.isMetaMask
       if(detectedProvider.isMetaMask){
         // Show network options modal
         throw {isMetaMask: true}
@@ -336,11 +325,13 @@ export const GlobalProvider = ({ children }) => {
     }
 
     setSupportedNet(true);
+    // web3Info.chainID
     const web3Modal = new Web3Modal({
-      network: web3Info.chainID && getNetwork(web3Info.chainID),
+      network: window.detectedProvider.chainId && getNetwork(window.detectedProvider.chainId),
       cacheProvider: true,
       providerOptions: getProviderOptions()
     });
+
     setWeb3Modal(web3Modal);
     const provider = await web3Modal.connect();
     subscribeProvider(
@@ -352,21 +343,13 @@ export const GlobalProvider = ({ children }) => {
     );
 
     const web3 = initWeb3(provider);
-    web3.eth.extend({
-      methods: [
-        {
-          name: "chainId",
-          call: "eth_chainId",
-          outputFormatter: web3.utils.hexToNumber
-        }
-      ]
-    });
-  
+    
     const accounts = await web3.eth.getAccounts();
     const address = accounts[0];
     const networkID = await web3.eth.net.getId();
-    const chainID = await web3.eth.chainId();
-
+    const chainId = await web3.eth.chainId();
+    web3.utils.isHex(chainId);
+    const chainID = web3.utils.isHex(chainId) ? web3.utils.hexToNumber(chainId) : chainId;
     const details = {
       web3,
       provider,
@@ -382,9 +365,7 @@ export const GlobalProvider = ({ children }) => {
   };
 
   const disconnectWallet = () => {
-
     web3InfoDispatch({type: DISCONNECT_WALLET});
-
   };
 
   useEffect(() => {
@@ -394,6 +375,7 @@ export const GlobalProvider = ({ children }) => {
   // useEffect(() => {
   //   localCart.current = cart;
   // }, [cart])
+
   
   useEffect(() => {
     (async() => {
