@@ -2,8 +2,12 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { Box } from "@mui/system";
 import BigNumber from "bignumber.js";
 import React, { useContext, useEffect, useState } from "react";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 import { v4 as uuidv4 } from 'uuid';
+import "react-phone-number-input/style.css"
+import PhoneInput from 'react-phone-number-input'
+import "../../CustomStyles/billStyle.css";
+
 // import Select from "react-select";
 import Hero from "../../Base/Hero";
 import { GlobalContext } from "../../Context/GlobalContext";
@@ -13,6 +17,8 @@ import { awaitBlockConsensus } from "../../Helpers/awaitTxn";
 import { CustomError } from "../../Helpers/customError";
 import tokenABI from "../../Helpers/tokenABI";
 import { serverHost, axiosConfig} from "../../Helpers/backendHost";
+import { validEmailRegex, validStreetReg, validCityReg, validStateReg, validCountryReg, validPostalCodeReg} from "../../Helpers/regExps";
+import { initShippingAddr, initShipAddrErr, initShipAddrErrMsg } from "../../Helpers/initsShippingAddr";
 import Autocomplete from "./Autocomplete";
 import { City } from "./Autocomplete/City";
 import { Country } from "./Autocomplete/Country";
@@ -20,8 +26,9 @@ import axios from "axios";
 
 
 
-export default function Bill() {
 
+
+export default function Bill() {
 
   // Global state
   const { cart, supportedNet, connectWallet, web3Installed, web3Info, deleteCart} = useContext(GlobalContext);
@@ -30,21 +37,188 @@ export default function Bill() {
   const [tokenIndex, setTokenIndex] = useState(null);
   const [tokenDecimals, setTokenDecimals] = useState(null);
   const [userBalance, setUserBalance] = useState(0);
-  const [email, setEmail] = useState("");
   const [isApproved, setIsApproved] = useState(false);
   const [isPaymentLoading, setIsPaymentLoading] = useState(false);
   const [isApprovalLoading, setIsApprovalLoading] = useState(false);
 
-  /**
-   * email,
-   * phone,
-   * street,
-   * town,
-   * state,
-   * country,
-   * postalcode
-   * 
-   */
+  const [shippingAddress, setShippingAddress] = useState(initShippingAddr);
+  const [shippingAddrError, setShippingAddrError] = useState(initShipAddrErr);
+  const [shipAddrErrMsg, setShipAddrErrMsg] = useState(initShipAddrErrMsg);
+
+
+  const [phoneNum, setPhoneNum] = useState(undefined);
+
+  
+  
+  const handleShippingChange = (event) => {
+    const { name, value } = event.target;
+    setShippingAddress({
+      ...shippingAddress,
+      [name]: value,
+    });
+  };
+
+  const checkShippingAddr = () => {
+    let isError = false;
+    let updatedShipAddrErr = {};
+    let updatedShipAddrErrMsg = {};
+    
+    Object.keys(shippingAddress).forEach(function(key) {
+      
+      if(key === "phone"){
+        if(phoneNum === undefined){
+          isError = true;
+          updatedShipAddrErr = {
+            ...updatedShipAddrErr,
+            [key]: true
+          };
+          updatedShipAddrErrMsg = {
+            ...updatedShipAddrErrMsg,
+            [key]: "This Field Is Required"
+          };
+        }else{
+          updatedShipAddrErr = {
+            ...updatedShipAddrErr,
+            [key]: false
+          };
+        }
+        return;
+      }
+      
+      if (shippingAddress[key] === "") {
+        isError = true;
+        updatedShipAddrErr = {
+          ...updatedShipAddrErr,
+          [key]: true
+        };
+        updatedShipAddrErrMsg = {
+          ...updatedShipAddrErrMsg,
+          [key]: "This Field Is Required"
+        };
+      }else{
+        switch(key){
+          case "email":
+            if(!validEmailRegex.test(shippingAddress[key])){
+              updatedShipAddrErr = {
+                ...updatedShipAddrErr,
+                [key]: true
+              };
+              updatedShipAddrErrMsg = {
+                ...updatedShipAddrErrMsg,
+                [key]: "Email is NOT valid"
+              };
+            }else{
+              updatedShipAddrErr = {
+                ...updatedShipAddrErr,
+                [key]: false
+              };
+            }
+
+            break;
+          case "street":
+            console.log("Street: ", (shippingAddress[key]));
+            console.log("Regex: ", validStreetReg.test(shippingAddress[key]));
+            if(!validStreetReg.test(shippingAddress[key])){
+              updatedShipAddrErr = {
+                ...updatedShipAddrErr,
+                [key]: true
+              };
+              updatedShipAddrErrMsg = {
+                ...updatedShipAddrErrMsg,
+                [key]: `Invalid Inputs Are NOT Allowed`
+              };
+            }else{
+              updatedShipAddrErr = {
+                ...updatedShipAddrErr,
+                [key]: false
+              };
+            }
+            break;
+          case "city":
+            if(!validCityReg.test(shippingAddress[key])){
+              updatedShipAddrErr = {
+                ...updatedShipAddrErr,
+                [key]: true
+              };
+              updatedShipAddrErrMsg = {
+                ...updatedShipAddrErrMsg,
+                [key]: `City Is NOT Valid`
+              };
+            }else{
+              updatedShipAddrErr = {
+                ...updatedShipAddrErr,
+                [key]: false
+              };
+            }
+            break;
+          case "state":
+            if(!validStateReg.test(shippingAddress[key])){
+              updatedShipAddrErr = {
+                ...updatedShipAddrErr,
+                [key]: true
+              };
+              updatedShipAddrErrMsg = {
+                ...updatedShipAddrErrMsg,
+                [key]: `State Is NOT Valid`
+              };
+            }else{
+              updatedShipAddrErr = {
+                ...updatedShipAddrErr,
+                [key]: false
+              };
+            }
+            break;
+          case "country":
+            if(!validCountryReg.test(shippingAddress[key])){
+              updatedShipAddrErr = {
+                ...updatedShipAddrErr,
+                [key]: true
+              };
+              updatedShipAddrErrMsg = {
+                ...updatedShipAddrErrMsg,
+                [key]: `Country Is NOT Valid`
+              };
+            }else{
+              updatedShipAddrErr = {
+                ...updatedShipAddrErr,
+                [key]: false
+              };
+            }
+            break;
+          case "postalCode":
+            if(!validPostalCodeReg.test(shippingAddress[key])){
+              updatedShipAddrErr = {
+                ...updatedShipAddrErr,
+                [key]: true
+              };
+              updatedShipAddrErrMsg = {
+                ...updatedShipAddrErrMsg,
+                [key]: `Postal Code Is NOT Valid`
+              };
+            }else{
+              updatedShipAddrErr = {
+                ...updatedShipAddrErr,
+                [key]: false
+              };
+            }
+            break;
+          default:
+            break;
+        }
+      }
+    });
+
+    setShippingAddrError({
+      ...shippingAddrError,
+      ...updatedShipAddrErr
+    });
+    setShipAddrErrMsg({
+      ...shipAddrErrMsg,
+      ...updatedShipAddrErrMsg
+    });
+
+    return isError;
+  };
 
   const handleChange = async(event) => {
     setTokenIndex(event.target.value);
@@ -54,19 +228,25 @@ export default function Bill() {
 
   
   const handlePayment = async() => {
+    // console.log("shippingAddrError: ", shippingAddrError);
     try{
       if(web3Info.connected !== undefined && web3Info.connected){
         if(tokenIndex == null){
-          (() => toast.error(`Please Select Payment Token`))();
-          return;
+          throw new CustomError("Please Select Payment Token");
         }
-        if(cart.totalQty > userBalance){
-          (() => toast.error(`Insufficient Token Balance`))();
-          return;
-        }
+
         if(cart.products.length <= 0){
           throw new CustomError("No Products Selected");
         }
+
+        if(cart.totalPrice > Number(userBalance).toFixed(3)){
+          throw new CustomError("Insufficient Token Balance");
+        }
+
+        if(checkShippingAddr()){
+          throw new CustomError("Fill All Shipping Details");
+        }
+
         setIsPaymentLoading(true);
         const web3 = web3Info.web3;
         const chainID = await web3.eth.chainId();
@@ -81,17 +261,16 @@ export default function Bill() {
         let products = [];
         for(let i=0; i<cart.products.length; i++){
           let price = (new BigNumber(cart.products[i].price*10**tokenDecimals).toFixed(0));
-          console.log(price);
           let product = {
             asin: cart.products[i].asin,
             price: price,
             quantity: cart.products[i].quantity
           };
-          console.log(product);
+          // console.log(product);
           products = [...products, product];
           product = "";
         }
-        console.log("products: ", products);
+        // console.log("products: ", products);
 
         if (!Date.now) {
           Date.now = function() { return new Date().getTime(); }
@@ -100,12 +279,11 @@ export default function Bill() {
         const orderID = uuidv4() + web3Info.address + timeStampInMs.toString();
         // makePayment(orderID, tokenIndex, totalPriceBN, totalQty, products).send({from: buyer})
         const data = await paymentContract.methods.makePayment(orderID, tokenIndex, totalPriceBN, totalQty, products).send({from: web3Info.address});
-        console.log("Data: ", data);
         const txHash = data.transactionHash;
         awaitBlockConsensus([web3Info.web3], txHash, 6, 750, async(error, txnReceipt) => {
           try{
             if(error){
-              console.log("Await Txn Error: ", error);
+              console.log(error);
               // return false;
               throw new CustomError(error.message);
             }
@@ -114,6 +292,17 @@ export default function Bill() {
             // const paymentDetails = await paymentContract.methods.getTransactionDetails(web3Info.address, orderID).call();
             paymentContract.methods.getTransactionDetails(web3Info.address, orderID).call().then(function(paymentDetails){
               console.log("paymentDetails: ", paymentDetails);
+              
+              const shippingDetails = {
+                email: shippingAddress.email,
+                phone: phoneNum,
+                street: shippingAddress.street,
+                city: shippingAddress.city,
+                state: shippingAddress.state,
+                country: shippingAddress.country,
+                postalCode: shippingAddress.postalCode
+              };
+
               const orderBody = {
                 buyer: String(web3Info.address),
                 totalPrice: (Number(cart.totalPrice)).toFixed(5),
@@ -123,10 +312,13 @@ export default function Bill() {
                 chainID: Number(chainID),
                 txnHash: String(txHash),
                 tokenIndex: Number(tokenIndex),
-                products: cart.products
+                products: cart.products,
+                shipping: shippingDetails
               };
+
+                          
       
-              console.log("Order for backend: ", orderBody);
+              // console.log("Order for backend: ", orderBody);
               return axios.post(`${serverHost}/api/order`, orderBody, axiosConfig);
 
             }).then(async function(res){
@@ -215,34 +407,33 @@ export default function Bill() {
 
   
   const handleApproval = async() => {
-    if(web3Info.connected === undefined){
-      (() => toast.error("Please Connect Wallet"))();
-      return;
-    }
-
-    if(tokenIndex == null){
-      (() => toast.error("Please Select Token"))();
-      return;
-    }
-
-    // if(cart.totalPrice.toFixed(3) > userBalance){
-    //   (() => toast.error("Insufficient Token Balance"))();
-    //   return;
-    // }
-
-    if(isApproved){
-      return;
-    }
-
+    
     try{
+      if(web3Info.connected === undefined){
+        throw new CustomError("Please Connect Wallet");
+      }
+
+      if(tokenIndex == null){
+        throw new CustomError("Please Select Token");
+      }
+
+      if(isApproved){
+        return;
+      }
+  
+      if(cart.products.length <= 0){
+        throw new CustomError("No Products Selected");
+      }
+      if(cart.totalPrice > Number(userBalance).toFixed(3)){
+        throw new CustomError("Insufficient Token Balance");
+      }
+      
       if(web3Info.connected !== undefined && web3Info.connected && tokenIndex !== null){
         //
         setIsApprovalLoading(true);
         //
         const tokenAddress = supportedTokens[web3Info.chainID][tokenIndex - 1].address;    
         const paymentAddr = paymentAddresses[web3Info.chainID];
-        console.log("tokenAddress: ", tokenAddress);
-        console.log("paymentAddr: ", paymentAddr);
         const tokenContract = new web3Info.web3.eth.Contract(tokenABI, tokenAddress);
         const totalPriceBN = (new BigNumber(cart.totalPrice*10**tokenDecimals));
         const data = await tokenContract.methods.approve(paymentAddr, totalPriceBN).send({from: web3Info.address});
@@ -272,15 +463,10 @@ export default function Bill() {
   };
 
   const checkAllowance = async() => {
-    console.log("checkAllowance called...");
     try{
       if(web3Info.connected !== undefined && web3Info.connected && tokenIndex !== null){
         const tokenAddress = supportedTokens[web3Info.chainID][tokenIndex - 1].address;    
         const paymentAddr = paymentAddresses[web3Info.chainID];
-        console.log("chainID: ", web3Info.chainID);
-        console.log("typeof chainID: ", typeof web3Info.chainID);
-        console.log("tokenAddress: ", tokenAddress);
-        console.log("tokenAddress: ", paymentAddr);
         if(tokenAddress === undefined || paymentAddr === undefined){
           throw new CustomError(`Unsupported Chain ID ${web3Info.chainID}`);
         }
@@ -306,14 +492,12 @@ export default function Bill() {
     try{
       if(web3Info.connected !== undefined && web3Info.connected && tokenIndex !== null){
         const tokenAddress = supportedTokens[web3Info.chainID][tokenIndex - 1].address;
-        console.log("tokenAddress: ", tokenAddress);
         if(tokenAddress === undefined){
           throw new CustomError(`Unsupported Chain ID ${web3Info.chainID}`);
         }
         const tokenContract = new web3Info.web3.eth.Contract(tokenABI, tokenAddress);
         const tokenBal = await tokenContract.methods.balanceOf(web3Info.address).call();
         const tokenBalance = web3Info.web3.utils.toBN(Number((parseFloat(tokenBal)/10**18).toFixed(0)));
-        console.log("User token balance: ", tokenBalance.toString());
         setUserBalance(tokenBalance);
       }
     }catch(error){
@@ -323,11 +507,16 @@ export default function Bill() {
 
   useEffect(() => {
     (async() => {
-      await getWalletBalance();
-      await checkAllowance();
+      if(tokenIndex != null){
+        await getWalletBalance();
+        await checkAllowance();
+      }
     })();
-  }, [tokenIndex, web3Info.address, web3Info.chainID]);
+  }, [tokenIndex, web3Info.address]);
   
+  useEffect(() => {
+    setTokenIndex(null);
+  }, [web3Info.chainID]);
   
   // Payment Styling
   const payStyling = {
@@ -345,11 +534,15 @@ export default function Bill() {
 
   };
 
-  // console.log("hexToNumberString: ", web3Info.web3.utils.hexToAscii("0x730396c00659059bf9a525eac839b4cbdc9f030cacee762405f7c4a077d3646b"));
+  // Error msg styling
+  const errMsgStyle = {
+    color: "red"
+  };
+
   
-  console.log("web3Info.connected", web3Info.connected);
-  console.log("web3Info.chainID", web3Info.chainID);
-  console.log("typeof web3Info.chainID", typeof web3Info.chainID);
+  // console.log("web3Info.connected", web3Info.connected);
+  // console.log("web3Info.chainID", web3Info.chainID);
+  // console.log("typeof web3Info.chainID", typeof web3Info.chainID);
   return (
     <Hero>
       <div className="bill">
@@ -374,32 +567,45 @@ export default function Bill() {
           <h3>Shipping details</h3>
           <div className="input__row">
             <div className="input__outer">
-              <label htmlFor="">Email</label>
-              <input type="email" placeholder="Email" />
+              <label htmlFor="email">Email</label>
+              <input type="email" style={{border: shippingAddrError.email ? "1px solid red" : "none"}} name="email" value={shippingAddress.email} onChange={handleShippingChange} placeholder="Email" />
+              <small style={errMsgStyle}>{shippingAddrError.email ? shipAddrErrMsg.email : ""}</small>
             </div>
             <div className="input__outer">
-              <label htmlFor="">Phone number</label>
-              <input type="number" placeholder="Phone" />
+              <label htmlFor="phone">
+                Phone number
+                <small style={{opacity: "0.8", color: "black", marginLeft: "15px"}}>(e.g. +2348123456789)</small>
+              </label>
+              {/* <input type="text" style={{border: shippingAddrError.phone ? "1px solid red" : "none"}} name="phone" value={shippingAddress.phone} onChange={handleShippingChange} placeholder="Phone" /> */}
+              <PhoneInput name="phone" placeholder="Enter phone number" value={phoneNum} onChange={setPhoneNum}/>
+              <small style={errMsgStyle}>{shippingAddrError.phone ? shipAddrErrMsg.phone : ""}</small>
             </div>
             <div className="input__outer">
-              <label htmlFor="">Street</label>
-              <input type="text" placeholder="Street" />
+              <label htmlFor="street">Street</label>
+              <input type="text" style={{border: shippingAddrError.street ? "1px solid red" : "none"}} name="street" value={shippingAddress.street} onChange={handleShippingChange} placeholder="Street" />
+              <small style={errMsgStyle}>{shippingAddrError.street ? shipAddrErrMsg.street : ""}</small>
             </div>
             <div className="input__outer">
-              <label htmlFor="">Town/City</label>
-              <Autocomplete list={City} placeholder={"Town/City"} />
+              <label htmlFor="city">Town/City</label>
+              {/* <Autocomplete list={City} placeholder={"Town/City"} /> */}
+              <input type="text" style={{border: shippingAddrError.city ? "1px solid red" : "none"}} name="city" value={shippingAddress.city} onChange={handleShippingChange} placeholder="Town/City" />
+              <small style={errMsgStyle}>{shippingAddrError.city ? shipAddrErrMsg.city : ""}</small>
             </div>
             <div className="input__outer">
-              <label htmlFor="">State</label>
-              <input type="text" placeholder="State" />
+              <label htmlFor="state">State</label>
+              <input type="text" style={{border: shippingAddrError.state ? "1px solid red" : "none"}} name="state" value={shippingAddress.state} onChange={handleShippingChange} placeholder="State" />
+              <small style={errMsgStyle}>{shippingAddrError.state ? shipAddrErrMsg.state : ""}</small>
             </div>
             <div className="input__outer">
-              <label htmlFor="">Country/region</label>
-              <Autocomplete list={Country} placeholder={"Country/region"} />
+              <label htmlFor="country">Country/region</label>
+              {/* <Autocomplete list={Country} placeholder={"Country/region"} /> */}
+              <input type="text" style={{border: shippingAddrError.country ? "1px solid red" : "none"}} name="country" value={shippingAddress.country} onChange={handleShippingChange} placeholder="Country/region" />
+              <small style={errMsgStyle}>{shippingAddrError.country ? shipAddrErrMsg.country : ""}</small>
             </div>
             <div className="input__outer">
-              <label htmlFor="">Postal code</label>
-              <input type="number" placeholder="Postal code" />
+              <label htmlFor="postalCode">Postal code</label>
+              <input type="text" style={{border: shippingAddrError.postalCode ? "1px solid red" : "none"}} name="postalCode" value={shippingAddress.postalCode} onChange={handleShippingChange} placeholder="Postal code" />
+              <small style={errMsgStyle}>{shippingAddrError.postalCode ? shipAddrErrMsg.postalCode : ""}</small>
             </div>
           </div>
         </form>
@@ -457,7 +663,7 @@ export default function Bill() {
             ?
             <button disabled={isPaymentLoading} onClick={handlePayment} className="button primary">{isPaymentLoading ? "Processing..." : "Make Payment"}</button>
             :
-            <button disabled={isApprovalLoading} onClick={handleApproval} className="button primary">{isApprovalLoading ? "Processing..." : "Approve Payment"}</button>
+            <button disabled={isApprovalLoading} onClick={handleApproval} className="button primary">{isApprovalLoading ? "Approving..." : "Approve Payment"}</button>
           }
         </div>
       </div>
