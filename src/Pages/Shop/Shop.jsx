@@ -27,16 +27,15 @@ export default function Shop() {
       setSearchTerm(event.target.value);
   };
 
-  useEffect(() => {
-    console.log("In Shop component, Products: ", products);
-  }, [products]);
+  // useEffect(() => {
+  //   console.log("In Shop component, Products: ", products);
+  // }, [products]);
 
   
   useEffect(() => {
     getCart();
   }, []);
 
-  console.log("In Shop component, cart: ", cart);
   return (
     <>
       <Hero>
