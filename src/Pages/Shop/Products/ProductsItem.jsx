@@ -47,7 +47,7 @@ export default function ProductsItem(props) {
       <div className="products__body">
         {/* <h5>{props.name}</h5> */}
         <hr />
-        <p>{props.description}</p>
+        <p>{props.title}</p>
       </div>
       <div className="products__footer">
         {/* <div className="discount">{props.discount == null ? "" : `Discount: ${props.discount}`}</div> */}

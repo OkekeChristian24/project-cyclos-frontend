@@ -55,7 +55,7 @@ export default function Cart() {
                     alt={CartLineItems.alt}
                     link={CartLineItems.link}
                     quantity={CartLineItems.quantity}
-                    desc={CartLineItems.description}
+                    desc={CartLineItems.title}
                     price={CartLineItems.price}
                     subtotal={CartLineItems.price}
                   />

@@ -17,7 +17,15 @@ import { awaitBlockConsensus } from "../../Helpers/awaitTxn";
 import { CustomError } from "../../Helpers/customError";
 import tokenABI from "../../Helpers/tokenABI";
 import { serverHost, axiosConfig} from "../../Helpers/backendHost";
-import { validEmailRegex, validStreetReg, validCityReg, validStateReg, validCountryReg, validPostalCodeReg} from "../../Helpers/regExps";
+import { 
+  validEmailRegex,
+  validStreetReg,
+  validCityReg,
+  validStateReg,
+  validCountryReg,
+  validPostalCodeReg
+} from "../../Helpers/regExps";
+import checkShippingAddr from "../../Helpers/checkShippingAddr";
 import { initShippingAddr, initShipAddrErr, initShipAddrErrMsg } from "../../Helpers/initsShippingAddr";
 import Autocomplete from "./Autocomplete";
 import { City } from "./Autocomplete/City";
@@ -26,12 +34,13 @@ import axios from "axios";
 
 
 
-
+const testErrArr = ["Error message One", "Error message Two", "Error message Three"];
+const testErr = "Error message One";
 
 export default function Bill() {
 
   // Global state
-  const { cart, supportedNet, connectWallet, web3Installed, web3Info, deleteCart} = useContext(GlobalContext);
+  const { cart, supportedNet, web3Info, deleteCart} = useContext(GlobalContext);
   
   // Local component state
   const [tokenIndex, setTokenIndex] = useState(null);
@@ -44,6 +53,8 @@ export default function Bill() {
   const [shippingAddress, setShippingAddress] = useState(initShippingAddr);
   const [shippingAddrError, setShippingAddrError] = useState(initShipAddrErr);
   const [shipAddrErrMsg, setShipAddrErrMsg] = useState(initShipAddrErrMsg);
+  const [isBackendErr, setIsBackendErr] = useState(false);
+  const [backendErrMsg, setBackendErrMsg] = useState(testErrArr);
 
 
   const [phoneNum, setPhoneNum] = useState(undefined);
@@ -58,155 +69,12 @@ export default function Bill() {
     });
   };
 
-  const checkShippingAddr = () => {
-    let isError = false;
-    let updatedShipAddrErr = {};
-    let updatedShipAddrErrMsg = {};
-    
-    Object.keys(shippingAddress).forEach(function(key) {
-      
-      if(key === "phone"){
-        if(phoneNum === undefined){
-          isError = true;
-          updatedShipAddrErr = {
-            ...updatedShipAddrErr,
-            [key]: true
-          };
-          updatedShipAddrErrMsg = {
-            ...updatedShipAddrErrMsg,
-            [key]: "This Field Is Required"
-          };
-        }else{
-          updatedShipAddrErr = {
-            ...updatedShipAddrErr,
-            [key]: false
-          };
-        }
-        return;
-      }
-      
-      if (shippingAddress[key] === "") {
-        isError = true;
-        updatedShipAddrErr = {
-          ...updatedShipAddrErr,
-          [key]: true
-        };
-        updatedShipAddrErrMsg = {
-          ...updatedShipAddrErrMsg,
-          [key]: "This Field Is Required"
-        };
-      }else{
-        switch(key){
-          case "email":
-            if(!validEmailRegex.test(shippingAddress[key])){
-              updatedShipAddrErr = {
-                ...updatedShipAddrErr,
-                [key]: true
-              };
-              updatedShipAddrErrMsg = {
-                ...updatedShipAddrErrMsg,
-                [key]: "Email is NOT valid"
-              };
-            }else{
-              updatedShipAddrErr = {
-                ...updatedShipAddrErr,
-                [key]: false
-              };
-            }
-
-            break;
-          case "street":
-            console.log("Street: ", (shippingAddress[key]));
-            console.log("Regex: ", validStreetReg.test(shippingAddress[key]));
-            if(!validStreetReg.test(shippingAddress[key])){
-              updatedShipAddrErr = {
-                ...updatedShipAddrErr,
-                [key]: true
-              };
-              updatedShipAddrErrMsg = {
-                ...updatedShipAddrErrMsg,
-                [key]: `Invalid Inputs Are NOT Allowed`
-              };
-            }else{
-              updatedShipAddrErr = {
-                ...updatedShipAddrErr,
-                [key]: false
-              };
-            }
-            break;
-          case "city":
-            if(!validCityReg.test(shippingAddress[key])){
-              updatedShipAddrErr = {
-                ...updatedShipAddrErr,
-                [key]: true
-              };
-              updatedShipAddrErrMsg = {
-                ...updatedShipAddrErrMsg,
-                [key]: `City Is NOT Valid`
-              };
-            }else{
-              updatedShipAddrErr = {
-                ...updatedShipAddrErr,
-                [key]: false
-              };
-            }
-            break;
-          case "state":
-            if(!validStateReg.test(shippingAddress[key])){
-              updatedShipAddrErr = {
-                ...updatedShipAddrErr,
-                [key]: true
-              };
-              updatedShipAddrErrMsg = {
-                ...updatedShipAddrErrMsg,
-                [key]: `State Is NOT Valid`
-              };
-            }else{
-              updatedShipAddrErr = {
-                ...updatedShipAddrErr,
-                [key]: false
-              };
-            }
-            break;
-          case "country":
-            if(!validCountryReg.test(shippingAddress[key])){
-              updatedShipAddrErr = {
-                ...updatedShipAddrErr,
-                [key]: true
-              };
-              updatedShipAddrErrMsg = {
-                ...updatedShipAddrErrMsg,
-                [key]: `Country Is NOT Valid`
-              };
-            }else{
-              updatedShipAddrErr = {
-                ...updatedShipAddrErr,
-                [key]: false
-              };
-            }
-            break;
-          case "postalCode":
-            if(!validPostalCodeReg.test(shippingAddress[key])){
-              updatedShipAddrErr = {
-                ...updatedShipAddrErr,
-                [key]: true
-              };
-              updatedShipAddrErrMsg = {
-                ...updatedShipAddrErrMsg,
-                [key]: `Postal Code Is NOT Valid`
-              };
-            }else{
-              updatedShipAddrErr = {
-                ...updatedShipAddrErr,
-                [key]: false
-              };
-            }
-            break;
-          default:
-            break;
-        }
-      }
-    });
+  const checkShippingDetails = () => {
+    const {
+      isError,
+      updatedShipAddrErr,
+      updatedShipAddrErrMsg
+    } = checkShippingAddr(shippingAddress, phoneNum);
 
     setShippingAddrError({
       ...shippingAddrError,
@@ -216,9 +84,169 @@ export default function Bill() {
       ...shipAddrErrMsg,
       ...updatedShipAddrErrMsg
     });
-
     return isError;
   };
+
+  // const checkShippingAddr = () => {
+  //   let isError = false;
+  //   let updatedShipAddrErr = {};
+  //   let updatedShipAddrErrMsg = {};
+    
+  //   Object.keys(shippingAddress).forEach(function(key) {
+      
+  //     if(key === "phone"){
+  //       if(phoneNum === undefined){
+  //         isError = true;
+  //         updatedShipAddrErr = {
+  //           ...updatedShipAddrErr,
+  //           [key]: true
+  //         };
+  //         updatedShipAddrErrMsg = {
+  //           ...updatedShipAddrErrMsg,
+  //           [key]: "This Field Is Required"
+  //         };
+  //       }else{
+  //         updatedShipAddrErr = {
+  //           ...updatedShipAddrErr,
+  //           [key]: false
+  //         };
+  //       }
+  //       return;
+  //     }
+      
+  //     if (shippingAddress[key] === "") {
+  //       isError = true;
+  //       updatedShipAddrErr = {
+  //         ...updatedShipAddrErr,
+  //         [key]: true
+  //       };
+  //       updatedShipAddrErrMsg = {
+  //         ...updatedShipAddrErrMsg,
+  //         [key]: "This Field Is Required"
+  //       };
+  //     }else{
+  //       switch(key){
+  //         case "email":
+  //           if(!validEmailRegex.test(shippingAddress[key])){
+  //             updatedShipAddrErr = {
+  //               ...updatedShipAddrErr,
+  //               [key]: true
+  //             };
+  //             updatedShipAddrErrMsg = {
+  //               ...updatedShipAddrErrMsg,
+  //               [key]: "Email is NOT valid"
+  //             };
+  //           }else{
+  //             updatedShipAddrErr = {
+  //               ...updatedShipAddrErr,
+  //               [key]: false
+  //             };
+  //           }
+
+  //           break;
+  //         case "street":
+  //           console.log("Street: ", (shippingAddress[key]));
+  //           if(!validStreetReg.test(shippingAddress[key])){
+  //             updatedShipAddrErr = {
+  //               ...updatedShipAddrErr,
+  //               [key]: true
+  //             };
+  //             updatedShipAddrErrMsg = {
+  //               ...updatedShipAddrErrMsg,
+  //               [key]: `Invalid Inputs Are NOT Allowed`
+  //             };
+  //           }else{
+  //             updatedShipAddrErr = {
+  //               ...updatedShipAddrErr,
+  //               [key]: false
+  //             };
+  //           }
+  //           break;
+  //         case "city":
+  //           if(!validCityReg.test(shippingAddress[key])){
+  //             updatedShipAddrErr = {
+  //               ...updatedShipAddrErr,
+  //               [key]: true
+  //             };
+  //             updatedShipAddrErrMsg = {
+  //               ...updatedShipAddrErrMsg,
+  //               [key]: `City Is NOT Valid`
+  //             };
+  //           }else{
+  //             updatedShipAddrErr = {
+  //               ...updatedShipAddrErr,
+  //               [key]: false
+  //             };
+  //           }
+  //           break;
+  //         case "state":
+  //           if(!validStateReg.test(shippingAddress[key])){
+  //             updatedShipAddrErr = {
+  //               ...updatedShipAddrErr,
+  //               [key]: true
+  //             };
+  //             updatedShipAddrErrMsg = {
+  //               ...updatedShipAddrErrMsg,
+  //               [key]: `State Is NOT Valid`
+  //             };
+  //           }else{
+  //             updatedShipAddrErr = {
+  //               ...updatedShipAddrErr,
+  //               [key]: false
+  //             };
+  //           }
+  //           break;
+  //         case "country":
+  //           if(!validCountryReg.test(shippingAddress[key])){
+  //             updatedShipAddrErr = {
+  //               ...updatedShipAddrErr,
+  //               [key]: true
+  //             };
+  //             updatedShipAddrErrMsg = {
+  //               ...updatedShipAddrErrMsg,
+  //               [key]: `Country Is NOT Valid`
+  //             };
+  //           }else{
+  //             updatedShipAddrErr = {
+  //               ...updatedShipAddrErr,
+  //               [key]: false
+  //             };
+  //           }
+  //           break;
+  //         case "postalCode":
+  //           if(!validPostalCodeReg.test(shippingAddress[key])){
+  //             updatedShipAddrErr = {
+  //               ...updatedShipAddrErr,
+  //               [key]: true
+  //             };
+  //             updatedShipAddrErrMsg = {
+  //               ...updatedShipAddrErrMsg,
+  //               [key]: `Postal Code Is NOT Valid`
+  //             };
+  //           }else{
+  //             updatedShipAddrErr = {
+  //               ...updatedShipAddrErr,
+  //               [key]: false
+  //             };
+  //           }
+  //           break;
+  //         default:
+  //           break;
+  //       }
+  //     }
+  //   });
+
+  //   setShippingAddrError({
+  //     ...shippingAddrError,
+  //     ...updatedShipAddrErr
+  //   });
+  //   setShipAddrErrMsg({
+  //     ...shipAddrErrMsg,
+  //     ...updatedShipAddrErrMsg
+  //   });
+
+  //   return isError;
+  // };
 
   const handleChange = async(event) => {
     setTokenIndex(event.target.value);
@@ -228,165 +256,168 @@ export default function Bill() {
 
   
   const handlePayment = async() => {
+
     // console.log("shippingAddrError: ", shippingAddrError);
     try{
-      if(web3Info.connected !== undefined && web3Info.connected){
-        if(tokenIndex == null){
-          throw new CustomError("Please Select Payment Token");
-        }
 
-        if(cart.products.length <= 0){
-          throw new CustomError("No Products Selected");
-        }
-
-        if(cart.totalPrice > Number(userBalance).toFixed(3)){
-          throw new CustomError("Insufficient Token Balance");
-        }
-
-        if(checkShippingAddr()){
-          throw new CustomError("Fill All Shipping Details");
-        }
-
-        setIsPaymentLoading(true);
-        const web3 = web3Info.web3;
-        const chainID = await web3.eth.chainId();
-        const paymentAddr = paymentAddresses[chainID];
-        if(!paymentAddr){
-          throw new CustomError(`Chain ID ${chainID} Is NOT Supported`);
-        }
-        // Initialise contracts
-        const paymentContract = new web3.eth.Contract(paymentABI, paymentAddr);
-        const totalPriceBN = (new BigNumber(cart.totalPrice*10**tokenDecimals));
-        const totalQty = cart.totalQty;
-        let products = [];
-        for(let i=0; i<cart.products.length; i++){
-          let price = (new BigNumber(cart.products[i].price*10**tokenDecimals).toFixed(0));
-          let product = {
-            asin: cart.products[i].asin,
-            price: price,
-            quantity: cart.products[i].quantity
-          };
-          // console.log(product);
-          products = [...products, product];
-          product = "";
-        }
-        // console.log("products: ", products);
-
-        if (!Date.now) {
-          Date.now = function() { return new Date().getTime(); }
-        }
-        const timeStampInMs = window.performance && window.performance.now && window.performance.timing && window.performance.timing.navigationStart ? window.performance.now() + window.performance.timing.navigationStart : Date.now();
-        const orderID = uuidv4() + web3Info.address + timeStampInMs.toString();
-        // makePayment(orderID, tokenIndex, totalPriceBN, totalQty, products).send({from: buyer})
-        const data = await paymentContract.methods.makePayment(orderID, tokenIndex, totalPriceBN, totalQty, products).send({from: web3Info.address});
-        const txHash = data.transactionHash;
-        awaitBlockConsensus([web3Info.web3], txHash, 6, 750, async(error, txnReceipt) => {
-          try{
-            if(error){
-              console.log(error);
-              // return false;
-              throw new CustomError(error.message);
-            }
-            
-            // First
-            // const paymentDetails = await paymentContract.methods.getTransactionDetails(web3Info.address, orderID).call();
-            paymentContract.methods.getTransactionDetails(web3Info.address, orderID).call().then(function(paymentDetails){
-              console.log("paymentDetails: ", paymentDetails);
-              
-              const shippingDetails = {
-                email: shippingAddress.email,
-                phone: phoneNum,
-                street: shippingAddress.street,
-                city: shippingAddress.city,
-                state: shippingAddress.state,
-                country: shippingAddress.country,
-                postalCode: shippingAddress.postalCode
-              };
-
-              const orderBody = {
-                buyer: String(web3Info.address),
-                totalPrice: (Number(cart.totalPrice)).toFixed(5),
-                totalQty: Number(cart.totalQty),
-                paymentID: String(paymentDetails.paymentID),
-                orderID: String(orderID),
-                chainID: Number(chainID),
-                txnHash: String(txHash),
-                tokenIndex: Number(tokenIndex),
-                products: cart.products,
-                shipping: shippingDetails
-              };
-
-                          
-      
-              // console.log("Order for backend: ", orderBody);
-              return axios.post(`${serverHost}/api/order`, orderBody, axiosConfig);
-
-            }).then(async function(res){
-              console.log("Server res: ", res);
-              if(res.status === 200){
-                if(res.data.success === 1){
-                  deleteCart();
-                  (() => toast.success("Transaction Successful"))();
-                }else{
-                  (() => toast.error(res.data.message))();
-                }
-                setIsPaymentLoading(false);
-              }else{
-                // The backend API call needs to be retried multiple times
-                // until the transaction is successfully stored on the database
-                console.log("Response data: ", res.data);
-                (() => toast.error("Transaction Not Stored"))();
-                setIsPaymentLoading(false);
-                // throw new CustomError(res.data.message);
-                // Here
-              }
-            }).catch(function(error){
-              console.log(error);
-              setIsPaymentLoading(false);
-              (() => toast.error("Error In Storing Transaction"))();
-            }).finally(async function(){
-              setIsPaymentLoading(false);
-              await checkAllowance();
-              await getWalletBalance();
-
-            });
-            setIsPaymentLoading(false);          
-            await checkAllowance();
-            await getWalletBalance();
-          }catch(error){
-            console.log(error);
-            if(error.custom){
-              (() => toast.error(error.message))();
-            }else{
-              (() => toast.error("Payment Failed"))();
-            }
-            setIsPaymentLoading(false);
-            await checkAllowance();
-            await getWalletBalance();
-              
-          }
-          
-          
-        });
-        // setIsPaymentLoading(false);
-        // console.log("After awaitTxn returned => ", awaitRes);
-
-        // const response = await makePayment(tokenDecimals, tokenIndex, cart, web3Info.address);
-        // if(response.success){
-        //   (() => toast.success(response.message))();
-        // }else{
-        //   (() => toast.error(response.message))();
-        // }
-        // await checkAllowance();
-        // await getWalletBalance();
-
-      }else{
+      if(!(web3Info.connected !== undefined && web3Info.connected)){
         throw new CustomError("Please Connect Wallet");
       }
+
+      if(tokenIndex == null){
+        throw new CustomError("Please Select Payment Token");
+      }
+
+      if(cart.products.length <= 0){
+        throw new CustomError("No Products Selected");
+      }
+
+      if(cart.totalPrice > Number(userBalance).toFixed(3)){
+        throw new CustomError("Insufficient Token Balance");
+      }
+
+      if(checkShippingDetails()){
+        throw new CustomError("Fill All Shipping Details");
+      }
+
+      setIsPaymentLoading(true);
+      console.log("setting 1");
+      const web3 = web3Info.web3;
+      const chainId = await web3.eth.chainId();
+      const chainID = web3.utils.isHex(chainId) ? web3.utils.hexToNumber(chainId) : chainId;
+      const paymentAddr = paymentAddresses[chainID];
+      if(!paymentAddr){
+        throw new CustomError(`Chain ID ${chainID} Is NOT Supported`);
+      }
+      // Initialise contracts
+      const paymentContract = new web3.eth.Contract(paymentABI, paymentAddr);
+      const totalPriceBN = (new BigNumber(cart.totalPrice*10**tokenDecimals));
+      const totalQty = cart.totalQty;
+      let products = [];
+      for(let i=0; i<cart.products.length; i++){
+        let price = (new BigNumber(cart.products[i].price*10**tokenDecimals).toFixed(0));
+        let product = {
+          asin: cart.products[i].asin,
+          price: price,
+          title: cart.products[i].title,
+          image: cart.products[i].image,
+          quantity: cart.products[i].quantity
+        };
+        // console.log(product);
+        products = [...products, product];
+        product = "";
+      }
+      // console.log("products: ", products);
+
+      if (!Date.now) {
+        Date.now = function() { return new Date().getTime(); }
+      }
+      const timeStampInMs = window.performance && window.performance.now && window.performance.timing && window.performance.timing.navigationStart ? window.performance.now() + window.performance.timing.navigationStart : Date.now();
+      const orderID = uuidv4() + web3Info.address + timeStampInMs.toString();
+      // makePayment(orderID, tokenIndex, totalPriceBN, totalQty, products).send({from: buyer})
+      const data = await paymentContract.methods.makePayment(orderID, tokenIndex, totalPriceBN, totalQty, products).send({from: web3Info.address});
+      const txHash = data.transactionHash;
+      awaitBlockConsensus([web3Info.web3], txHash, 4, 750, async(error, txnReceipt) => {
+        try{
+          if(error){
+            console.log(error);
+            // return false;
+            throw new CustomError(error.message);
+          }
+          
+          // const paymentDetails = await paymentContract.methods.getTransactionDetails(web3Info.address, orderID).call();
+          paymentContract.methods.getTransactionDetails(web3Info.address, orderID).call().then(function(paymentDetails){
+            console.log("paymentDetails: ", paymentDetails);
+            
+            const shippingDetails = {
+              email: shippingAddress.email,
+              phone: phoneNum,
+              street: shippingAddress.street,
+              city: shippingAddress.city,
+              state: shippingAddress.state,
+              country: shippingAddress.country,
+              postalCode: shippingAddress.postalCode
+            };
+
+            const orderBody = {
+              buyer: String(web3Info.address),
+              totalPrice: (Number(cart.totalPrice)).toFixed(5),
+              totalQty: Number(cart.totalQty),
+              paymentID: String(paymentDetails.paymentID),
+              orderID: String(orderID),
+              chainID: Number(chainID),
+              txnHash: String(txHash),
+              tokenIndex: Number(tokenIndex),
+              products: cart.products,
+              shipping: shippingDetails
+            };
+
+                        
+    
+            // console.log("Order for backend: ", orderBody);
+            return axios.post(`${serverHost}/api/order`, orderBody, axiosConfig);
+
+          }).then(function(res){
+            setIsPaymentLoading(false);
+            console.log("setting 2");
+            // console.log("Server res: ", res);
+            if(res.status === 200){
+              if(res.data.success === 1){
+                deleteCart();
+                (() => toast.success("Transaction Successful"))();
+              }else{
+                (() => toast.error(res.data.message))();
+              }
+            }else{
+              setIsBackendErr(true);
+              setBackendErrMsg(res.data.message);
+              // The backend API call needs to be retried multiple times
+              // until the transaction is successfully stored on the database
+              console.log("Response data: ", res.data);
+              (() => toast.error("Transaction Not Stored"))();
+              setIsPaymentLoading(false);
+              console.log("setting 3");
+              // throw new CustomError(res.data.message);
+              
+            }
+          }).catch(function(error){
+            console.log(error);
+            setIsPaymentLoading(false);
+            console.log("setting 4");
+            (() => toast.error("Error In Storing Transaction"))();
+          }).finally(async function(){
+            setIsPaymentLoading(false);
+            console.log("setting 5");
+            await checkAllowance();
+            await getWalletBalance();
+
+          });
+          setIsPaymentLoading(false);
+          console.log("setting 6");
+          await checkAllowance();
+          await getWalletBalance();
+        }catch(error){
+          console.log(error);
+          if(error.custom){
+            (() => toast.error(error.message))();
+          }else{
+            (() => toast.error("Payment Failed"))();
+          }
+          setIsPaymentLoading(false);
+          console.log("setting 7");
+          await checkAllowance();
+          await getWalletBalance();
+            
+        }
+        
+        
+      });
+
       
     }catch(error){
       console.log(error);
       setIsPaymentLoading(false);
+      console.log("setting 8");
       await checkAllowance();
       await getWalletBalance();
       if(error.custom){
@@ -429,19 +460,21 @@ export default function Bill() {
       }
       
       if(web3Info.connected !== undefined && web3Info.connected && tokenIndex !== null){
-        //
         setIsApprovalLoading(true);
-        //
         const tokenAddress = supportedTokens[web3Info.chainID][tokenIndex - 1].address;    
         const paymentAddr = paymentAddresses[web3Info.chainID];
         const tokenContract = new web3Info.web3.eth.Contract(tokenABI, tokenAddress);
         const totalPriceBN = (new BigNumber(cart.totalPrice*10**tokenDecimals));
         const data = await tokenContract.methods.approve(paymentAddr, totalPriceBN).send({from: web3Info.address});
         const txHash = data.transactionHash;
-        awaitBlockConsensus([web3Info.web3], txHash, 6, 750, (error, txnReceipt) => {
+        awaitBlockConsensus([web3Info.web3], txHash, 4, 750, (error, txnReceipt) => {
           if(error){
+            console.log(error);
+            setIsApprovalLoading(false);
+
             throw new Error("Approval Failed");
           }
+          setIsApprovalLoading(false);
           setIsApproved(true);
           (() => toast.success("Approval Successful"))();
           return;
@@ -540,9 +573,6 @@ export default function Bill() {
   };
 
   
-  // console.log("web3Info.connected", web3Info.connected);
-  // console.log("web3Info.chainID", web3Info.chainID);
-  // console.log("typeof web3Info.chainID", typeof web3Info.chainID);
   return (
     <Hero>
       <div className="bill">
@@ -565,6 +595,24 @@ export default function Bill() {
         </div>
         <form className="bill__body">
           <h3>Shipping details</h3>
+          {
+            isBackendErr
+            &&
+            <div className="invalidDataError">
+              <span onClick={() => setIsBackendErr(false)}>X</span>
+              {
+                <div className="invalidDataErrorMsg">
+                  {
+                  backendErrMsg.constructor === Array
+                  ?
+                  backendErrMsg.map(error => <p>{error}</p>)
+                  :
+                  <p>{backendErrMsg}</p>
+                  }
+                </div> 
+              }
+            </div>
+          }
           <div className="input__row">
             <div className="input__outer">
               <label htmlFor="email">Email</label>

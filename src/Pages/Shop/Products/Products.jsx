@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import ProductsItem from "./ProductsItem";
-import { ProductsModul } from "./ProductsModul";
 
 export default function Products({ products }) {
 
@@ -8,7 +7,6 @@ export default function Products({ products }) {
     //
   }, []);
   
-  console.log("In Products component: ", products);
   return (
     <div className="products__outer">
       <div className="products__outer-bg">
@@ -19,15 +17,15 @@ export default function Products({ products }) {
       </div>
       <div className="auto__container">
         <div className="products__row">
-          {products.map((product) => {
+          {products.map((product, index) => {
             return (
               <ProductsItem
-                key={product.asin}
+                key={index}
                 asin={product.asin}
                 image={product.image}
                 alt={product.alt}
                 name={product.name}
-                description={product.title}
+                title={product.title}
                 discount={product.discount}
                 price={product.price.value}
                 link={product.link}
