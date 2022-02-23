@@ -1,0 +1,69 @@
+.container {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+overflow-x: scroll;
+    margin-top: 2rem;
+    }
+    .container h1 {
+        width: 100%;
+        max-width: 100%;
+overflow-x: scroll;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 4rem;
+    }
+    .pagination {
+    background: #edf3fa;
+    color: black !important;
+    padding: 1rem;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    }
+    table {
+    /* padding: .5rem; */
+    width: 100%;
+    color: #41559B;
+    text-align: center;
+    }
+    table th div {
+    font-size: 1.6rem;
+    /* background: #2d3039; */
+    color: #293B7A;
+    }
+    table thead tr td {
+    width: 30rem;
+    }
+    table td {
+    background: #fff;
+    width: 20rem;
+    max-width: 20rem;
+    padding: 1rem;
+    border-bottom: 0.854209px dashed #000000;
+    border-top: 0.854209px dashed #000000;
+    border-right: 0.854209px dashed #000000;
+    }
+
+    .input {
+    width: 100%;
+    height: 1rem;
+    border-radius: 50px;
+    padding: 1rem;
+    border: 0.1rem solid #293B7A;
+    margin-bottom: 1rem;
+    }
+    /* .button {
+    background: #ffffff;
+    height: 2rem;
+    width: 2rem;
+    border: none;
+    cursor: pointer;
+    } */
+    select {
+    height: 2rem;
+    width: 10rem;
+    }

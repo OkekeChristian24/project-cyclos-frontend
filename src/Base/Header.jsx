@@ -160,13 +160,19 @@ export default function Header() {
                <Link to="/bill"> Bill</Link>
               </a>
 
-              <a href="#" className="nav__inner-link">
-                Foundation
-              </a>
+            
               <button onClick={!web3Info.connected ? connectWalletHandler : undefined} className="button connect">
                 <img src="images/icons/wallet.svg" alt="wallet" />
                 {web3Info.connected ? formatWallet(web3Info.address) : "Connect Wallet"}
               </button>
+            
+              <a href="/dashboard" >
+              <button style={{marginLeft:20}} className="button connect">
+                <img src="images/icons/wallet.svg" alt="wallet" />
+                Dashboard
+              </button>
+              </a>
+        
             </div>
           </nav>
           <div
