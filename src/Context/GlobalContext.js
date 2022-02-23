@@ -269,8 +269,6 @@ export const GlobalProvider = ({ children }) => {
     const chainID = web3.utils.isHex(chainId) ? web3.utils.hexToNumber(chainId) : chainId;
     
     const networkID = await web3.eth.net.getId();
-    console.log("chainChangeCallBack, chainID: ", chainID);
-    console.log("chainChangeCallBack, networkID: ", networkID);
     // web3InfoDispatch({type: CHAIN_CHANGE,  payload: {chainID}});
     if(getNetwork(chainID) === ""){
       // (() => toast.error(`Chain ID ${chainID} is Not Supported!`))();

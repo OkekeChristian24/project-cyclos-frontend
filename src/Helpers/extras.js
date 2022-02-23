@@ -291,3 +291,56 @@ const makePayment = async(tokenDecimals, tokenIndex, cart, buyer) => {
   };
 
 */
+
+
+// Signing and verifying a message
+/*
+// (1) With personal_sign
+
+Client side:
+web3.personal.sign(web3.fromUtf8("dinosaur"), web3.eth.coinbase, console.log);\
+
+Server side:
+
+const msg = 'dinosaur';
+
+const msgBuffer = ethereumJsUtil.toBuffer(msg);
+const msgHash = ethereumJsUtil.hashPersonalMessage(msgBuffer);
+const signatureBuffer = ethereumJsUtil.toBuffer(signature);
+const signatureParams = ethereumJsUtil.fromRpcSig(signatureBuffer);
+const publicKey = ethereumJsUtil.ecrecover(
+  msgHash,
+  signatureParams.v,
+  signatureParams.r,
+  signatureParams.s
+);
+const addressBuffer = ethereumJsUtil.publicToAddress(publicKey);
+const address = ethereumJsUtil.bufferToHex(addressBuffer);
+
+console.log(address); // Prints my initial web3.eth.coinbase
+
+(2) With eth_sign
+
+Client side:
+web3.eth.sign(web3.eth.coinbase, web3.sha3("dinosaur"), console.log);
+
+Server side:
+
+const msg = 'dinosaur';
+
+const msgHash = ethereumJsUtil.sha3(msg);
+// The rest is the same as above
+const signatureBuffer = ethereumJsUtil.toBuffer(signature);
+const signatureParams = ethereumJsUtil.fromRpcSig(signatureBuffer);
+const publicKey = ethereumJsUtil.ecrecover(
+  msgHash,
+  signatureParams.v,
+  signatureParams.r,
+  signatureParams.s
+);
+const addressBuffer = ethereumJsUtil.publicToAddress(publicKey);
+const address = ethereumJsUtil.bufferToHex(addressBuffer);
+
+console.log(address); // Prints my initial web3.eth.coinbase
+
+*/
