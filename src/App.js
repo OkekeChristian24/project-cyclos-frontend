@@ -6,6 +6,7 @@ import Bill from "./Pages/Bill/Bill";
 import Cart from "./Pages/Cart/Cart";
 import Home from "./Pages/Home/Home";
 import Shop from "./Pages/Shop/Shop";
+import Orders from "./Pages/Orders/Orders";
 
 import { GlobalProvider } from "./Context/GlobalContext";
 
@@ -48,6 +49,7 @@ export default function App() {
           <Route path="/shop" element={<Shop />} />
           <Route path="/bill" element={<Bill />} />
           <Route path="/cart" element={<Cart></Cart>} />
+          <Route path="/dashboard" element={<Orders />} />
 
           {/* 
           <Route path="/cards-group" element={<CardGroup></CardGroup>} /> */}
