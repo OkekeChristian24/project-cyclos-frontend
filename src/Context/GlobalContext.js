@@ -173,7 +173,6 @@ export const GlobalProvider = ({ children }) => {
       const paymentAddr = paymentAddresses[chainID];
       const paymentContract = new web3.eth.Contract(paymentABI, paymentAddr);
       const paymentDetails = await paymentContract.methods.getTransactionDetails(buyer, orderID);
-      console.log(paymentDetails);
       // getTransactionDetails(addr ess buyer, string memory orderId)
       paymentDispatch({type: GET_TX_DETAILS, payload: { }});
     } catch (error) {
@@ -190,9 +189,6 @@ export const GlobalProvider = ({ children }) => {
     };
     try {
       const res = await axios.post(`${serverHost}/api/products`, term, axiosConfig);
-      
-      console.log("searchProduct: ", res);
-      
       const responseProducts = res.data.data.search_results;
       const products = responseProducts.filter(product => product.price !== undefined);
       productDispatch({type: SEARCH_PRODUCT, payload: products});
@@ -286,8 +282,6 @@ export const GlobalProvider = ({ children }) => {
     const chainId = await web3.eth.chainId();
     web3.utils.isHex(chainId);
     const chainID = web3.utils.isHex(chainId) ? web3.utils.hexToNumber(chainId) : chainId;
-    console.log("netChangeCallBack, chainID: ", chainID);
-    console.log("netChangeCallBack, networkID: ", networkID);
     
 
     if(getNetwork(chainID) === ""){
@@ -323,7 +317,6 @@ export const GlobalProvider = ({ children }) => {
     }
 
     setSupportedNet(true);
-    // web3Info.chainID
     const web3Modal = new Web3Modal({
       network: window.detectedProvider.chainId && getNetwork(window.detectedProvider.chainId),
       cacheProvider: true,
