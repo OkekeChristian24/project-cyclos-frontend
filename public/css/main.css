@@ -10,15 +10,15 @@
   --button-add: #2b2d53;
   --input-bg: #faf8ff;
   --total-color: #4b5c98;
-  --sticky-color: #48b3e4;
+  --sticky-color: #FD6E4F;
   --main: #293b7a;
   --main-light: #5e6b8e;
   --title: #111c42;
   --arrow: #fff;
   --border: #828282;
-  --btn-primary: linear-gradient(118.63deg, #68e2e1 2.25%, #97aae9 83.88%),
-    #04bad5;
-  --btn-secondary: linear-gradient(0deg, #8f87ff, #8f87ff),
+  --btn-primary: linear-gradient(118.63deg, #FD6E4F 2.25%, #FD8B72 83.88%),
+    #FD8B72;
+  --btn-secondary: linear-gradient(0deg, #FD6E4F, #FD8B72),
     rgba(255, 255, 255, 0.22);
   --btn-primary-shadow: 0px 24px 50px rgba(154, 172, 234, 0.63),
     inset 0px 4px 20px rgba(255, 255, 255, 0.55),
@@ -275,7 +275,7 @@ p.sm {
 }
 .button.extra {
   background: var(--bgcolor);
-  border: 1px solid #04bad5;
+  /* border: 1px solid #04bad5; */
   -webkit-box-shadow: 0px 14px 30px rgba(21, 227, 240, 0.21);
           box-shadow: 0px 14px 30px rgba(21, 227, 240, 0.21);
   color: var(--title);
