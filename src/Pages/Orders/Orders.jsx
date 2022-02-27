@@ -37,8 +37,8 @@ export default function Orders() {
     try {
       
       if(web3Info.address !== undefined){
-        // const user = "0xFd0522277d30bB29fB69268987019F254B98519c";
-        const user = web3Info.address;
+        const user = "0xFd0522277d30bB29fB69268987019F254B98519c";
+        // const user = web3Info.address;
         const response = await axios.get(`${serverHost}/api/order/user/${user}`, axiosConfig);
         const { data: resData } = response;
         if(resData.success === reqSuccess){
@@ -167,11 +167,17 @@ export default function Orders() {
             </div>
           </div>
           {
-            pendingData.length > 0
+            web3Info.address === undefined
             ?
-            <Table columns={columns} data={pendingData} />
+            <p>Connect wallet to view transactions</p>
             :
-            <p>No pending transactions</p>
+            (
+              pendingData.length > 0
+              ?
+              <Table columns={columns} data={pendingData} />
+              :
+              <p>No pending transactions</p>
+            )
           }
         </>
       }
@@ -186,11 +192,17 @@ export default function Orders() {
             </div>
           </div>
           {
-            historyData.length > 0
+            web3Info.address === undefined 
             ?
-            <Table columns={columns} data={historyData} />
+            <p>Connect wallet to view transactions</p>
             :
-            <p>No history transactions</p>
+            (
+              historyData.length > 0
+              ?
+              <Table columns={columns} data={historyData} />
+              :
+              <p>No history transactions</p>
+            )
           }
         </>
       }

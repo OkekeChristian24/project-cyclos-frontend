@@ -158,7 +158,7 @@ export default function Header() {
               
                <Link to="/bill"> Bill</Link>
               </a>
-
+              
             
               <button onClick={!web3Info.connected ? connectWalletHandler : undefined} className="button connect">
                 <img src="images/icons/wallet.svg" alt="wallet" />
