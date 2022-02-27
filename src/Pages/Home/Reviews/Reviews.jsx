@@ -9,7 +9,7 @@ export default function Reviews() {
       </div>
       <div className="auto__container">
         <div className="reviews__inner">
-          <h2>Reviews</h2>
+          <h2>How it works</h2>
           <div className="slider__outer">
             <ReviewsSlider />
           </div>
