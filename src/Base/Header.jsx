@@ -12,7 +12,7 @@ const chainIDs = ["Fantom Opera", "Binance Smart Chain"];
 export default function Header() {
 
   // From GlobalContext
-  const { supportedNet, web3Installed, web3Info, connectWallet, disconnectWallet } = useContext(GlobalContext);
+  const { web3Installed, web3Info, connectWallet, disconnectWallet } = useContext(GlobalContext);
 
   const cart = JSON.parse(window.localStorage.getItem(process.env.REACT_APP_CART_NAME));
 
@@ -60,9 +60,7 @@ export default function Header() {
     setSelectedValue(value);
     const response = await netSwitchOrAdd(metaMaskProvider, value);
     if(response.success){
-      // await connectWalletHandler();
       await connectWallet(response.chainID);
-      // (() => toast.success(response.message))();
     }else if(response.success === false){
       (() => toast.error(response.message))();
     }
@@ -135,6 +133,7 @@ export default function Header() {
     }
   };
 
+
   return (
     <header className="header" id="header">
       <div className="auto__container">
@@ -165,13 +164,17 @@ export default function Header() {
                 <img src="images/icons/wallet.svg" alt="wallet" />
                 {web3Info.connected ? formatWallet(web3Info.address) : "Connect Wallet"}
               </button>
-            
-              <a href="/dashboard" >
-              <button style={{marginLeft:20}} className="button connect">
-                <img src="images/icons/wallet.svg" alt="wallet" />
-                Dashboard
-              </button>
-              </a>
+
+              {
+                web3Info.address !== undefined
+                &&
+                <a href="/dashboard" >
+                  <button style={{marginLeft:20}} className="button connect">
+                    <img src="images/icons/wallet.svg" alt="wallet" />
+                    Dashboard
+                  </button>
+                </a>
+              }
         
             </div>
           </nav>
