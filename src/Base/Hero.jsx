@@ -4,7 +4,7 @@ export default function Hero(props) {
   return (
     <div className="hero">
       <div className="hero__bg">
-        <img src="images/index/intro.png" alt="" />
+        <img src="images/header.png" alt="" />
         <div className="hero__wave">
           <svg width="2880" height="100%" viewBox="0 0 2880 362" fill="none">
             <path

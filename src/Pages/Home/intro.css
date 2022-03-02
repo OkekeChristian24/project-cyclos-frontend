@@ -1,0 +1,8 @@
+@media screen and (max-width:900px) {
+    #cart{
+        visibility: hidden !important;
+    }
+    #text{
+        z-index: 10;
+    }
+}
