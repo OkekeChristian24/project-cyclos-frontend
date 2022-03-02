@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import "./intro.css"
 export default function Intro() {
   return (
     <section className="intro">
       <div className="intro__bg">
-        <img src="images/index/intro.png" alt="" />
+        <img src="images/header.png" alt="" />
         <div className="intro__wave">
           <svg width="2880" height="100%" viewBox="0 0 2880 362" fill="none">
             <path
@@ -19,13 +19,13 @@ export default function Intro() {
         </div>
       </div>
       <div className="intro__shape">
-        <img src="images/index/shapes.png" alt="" />
+        <img src="images/hero.png" alt="" />
       </div>
       <div className="auto__container">
-        <div className="intro__inner">
+        <div  className="intro__inner">
           <div className="intro__inner-content">
             <h1>Crypto made Easy</h1>
-            <p className="bg">
+            <p id ="text" className="bg">
             Bridging The Crypto-Retail Divide.  
 To make a purchase, look through our catalogue.
             </p>
@@ -33,8 +33,8 @@ To make a purchase, look through our catalogue.
             <Link to="/shop"> Explore</Link>
             </a>
           </div>
-          <div className="intro__inner-image">
-            <img src="images/index/heroshop.png" alt="" />
+          <div id="cart" className="intro__inner-image">
+            <img  src="images/cart2.png" alt="" />
             
           </div>
         </div>

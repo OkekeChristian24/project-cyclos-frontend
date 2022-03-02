@@ -49,7 +49,7 @@ export default function ReviewsSlider() {
           {/* step 1 */}
           <div  className="slider__item">
         
-            <div  style={{margin:"0 auto", width:130, height:130,borderRadius:20, background:"#01062D", display:"flex", justifyContent:"center", alignItems:"center"}}>
+            <div  style={{margin:"0 auto", width:130, height:130,borderRadius:100, background:"#01062D", display:"flex", justifyContent:"center", alignItems:"center"}}>
             <img width={100} src="images/howItWorks/search.png" alt="" />
             </div>
             <div style={{margin:"0 auto", textAlign: "center"}} className="slider__item-info-text">
@@ -62,7 +62,7 @@ export default function ReviewsSlider() {
    {/* step 2 */}
    <div  className="slider__item">
         
-            <div  style={{margin:"0 auto", width:130, height:130,borderRadius:20, background:"#01062D", display:"flex", justifyContent:"center", alignItems:"center"}}>
+            <div  style={{margin:"0 auto", width:130, height:130,borderRadius:100, background:"#01062D", display:"flex", justifyContent:"center", alignItems:"center"}}>
             <img style={{margin:"0 auto"}} width={100} src="images/howItWorks/cart.png" alt="" />
             </div>
             <div style={{margin:"0 auto", textAlign: "center"}} className="slider__item-info-text">
@@ -74,7 +74,7 @@ export default function ReviewsSlider() {
           </div>
              {/* step 3*/}
    <div  className="slider__item">
-            <div  style={{margin:"0 auto", width:130, height:130,borderRadius:20, background:"#01062D", display:"flex", justifyContent:"center", alignItems:"center"}}>
+            <div  style={{margin:"0 auto", width:130, height:130,borderRadius:100, background:"#01062D", display:"flex", justifyContent:"center", alignItems:"center"}}>
               <img  width={100} src="images/howItWorks/checkout.png" alt="" />
             </div>
             <div style={{margin:"0 auto", textAlign: "center"}} className="slider__item-info-text">
@@ -88,7 +88,7 @@ export default function ReviewsSlider() {
    {/* step 4 */}
    <div  className="slider__item">
 
-            <div  style={{margin:"0 auto", width:130, height:130,borderRadius:20, background:"#01062D", display:"flex", justifyContent:"center", alignItems:"center"}}>
+            <div  style={{margin:"0 auto", width:130, height:130,borderRadius:100, background:"#01062D", display:"flex", justifyContent:"center", alignItems:"center"}}>
             <img style={{margin:"0 auto"}} width={100} src="images/howItWorks/payment.png"alt="" />
             </div>
             <div style={{margin:"0 auto", textAlign: "center"}} className="slider__item-info-text">

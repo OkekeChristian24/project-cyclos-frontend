@@ -1,0 +1,16 @@
+@media screen and (max-width:800px) {
+    #footer{
+        /* padding: 100px 20px ; */
+    }
+    #links{
+        display: flex;
+        flex-direction: column;
+        font-size: 10px !important;
+        /* padding: 1rem !important; */
+    }
+    #below{
+        display: flex;
+        flex-direction: column; 
+        /* padding: 1rem !important; */
+    }
+}

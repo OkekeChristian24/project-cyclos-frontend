@@ -4,13 +4,13 @@ export default function Purchase() {
   return (
     <section className="purchase">
       <div className="purchase__shape">
-        <img src="images/index/shapes.png" alt="shapes" />
+        <img src="images/purchase.png" alt="shapes" />
       </div>
       <div className="auto__container">
         <div className="purchase__inner">
           <div className="purchase__inner-cards">
             <div className="purchase__inner-card">
-              <div className="purchase__inner-card-icon">
+              <div style={{background:"#D3D3D3"}} className="purchase__inner-card-icon">
                 <img src="images/icons/bell.svg" alt="bell" />
               </div>
               <h5>IOS/Android Phone</h5>
@@ -34,7 +34,7 @@ export default function Purchase() {
               </p>
             </div>
             <div className="purchase__inner-card">
-              <div className="purchase__inner-card-icon">
+              <div style={{background:"#D3D3D3"}} className="purchase__inner-card-icon">
                 <img src="images/icons/bell.svg" alt="" />
               </div>
               <h5>Sports Car (Gadgets)</h5>
@@ -58,7 +58,7 @@ export default function Purchase() {
               </p>
             </div>
             <div className="purchase__inner-card">
-              <div className="purchase__inner-card-icon">
+              <div style={{background:"#D3D3D3"}} className="purchase__inner-card-icon">
                 <img src="images/icons/bell.svg" alt="" />
               </div>
               <h5>Luxury Wristwatch</h5>
@@ -82,8 +82,8 @@ export default function Purchase() {
 Don’t sleep on it. Add to Cart now.</strong>
               </p>
             </div>
-            <div className="purchase__inner-card">
-              <div className="purchase__inner-card-icon">
+            <div style={{background:"#FFE2DC"}} className="purchase__inner-card">
+              <div style={{background:"#212121"}} className="purchase__inner-card-icon">
                 <img src="images/icons/bell.svg" alt="" />
               </div>
               <h5>Luxury Jewelry</h5>
