@@ -5,10 +5,10 @@ export default function Banner() {
   return (
     <section className="banner">
       <div className="banner__shape">
-        <img src="images/index/bannerShape.png" alt="bannerShape" />
+        <img src="images/kite.png" alt="bannerShape" />
       </div>
       <div className="banner__bg">
-        <img src="images/index/banner.png" alt="banner" />
+        <img src="images/youtube.png" alt="banner" />
         <div className="banner__wave">
           <svg width="2880" height="100%" viewBox="0 0 2880 362" fill="none">
             <path

@@ -7,6 +7,7 @@ import { formatWallet } from "../Helpers/helperFunctions";
 import NetOptions from "../Components/NetOptions";
 import netSwitchOrAdd from "../Helpers/netSwitchOrAdd";
 import detectEthereumProvider from "@metamask/detect-provider";
+import "./header.css"
 const chainIDs = ["Fantom Opera", "Binance Smart Chain"];
 
 export default function Header() {
@@ -139,7 +140,7 @@ export default function Header() {
       <div className="auto__container">
         <div className="header__inner">
           <div className="header__inner-logo">
-            <img src="images/logo.png" alt="logo" />
+            <img id="image" style={{width:200}} src="images/logo/Logo white.png" alt="logo" />
           </div>
           <nav className={"nav " + (menu ? "active" : "")} id="menu">
             <div className="nav__inner">
@@ -147,11 +148,9 @@ export default function Header() {
               <Link to="/"> Home</Link>
               </a>
               <a href="#" className="nav__inner-link">
-              
                 <Link to="/shop">   Shop</Link>
               </a>
               <a href="#" className="nav__inner-link">
-                
                 <Link to="/cart"> Cart</Link>
               </a>
               <a href="#" className="nav__inner-link">
@@ -160,12 +159,12 @@ export default function Header() {
               </a>
               
             
-              <button onClick={!web3Info.connected ? connectWalletHandler : undefined} className="button connect">
+              <button style={{width:215, fontSize:16}} onClick={!web3Info.connected ? connectWalletHandler : undefined} className="button connect">
                 <img src="images/icons/wallet.svg" alt="wallet" />
                 {web3Info.connected ? formatWallet(web3Info.address) : "Connect Wallet"}
               </button>
 
-              {
+           {
                 web3Info.address !== undefined
                 &&
                 <a href="/dashboard" >
@@ -175,6 +174,7 @@ export default function Header() {
                   </button>
                 </a>
               }
+
         
             </div>
           </nav>
