@@ -172,17 +172,7 @@ export default function Header() {
                 {web3Info.connected ? formatWallet(web3Info.address) : "Connect Wallet"}
               </button>
 
-           {
-                web3Info.address !== undefined
-                &&
-                <a href="/dashboard" >
-                  <button style={{marginLeft:20}} className="button connect">
-                    <img src="images/icons/wallet.svg" alt="wallet" />
-                    Dashboard
-                  </button>
-                </a>
-              }
-
+           
         
             </div>
           </nav>
