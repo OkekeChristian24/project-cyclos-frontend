@@ -1,10 +1,6 @@
 import { MAKE_PAYMENT, GET_TX_DETAILS } from "../ActionTypes/paymentTypes";
 
-const stateSample = {
-  
-};
-
-const paymentReducer = (state={}, action) => {
+const paymentReducer = (state = {}, action) => {
     switch(action.type) {
       case MAKE_PAYMENT:
         return {
