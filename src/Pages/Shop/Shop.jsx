@@ -6,7 +6,7 @@ import Products from "./Products/Products";
 export default function Shop() {
 
   // Global states and functions
-  const { products, searchProducts, getCart, cart } = useContext(GlobalContext);
+  const { products, searchProducts, getCart } = useContext(GlobalContext);
 
   // Local states
   const [searchTerm, setSearchTerm] = useState("");
@@ -26,10 +26,6 @@ export default function Shop() {
   const handleTextChange = (event) => {
       setSearchTerm(event.target.value);
   };
-
-  // useEffect(() => {
-  //   console.log("In Shop component, Products: ", products);
-  // }, [products]);
 
   
   useEffect(() => {

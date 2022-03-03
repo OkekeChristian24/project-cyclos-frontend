@@ -35,6 +35,7 @@ function DefaultColumnFilter({
 
 // Our table component
 export function Table({ columns, data }) {
+  // console.log("Table data: ", data);
     const filterTypes = React.useMemo(
       () => ({
         fuzzyText: fuzzyTextFilterFn,
@@ -211,3 +212,4 @@ export function Table({ columns, data }) {
       </>
     );
   }
+
