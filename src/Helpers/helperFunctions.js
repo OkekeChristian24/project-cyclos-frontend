@@ -99,9 +99,9 @@ export const subscribeProvider = (
 
 export const formatWallet = (acct) => {
   const dots = "...";
-  const firstFour = acct.substring(0, 4);
+  const firstSix = acct.substring(0, 6);
   const lastFour = acct.substring(38,42);
-  const displayAcct = " " + firstFour + dots + lastFour;
+  const displayAcct = " " + firstSix + dots + lastFour;
   return displayAcct;
 };
 

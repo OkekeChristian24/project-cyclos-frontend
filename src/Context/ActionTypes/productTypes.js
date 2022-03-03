@@ -1,1 +1,2 @@
 export const SEARCH_PRODUCT = "SEARCH_PRODUCT";
+export const CLEAR_PRODUCT = "CLEAR_PRODUCT";

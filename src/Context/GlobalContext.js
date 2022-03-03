@@ -19,7 +19,7 @@ import paymentReducer from "./Reducers/paymentReducer";
 import transactionsReducer from "./Reducers/transactionsReducer";
 
 import { GET_TRANSACTIONS } from "./ActionTypes/transactionsTypes";
-import { SEARCH_PRODUCT } from "./ActionTypes/productTypes";
+import { CLEAR_PRODUCT, SEARCH_PRODUCT } from "./ActionTypes/productTypes";
 import { 
   CONNECT_WALLET,
   DISCONNECT_WALLET,
@@ -197,6 +197,10 @@ export const GlobalProvider = ({ children }) => {
       console.log(error);
     }
 
+  };
+
+  const clearProducts = () => {
+    productDispatch({type: CLEAR_PRODUCT});
   };
 
   // == End of Product actions == //
@@ -434,6 +438,7 @@ export const GlobalProvider = ({ children }) => {
       connectWallet,
       disconnectWallet,
       searchProducts,
+      clearProducts,
       addToCart,
       getCart,
       updateCart,
