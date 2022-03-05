@@ -7,7 +7,7 @@ import {
   NETWORK_CHANGE
 } from "../ActionTypes/web3InfoTypes";
 
-/**
+
  const initialWeb3Info = {
     networkID: null,
     chainID: null,
@@ -18,11 +18,11 @@ import {
     showModal: false,
   };
 
- */
 
 
 
-const web3InfoReducer = (state = {}, action) => {
+
+const web3InfoReducer = (state = initialWeb3Info, action) => {
       switch(action.type){
           case CONNECT_WALLET:
 

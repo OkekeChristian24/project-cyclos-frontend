@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Hero from "../../Base/Hero";
 import { GlobalContext } from "../../Context/GlobalContext";
 import CartLineItem from "./CartLine/CartLineItem";
-import { CartLineModul } from "./CartLine/CartLineModul";
 
 export default function Cart() {
 

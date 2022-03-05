@@ -104,3 +104,11 @@ export const formatWallet = (acct) => {
   const displayAcct = " " + firstFour + dots + lastFour;
   return displayAcct;
 };
+
+export const formatInputData = (data) => {
+  const dots = "...";
+  const firstFour = data.substring(0, 4);
+  const lastFour = data.substring(38,42);
+  const displayData = " " + firstFour + dots + lastFour;
+  return displayData;
+};
