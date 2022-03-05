@@ -7,10 +7,12 @@ import Cart from "./Pages/Cart/Cart";
 import Home from "./Pages/Home/Home";
 import Shop from "./Pages/Shop/Shop";
 import Orders from "./Pages/Orders/Orders";
+import OrderItems from "./Pages/OrderItems/OrderItems";
 
 import { GlobalProvider } from "./Context/GlobalContext";
 
 export default function App() {
+
   const initTheme =
     localStorage.getItem("lightMode") === "true"
       ? true 
@@ -50,6 +52,7 @@ export default function App() {
           <Route path="/bill" element={<Bill />} />
           <Route path="/cart" element={<Cart></Cart>} />
           <Route path="/dashboard" element={<Orders />} />
+          <Route path="/item/:index" element={<OrderItems />} />
 
           {/* 
           <Route path="/cards-group" element={<CardGroup></CardGroup>} /> */}

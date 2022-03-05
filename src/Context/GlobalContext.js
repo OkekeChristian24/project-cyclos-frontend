@@ -9,17 +9,17 @@ import React,
 import axios from "axios";
 import Web3Modal from "web3modal";
 import Web3 from "web3";
-import BigNumber from "bignumber.js";
 import detectEthereumProvider from '@metamask/detect-provider';
 import toast from 'react-hot-toast';
-import { v4 as uuidv4 } from 'uuid';
 
-import { SEARCH_PRODUCT } from "./ActionTypes/productTypes";
 import web3InfoReducer from "./Reducers/web3InfoReducer";
 import productReducer from "./Reducers/productReducer";
 import cartReducer from "./Reducers/cartReducer";
 import paymentReducer from "./Reducers/paymentReducer";
+import transactionsReducer from "./Reducers/transactionsReducer";
 
+import { GET_TRANSACTIONS } from "./ActionTypes/transactionsTypes";
+import { CLEAR_PRODUCT, SEARCH_PRODUCT } from "./ActionTypes/productTypes";
 import { 
   CONNECT_WALLET,
   DISCONNECT_WALLET,
@@ -45,13 +45,10 @@ import {
   subscribeProvider
 } from "../Helpers/helperFunctions";
 import { getChainData } from "../Helpers/helperFunctions"
-import { supportedTokens, paymentAddresses } from "../Helpers/addresses"
-import tokenABI from "../Helpers/tokenABI";
+import { paymentAddresses } from "../Helpers/addresses"
 import paymentABI from "../Helpers/paymentABI";
-import { PRICE_MULTIPLIER } from "../Helpers/multipliers";
 import { serverHost, axiosConfig} from "../Helpers/backendHost";
-import { awaitBlockConsensus } from '../Helpers/awaitTxn';
-import { CustomError } from "../Helpers/customError";
+import { reqSuccess } from '../Helpers/constants/reqStatus';
 
 
 // Initialize web3
@@ -141,7 +138,8 @@ export const GlobalProvider = ({ children }) => {
   const [products, productDispatch] = useReducer(productReducer, initialProducts);
   const [cart, cartDispatch] = useReducer(cartReducer, initialCartState);
   const [payment, paymentDispatch] = useReducer(paymentReducer, {});
-
+  const [userTransactions, userTxnsDispatch] = useReducer(transactionsReducer, []);
+  
   const [web3Installed, setWeb3Installed] = useState(false);
   const [web3Modal, setWeb3Modal] = useState({});
   const [detectedProvider, setDetectedProvider] = useState({});
@@ -176,10 +174,13 @@ export const GlobalProvider = ({ children }) => {
       // getTransactionDetails(addr ess buyer, string memory orderId)
       paymentDispatch({type: GET_TX_DETAILS, payload: { }});
     } catch (error) {
-      //
+      console.log(error);
     }
     
   };
+
+  // == End of Payment actions == //
+
 
   // == Product actions == //
   const searchProducts = async(searchTerm) => {
@@ -197,6 +198,36 @@ export const GlobalProvider = ({ children }) => {
     }
 
   };
+
+  const clearProducts = () => {
+    productDispatch({type: CLEAR_PRODUCT});
+  };
+
+  // == End of Product actions == //
+
+
+  // == UserTransactions actions == //
+  const getUserTransactions = async (userAddress) => {
+    try {
+      const response = await axios.get(`${serverHost}/api/order/user/${userAddress}`, axiosConfig);
+      const { data: resData } = response;
+      if(resData.success === reqSuccess){
+        userTxnsDispatch({type: GET_TRANSACTIONS, payload: { newState: resData.data }});
+        return resData.data;
+      }
+      throw new Error("Unsuccessful request");
+    } catch (error) {
+      console.log(error);
+      return ([]);
+    }
+  };
+
+  const removeTransaction = async () => {
+    
+  };
+
+  // == End of UserTransactions actions == //
+
 
 
   // == Cart actions == //
@@ -237,7 +268,7 @@ export const GlobalProvider = ({ children }) => {
     cartDispatch({type: UPDATE_ITEM, payload: { product: productToUpdate }});
   };
 
-
+  // == End of Cart actions == //
 
 
 
@@ -295,7 +326,10 @@ export const GlobalProvider = ({ children }) => {
     (() => toast.success(`You Are Connected To ${chainName}`))();
   };
 
-  // Wallet action
+  // == End of Wallet provider callbacks == //
+
+
+  // == Wallet actions == //
   const connectWallet = async(chainid="") => {
     let idToCheck = "";
     if(chainid !== ""){
@@ -359,6 +393,9 @@ export const GlobalProvider = ({ children }) => {
     web3InfoDispatch({type: DISCONNECT_WALLET});
   };
 
+  // == End of Wallet actions == // 
+
+
   useEffect(() => {
     localWeb3Info.current = web3Info;
   }, [web3Info])
@@ -397,15 +434,18 @@ export const GlobalProvider = ({ children }) => {
       cart,
       web3Installed,
       supportedNet,
+      userTransactions,
       connectWallet,
       disconnectWallet,
       searchProducts,
+      clearProducts,
       addToCart,
       getCart,
       updateCart,
       removeItem,
       deleteCart,
-      updateItem
+      updateItem,
+      getUserTransactions
     }}>
       {children}
     </GlobalContext.Provider>

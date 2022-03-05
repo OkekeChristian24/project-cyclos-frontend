@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 
 export default function Purchase() {
   return (
@@ -26,6 +28,7 @@ export default function Purchase() {
                       <img src="images/icons/starFull.svg" alt="starFull" />
                     </span>
                   </div>
+                  <div className="num">4.2</div>
                 </div>
                 <div className="num">4.2</div>
               </div> */}

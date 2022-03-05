@@ -145,7 +145,7 @@ export default function Header() {
           <nav className={"nav " + (menu ? "active" : "")} id="menu">
             <div className="nav__inner">
               <a href="" className="nav__inner-link">
-              <Link to="/"> Home</Link>
+                <Link to="/"> Home</Link>
               </a>
               <a href="#" className="nav__inner-link">
                 <Link to="/shop">   Shop</Link>
@@ -157,6 +157,14 @@ export default function Header() {
               
                <Link to="/bill"> Bill</Link>
               </a>
+              {
+                web3Info.address !== undefined
+                &&
+                <a href="#" className="nav__inner-link">
+                
+                <Link to="/dashboard"> Dashboard</Link>
+                </a>
+              }
               
             
               <button style={{width:215, fontSize:16}} onClick={!web3Info.connected ? connectWalletHandler : undefined} className="button connect">
@@ -164,17 +172,7 @@ export default function Header() {
                 {web3Info.connected ? formatWallet(web3Info.address) : "Connect Wallet"}
               </button>
 
-           {
-                web3Info.address !== undefined
-                &&
-                <a href="/dashboard" >
-                  <button style={{marginLeft:20}} className="button connect">
-                    <img src="images/icons/wallet.svg" alt="wallet" />
-                    Dashboard
-                  </button>
-                </a>
-              }
-
+           
         
             </div>
           </nav>
