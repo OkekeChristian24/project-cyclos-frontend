@@ -86,9 +86,9 @@ import "./footer.css"
 export default function Footer() {
   const [cookie, setCookie] = useState(true);
   return (
-    <footer id="footer" className="footer" style={{background:'#FD6E4F'}}>
+    <footer id="footer" className="footer" style={{background:'#FD6E4F'}} >
       <div className="footer__bg">
-      {/* <img src="images/footer.png" alt="" /> */}
+      <img src="images/footer2.svg" alt="" />
       </div>
       <div className="footer__wave">
         <svg width="2880" height="100%" viewBox="0 0 2880 360" fill="none">
