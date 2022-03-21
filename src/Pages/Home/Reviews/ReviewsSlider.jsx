@@ -94,7 +94,7 @@ export default function ReviewsSlider() {
             <div style={{margin:"0 auto", textAlign: "center"}} className="slider__item-info-text">
                 <h4 style={{marginTop:20}}>Make Payment</h4>
                 <p style={{marginTop:20}} >
-           Fonalise payment and get your order delivered to you in no time
+           Finalize payment and get your order delivered to you in no time
             </p>
               </div>
           </div>

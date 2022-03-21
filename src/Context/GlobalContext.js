@@ -183,9 +183,10 @@ export const GlobalProvider = ({ children }) => {
 
 
   // == Product actions == //
-  const searchProducts = async(searchTerm) => {
+  const searchProducts = async(searchTerm, domain) => {
     
     const term = {
+      domain, 
       search_term: searchTerm
     };
     try {
