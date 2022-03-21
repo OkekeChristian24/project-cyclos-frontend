@@ -17,20 +17,12 @@ import { awaitBlockConsensus } from "../../Helpers/awaitTxn";
 import { CustomError } from "../../Helpers/customError";
 import tokenABI from "../../Helpers/tokenABI";
 import { serverHost, axiosConfig} from "../../Helpers/backendHost";
-import { 
-  validEmailRegex,
-  validStreetReg,
-  validCityReg,
-  validStateReg,
-  validCountryReg,
-  validPostalCodeReg
-} from "../../Helpers/regExps";
 import checkShippingAddr from "../../Helpers/checkShippingAddr";
 import { initShippingAddr, initShipAddrErr, initShipAddrErrMsg } from "../../Helpers/initsShippingAddr";
-import Autocomplete from "./Autocomplete";
-import { City } from "./Autocomplete/City";
-import { Country } from "./Autocomplete/Country";
 import axios from "axios";
+import getFeesPercent from "../../Helpers/getFeesPercent";
+import companies from "../../Helpers/constants/companies";
+import calculate from "../../Helpers/calculate";
 
 
 
@@ -55,6 +47,9 @@ export default function Bill() {
   const [shipAddrErrMsg, setShipAddrErrMsg] = useState(initShipAddrErrMsg);
   const [isBackendErr, setIsBackendErr] = useState(false);
   const [backendErrMsg, setBackendErrMsg] = useState(testErrArr);
+  const [chargePercent, setChargePercent] = useState(null);
+  const [taxPercent, setTaxPercent] = useState(null);
+  
 
 
   const [phoneNum, setPhoneNum] = useState(undefined);
@@ -97,7 +92,6 @@ export default function Bill() {
   
   const handlePayment = async() => {
 
-    // console.log("shippingAddrError: ", shippingAddrError);
     try{
 
       if(!(web3Info.connected !== undefined && web3Info.connected)){
@@ -112,7 +106,7 @@ export default function Bill() {
         throw new CustomError("No Products Selected");
       }
 
-      if(cart.totalPrice > Number(userBalance).toFixed(3)){
+      if(calculate(chargePercent, taxPercent, cart.totalPrice) > Number(userBalance).toFixed(3)){
         throw new CustomError("Insufficient Token Balance");
       }
 
@@ -121,7 +115,6 @@ export default function Bill() {
       }
 
       setIsPaymentLoading(true);
-      console.log("setting 1");
       const web3 = web3Info.web3;
       const chainId = await web3.eth.chainId();
       const chainID = web3.utils.isHex(chainId) ? web3.utils.hexToNumber(chainId) : chainId;
@@ -131,7 +124,7 @@ export default function Bill() {
       }
       // Initialise contracts
       const paymentContract = new web3.eth.Contract(paymentABI, paymentAddr);
-      const totalPriceBN = (new BigNumber(cart.totalPrice*10**tokenDecimals));
+      const totalPriceBN = (new BigNumber(calculate(chargePercent, taxPercent, cart.totalPrice)*10**tokenDecimals));
       const totalQty = cart.totalQty;
       let products = [];
       for(let i=0; i<cart.products.length; i++){
@@ -143,11 +136,9 @@ export default function Bill() {
           image: cart.products[i].image,
           quantity: cart.products[i].quantity
         };
-        // console.log(product);
         products = [...products, product];
         product = "";
       }
-      // console.log("products: ", products);
 
       if (!Date.now) {
         Date.now = function() { return new Date().getTime(); }
@@ -167,7 +158,6 @@ export default function Bill() {
           
           // const paymentDetails = await paymentContract.methods.getTransactionDetails(web3Info.address, orderID).call();
           paymentContract.methods.getTransactionDetails(web3Info.address, orderID).call().then(function(paymentDetails){
-            console.log("paymentDetails: ", paymentDetails);
             
             const shippingDetails = {
               email: shippingAddress.email,
@@ -189,7 +179,8 @@ export default function Bill() {
               txnHash: String(txHash),
               tokenIndex: Number(tokenIndex),
               products: cart.products,
-              shipping: shippingDetails
+              shipping: shippingDetails,
+              company: companies[0].name
             };
 
                         
@@ -199,7 +190,6 @@ export default function Bill() {
 
           }).then(function(res){
             setIsPaymentLoading(false);
-            console.log("setting 2");
             // console.log("Server res: ", res);
             if(res.status === 200){
               if(res.data.success === 1){
@@ -213,27 +203,22 @@ export default function Bill() {
               setBackendErrMsg(res.data.message);
               // The backend API call needs to be retried multiple times
               // until the transaction is successfully stored on the database
-              console.log("Response data: ", res.data);
               (() => toast.error("Transaction Not Stored"))();
               setIsPaymentLoading(false);
-              console.log("setting 3");
               // throw new CustomError(res.data.message);
               
             }
           }).catch(function(error){
             console.log(error);
             setIsPaymentLoading(false);
-            console.log("setting 4");
             (() => toast.error("Error In Storing Transaction"))();
           }).finally(async function(){
             setIsPaymentLoading(false);
-            console.log("setting 5");
             await checkAllowance();
             await getWalletBalance();
 
           });
           setIsPaymentLoading(false);
-          console.log("setting 6");
           await checkAllowance();
           await getWalletBalance();
         }catch(error){
@@ -244,7 +229,6 @@ export default function Bill() {
             (() => toast.error("Payment Failed"))();
           }
           setIsPaymentLoading(false);
-          console.log("setting 7");
           await checkAllowance();
           await getWalletBalance();
             
@@ -257,7 +241,6 @@ export default function Bill() {
     }catch(error){
       console.log(error);
       setIsPaymentLoading(false);
-      console.log("setting 8");
       await checkAllowance();
       await getWalletBalance();
       if(error.custom){
@@ -295,7 +278,7 @@ export default function Bill() {
       if(cart.products.length <= 0){
         throw new CustomError("No Products Selected");
       }
-      if(cart.totalPrice > Number(userBalance).toFixed(3)){
+      if(calculate(chargePercent, taxPercent, cart.totalPrice) > Number(userBalance).toFixed(3)){
         throw new CustomError("Insufficient Token Balance");
       }
       
@@ -304,7 +287,7 @@ export default function Bill() {
         const tokenAddress = supportedTokens[web3Info.chainID][tokenIndex - 1].address;    
         const paymentAddr = paymentAddresses[web3Info.chainID];
         const tokenContract = new web3Info.web3.eth.Contract(tokenABI, tokenAddress);
-        const totalPriceBN = (new BigNumber(cart.totalPrice*10**tokenDecimals));
+        const totalPriceBN = (new BigNumber(calculate(chargePercent, taxPercent, cart.totalPrice)*10**tokenDecimals));
         const data = await tokenContract.methods.approve(paymentAddr, totalPriceBN).send({from: web3Info.address});
         const txHash = data.transactionHash;
         awaitBlockConsensus([web3Info.web3], txHash, 4, 750, (error, txnReceipt) => {
@@ -391,6 +374,16 @@ export default function Bill() {
     setTokenIndex(null);
   }, [web3Info.chainID]);
   
+  useEffect(() => {
+    (async() => {
+      const fees = await getFeesPercent(companies[0].name);
+      if(fees !== null){
+        setChargePercent(fees.charge);
+        setTaxPercent(fees.tax);
+      }
+    })();
+  }, []);
+
   // Payment Styling
   const payStyling = {
     width: "100%",
@@ -505,7 +498,7 @@ export default function Bill() {
           &&
           cart.totalPrice !== 0
           &&
-          <h5>Total Price: ${cart.totalPrice.toFixed(3)}</h5>
+          <h5>Total Price: ${calculate(chargePercent, taxPercent, cart.totalPrice)}</h5>
           }
         </div>
         <div style={payStyling}>

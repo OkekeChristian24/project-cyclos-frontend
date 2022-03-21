@@ -1,17 +1,33 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Hero from "../../Base/Hero";
 import { GlobalContext } from "../../Context/GlobalContext";
+import calculate from "../../Helpers/calculate";
+import companies from "../../Helpers/constants/companies";
+import getFeesPercent from "../../Helpers/getFeesPercent";
 import CartLineItem from "./CartLine/CartLineItem";
 
 export default function Cart() {
 
   const { cart, deleteCart } = useContext(GlobalContext);
 
+  const [chargePercent, setChargePercent] = useState(null);
+  const [taxPercent, setTaxPercent] = useState(null);
+
   const handleCartDelete = () => {
     deleteCart();
   }
-  console.log(cart);
+
+  useEffect(() => {
+    (async() => {
+      const fees = await getFeesPercent(companies[0].name);
+      if(fees !== null){
+        setChargePercent(fees.charge);
+        setTaxPercent(fees.tax);
+      }
+    })();
+  }, []);
+
   return (
     <>
       
@@ -94,15 +110,19 @@ export default function Cart() {
               </div>
               <div className="total__inner-row">
                 <h4>Subtotal</h4>
-                <span>{`${Number(cart.totalPrice).toFixed(5)}`}</span>
+                <span>{`$${Number(cart.totalPrice).toFixed(5)}`}</span>
               </div>
               <div className="total__inner-row">
-                <h4>Shipping</h4>
-                <span>Free shipping Shipping to FL.</span>
+                <h4>Charge</h4>
+                <span>{`${chargePercent}%`}</span>
+              </div>
+              <div className="total__inner-row">
+                <h4>Tax</h4>
+                <span>{`${taxPercent}%`}</span>
               </div>
               <div className="total__inner-row">
                 <h4>Total</h4>
-                <span>{`${Number(cart.totalPrice).toFixed(5)}`}</span>
+                <span>{`$${calculate(chargePercent, taxPercent, cart.totalPrice)}`}</span>
               </div>
               <div className="total__inner-submit">
                 <button className="button primary">

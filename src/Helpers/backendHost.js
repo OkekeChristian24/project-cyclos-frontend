@@ -1,6 +1,7 @@
 
 // Axios config
-export const serverHost = "http://cyclos.shop/cyclos";
+// export const serverHost = "https://cyclos.shop/cyclosapi";
+export const serverHost = "http://localhost:5000";
 export const axiosConfig = {
   headers: {
     'Content-Type': 'application/json'
