@@ -24,9 +24,9 @@ export default function Intro() {
       <div className="auto__container">
         <div  className="intro__inner">
           <div className="intro__inner-content">
-            <h1>Crypto made Easy</h1>
+            <h1> Cross-border shopping using cryptocurrency.</h1>
             <p id ="text" className="bg">
-            Bridging The Crypto-Retail Divide.  
+            Bridging the crypto-retail divide.  
 To make a purchase, look through our catalogue.
             </p>
             <a href="#" className="button primary">

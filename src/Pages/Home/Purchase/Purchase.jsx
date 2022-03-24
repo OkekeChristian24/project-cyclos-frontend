@@ -78,11 +78,10 @@ export default function Purchase() {
             <div className="purchase__inner-content-bg">
               <img src="images/index/oval.svg" alt="" />
             </div>
-            <h2> Procure with Crypto</h2>
+            <h2> Pay with stablecoins</h2>
 
             <p>
-              Add goods to your shopping cart. Remember to take advantage of the
-              discount!
+            Add items to your shopping cart. You can pay using the Binance smart chain and Fantom Opera.
             </p>
             <a href="#" className="button primary">
               Place Order

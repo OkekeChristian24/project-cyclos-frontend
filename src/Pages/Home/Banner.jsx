@@ -25,7 +25,7 @@ export default function Banner() {
         <div className="banner__inner">
           <div className="banner__inner-video-outer">
             <YouTube
-              videoId={"i9F9_pzVG7w"} // defaults -> null
+              videoId={"tMsCM45atKk"} // defaults -> null
               className={"banner__inner-video"}
             />
           </div>
