@@ -4,13 +4,15 @@ import Intro from "./Intro";
 import Pay from "./Pay";
 import Purchase from "./Purchase/Purchase";
 import Reviews from "./Reviews/Reviews";
+import Unique from "./Unique/unique";
 
 export default function Home() {
   return (
     <>
       <Intro />
       <Purchase />
-      <Pay />
+      {/* <Pay /> */}
+      <Unique />
       <Banner />
       <Reviews />
     </>

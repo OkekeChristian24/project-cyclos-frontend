@@ -49,38 +49,38 @@ export default function ReviewsSlider() {
           {/* step 1 */}
           <div  className="slider__item">
         
-            <div  style={{margin:"0 auto", width:130, height:130,borderRadius:100, background:"#01062D", display:"flex", justifyContent:"center", alignItems:"center"}}>
+            {/* <div  style={{margin:"0 auto", width:130, height:130,borderRadius:100, background:"#01062D", display:"flex", justifyContent:"center", alignItems:"center"}}>
             <img width={100} src="images/howItWorks/search.png" alt="" />
-            </div>
+            </div> */}
             <div style={{margin:"0 auto", textAlign: "center"}} className="slider__item-info-text">
-                <h4 style={{marginTop:20}}>Search</h4>
+                <h4 style={{marginTop:20}}>No Threat of Cyber Hack</h4>
                 <p style={{marginTop:20}} >
-            Browse through our catalogue to select products for purchase.
+                One of the most significant problems facing the e-commerce industry is the threat to consumer data. With the use of Blockchain technology, this threat is eliminated, ensuring the security of your data.
             </p>
               </div>
           </div>
    {/* step 2 */}
    <div  className="slider__item">
         
-            <div  style={{margin:"0 auto", width:130, height:130,borderRadius:100, background:"#01062D", display:"flex", justifyContent:"center", alignItems:"center"}}>
+            {/* <div  style={{margin:"0 auto", width:130, height:130,borderRadius:100, background:"#01062D", display:"flex", justifyContent:"center", alignItems:"center"}}>
             <img style={{margin:"0 auto"}} width={100} src="images/howItWorks/cart.png" alt="" />
-            </div>
+            </div> */}
             <div style={{margin:"0 auto", textAlign: "center"}} className="slider__item-info-text">
-                <h4 style={{marginTop:20}}>Put in Cart</h4>
+                <h4 style={{marginTop:20}}>Seamless Digital Payment</h4>
                 <p style={{marginTop:20}} >
-                Add items to your cart. Don't forget the discounts!
+                Card payments can sometimes be a hassle, leading to delayed shipments and long calls with customer service. With Cyclos, the digital payment process becomes quick and simplified. 
             </p>
               </div>
           </div>
              {/* step 3*/}
    <div  className="slider__item">
-            <div  style={{margin:"0 auto", width:130, height:130,borderRadius:100, background:"#01062D", display:"flex", justifyContent:"center", alignItems:"center"}}>
+            {/* <div  style={{margin:"0 auto", width:130, height:130,borderRadius:100, background:"#01062D", display:"flex", justifyContent:"center", alignItems:"center"}}>
               <img  width={100} src="images/howItWorks/checkout.png" alt="" />
-            </div>
+            </div> */}
             <div style={{margin:"0 auto", textAlign: "center"}} className="slider__item-info-text">
-                <h4 style={{marginTop:20}}>Check out</h4>
+                <h4 style={{marginTop:20}}>Affordable</h4>
                 <p style={{marginTop:20}} >
-           Checkout items in your cart.
+                At Cyclos, we aim to expand cross-border shopping across Africa and enable our valued customers to buy what they want without risks, hassle, or prolonged delivery periods. This is why we constantly work to provide affordable services to you. 
             </p>
               </div>
           </div>
@@ -88,13 +88,13 @@ export default function ReviewsSlider() {
    {/* step 4 */}
    <div  className="slider__item">
 
-            <div  style={{margin:"0 auto", width:130, height:130,borderRadius:100, background:"#01062D", display:"flex", justifyContent:"center", alignItems:"center"}}>
+            {/* <div  style={{margin:"0 auto", width:130, height:130,borderRadius:100, background:"#01062D", display:"flex", justifyContent:"center", alignItems:"center"}}>
             <img style={{margin:"0 auto"}} width={100} src="images/howItWorks/payment.png"alt="" />
-            </div>
+            </div> */}
             <div style={{margin:"0 auto", textAlign: "center"}} className="slider__item-info-text">
-                <h4 style={{marginTop:20}}>Make Payment</h4>
+                <h4 style={{marginTop:20}}>Transparency</h4>
                 <p style={{marginTop:20}} >
-           Finalise payment using cryptocurrency and get your order delivered to you inn no time.
+                Your trust is of the highest degree of importance to us, so we work hard to earn it. We keep our workings and details of the shipment process transparent, so you always have an accurate picture. Additionally, our customer service is friendly and responsive to answer your questions readily.  
             </p>
               </div>
           </div>
@@ -104,21 +104,3 @@ export default function ReviewsSlider() {
   );
 }
 
-{/* <div className="slider__item">
-<div className="slider__item-icon">
-  <img src="images/icons/revIcon.svg" alt="" />
-</div>
-<p>
-  There are many variations of passages of Lorem Ipsum form, by
-  injected humour randomised words which slightly believable.
-</p>
-<div className="slider__item-info">
-  <div className="slider__item-info-avatar">
-    <img src="images/index/ava.png" alt="" />
-  </div>
-  <div className="slider__item-info-text">
-    <h5>Adalberto Kovach</h5>
-    <p>Marketing Management</p>
-  </div>
-</div>
-</div> */}
