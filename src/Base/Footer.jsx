@@ -128,7 +128,7 @@ export default function Footer() {
           {/* Below the line */}
           <div id="below" className="footer__inner-general">
             <div className="footer__inner-general-row">
-            <div className="footer__inner-info-copy" style={{fontSize: '16px', fontweight:"bold"}}>© 2021 Mastermind. All rights reserved</div>
+            <div className="footer__inner-info-copy" style={{fontSize: '16px', fontweight:"bold"}}>© 2021 Cyclos. All rights reserved</div>
             </div>
             <div className="footer__inner-general-row">
             <div className="footer__inner-social">

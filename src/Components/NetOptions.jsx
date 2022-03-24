@@ -37,7 +37,7 @@ export default function NetOptions(props) {
                 <PersonIcon />
                 {chain.logoUrl}
               </Avatar> */}
-              <img src={chain.logoUrl} alt="Chain Logo" srcset="" />
+              <img width="42px" height="42px" src={chain.logoUrl} alt="Chain Logo" srcset="" />
             </ListItemAvatar>
             <ListItemText primary={chain.name} />
           </ListItem>

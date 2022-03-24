@@ -4,7 +4,7 @@ import { GlobalContext } from "../../../Context/GlobalContext";
 export default function CartLineItem(props) {
 
   // global states
-  const { cart, updateCart, updateItem, removeItem } = useContext(GlobalContext);
+  const { updateItem, removeItem } = useContext(GlobalContext);
 
   // Local states
   const [itemQty, setItemQty] = useState(props.quantity);
@@ -23,32 +23,7 @@ export default function CartLineItem(props) {
     removeItem(props.asin);
   };
 
-  // const handleQtyChange = (event) => {
-  //   console.log("typeof event value: ", typeof event.target.value);
-  //   console.log("event value is a number: ", isNaN(event.target.value));
-  //   console.log("cart: ", cart);
-  //   if(isNaN(event.target.value)){
-  //     setItemQty(event.target.value);
-  //     return;
-  //   }
-  //   const numValue = Number(event.target.value);
-  //   if( numValue < 1){
-  //     setItemQty(numValue);
-  //     return;
-  //   }
-
-  //   const cartProduct = {
-  //     asin: props.asin,
-  //     title: props.title,
-  //     price: props.price,
-  //     image: props.image,
-  //     link: props.link,
-  //     quantity: Number(event.target.value)
-  //   };
-  // 
-  //   updateItem(cartProduct);
-  // };
-
+  
   const handleItemUpdate = () => {
     if(typeof itemQty !== "number"){
       return;
@@ -89,7 +64,7 @@ export default function CartLineItem(props) {
           <div className="cartLine__image">
             <img src={props.image} alt={props.alt} />
           </div>
-          <div className="cartLine__desc">{props.desc}</div>
+          <div className="cartLine__desc">{props.title}</div>
         </div>
         <div className="cart__table-col">
           <span className="mobileTitle">Price</span>

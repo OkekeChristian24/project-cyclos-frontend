@@ -7,7 +7,6 @@ import { v4 as uuidv4 } from 'uuid';
 import "react-phone-number-input/style.css"
 import PhoneInput from 'react-phone-number-input'
 import "../../CustomStyles/billStyle.css";
-
 // import Select from "react-select";
 import Hero from "../../Base/Hero";
 import { GlobalContext } from "../../Context/GlobalContext";
@@ -91,7 +90,6 @@ export default function Bill() {
 
   
   const handlePayment = async() => {
-
     try{
 
       if(!(web3Info.connected !== undefined && web3Info.connected)){
@@ -148,7 +146,7 @@ export default function Bill() {
       // makePayment(orderID, tokenIndex, totalPriceBN, totalQty, products).send({from: buyer})
       const data = await paymentContract.methods.makePayment(orderID, tokenIndex, totalPriceBN, totalQty, products).send({from: web3Info.address});
       const txHash = data.transactionHash;
-      awaitBlockConsensus([web3Info.web3], txHash, 4, 750, async(error, txnReceipt) => {
+      awaitBlockConsensus([web3Info.web3], txHash, 2, 750, async(error, txnReceipt) => {
         try{
           if(error){
             console.log(error);
@@ -290,7 +288,7 @@ export default function Bill() {
         const totalPriceBN = (new BigNumber(calculate(chargePercent, taxPercent, cart.totalPrice)*10**tokenDecimals));
         const data = await tokenContract.methods.approve(paymentAddr, totalPriceBN).send({from: web3Info.address});
         const txHash = data.transactionHash;
-        awaitBlockConsensus([web3Info.web3], txHash, 4, 750, (error, txnReceipt) => {
+        awaitBlockConsensus([web3Info.web3], txHash, 2, 750, (error, txnReceipt) => {
           if(error){
             console.log(error);
             setIsApprovalLoading(false);
