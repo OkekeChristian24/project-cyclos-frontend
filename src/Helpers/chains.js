@@ -15,7 +15,8 @@ const otherChains = [
       decimals: 18,
       contractAddress: "",
       balance: ""
-    }
+    },
+    logoUrl: ""
   },
   {
     name: "Ethereum Ropsten",
@@ -32,7 +33,9 @@ const otherChains = [
       decimals: 18,
       contractAddress: "",
       balance: ""
-    }
+    },
+    logoUrl: ""
+
   },
   {
     name: "Ethereum Rinkeby",
@@ -49,7 +52,8 @@ const otherChains = [
       decimals: 18,
       contractAddress: "",
       balance: ""
-    }
+    },
+    logoUrl: ""
   },
   {
     name: "Ethereum Görli",
@@ -66,7 +70,8 @@ const otherChains = [
       decimals: 18,
       contractAddress: "",
       balance: ""
-    }
+    },
+    logoUrl: ""
   },
   {
     name: "RSK Mainnet",
@@ -83,7 +88,8 @@ const otherChains = [
       decimals: 18,
       contractAddress: "",
       balance: ""
-    }
+    },
+    logoUrl: ""
   },
   {
     name: "Ethereum Kovan",
@@ -100,7 +106,8 @@ const otherChains = [
       decimals: 18,
       contractAddress: "",
       balance: ""
-    }
+    },
+    logoUrl: ""
   },
   {
     name: "Ethereum Classic Mainnet",
@@ -117,7 +124,8 @@ const otherChains = [
       decimals: 18,
       contractAddress: "",
       balance: ""
-    }
+    },
+    logoUrl: ""
   },
   {
     name: "POA Network Sokol",
@@ -134,7 +142,8 @@ const otherChains = [
       decimals: 18,
       contractAddress: "",
       balance: ""
-    }
+    },
+    logoUrl: ""
   },
   {
     name: "POA Network Core",
@@ -151,7 +160,8 @@ const otherChains = [
       decimals: 18,
       contractAddress: "",
       balance: ""
-    }
+    },
+    logoUrl: ""
   },
   {
     name: "xDAI Chain",
@@ -168,7 +178,8 @@ const otherChains = [
       decimals: 18,
       contractAddress: "",
       balance: ""
-    }
+    },
+    logoUrl: ""
   },
   {
     name: "Callisto Mainnet",
@@ -185,7 +196,8 @@ const otherChains = [
       decimals: 18,
       contractAddress: "",
       balance: ""
-    }
+    },
+    logoUrl: ""
   }
 ];
 
@@ -206,6 +218,7 @@ const supportedChains = [
       contractAddress: "",
       balance: ""
     },
+    logoUrl: "/images/chains/SmartChain/SmartChain.svg",
     blockExplorerUrl: "https://bscscan.com/"
   },
   {
@@ -224,8 +237,10 @@ const supportedChains = [
       contractAddress: "",
       balance: ""
     },
+    logoUrl: "/images/chains/Fantom/Fantom.svg",
     blockExplorerUrl: "https://ftmscan.com/"
   }
+  
 ];
 
 

@@ -33,9 +33,11 @@ export default function NetOptions(props) {
         {supportedChains.map((chain) => (
           <ListItem button onClick={() => handleListItemClick(chain.chain_id_hex)} key={chain.chain_id_hex}>
             <ListItemAvatar>
-              <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
+              {/* <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
                 <PersonIcon />
-              </Avatar>
+                {chain.logoUrl}
+              </Avatar> */}
+              <img src={chain.logoUrl} alt="Chain Logo" srcset="" />
             </ListItemAvatar>
             <ListItemText primary={chain.name} />
           </ListItem>

@@ -1,11 +1,6 @@
 import supportedChains from "./chains";
+import { CustomError } from "./customError";
 
-class CustomError extends Error {
-    constructor(message) {
-      super(message);
-      this.custom = true;
-    }
-}
 
 
 const getMainnetConfig = (chainID) => {

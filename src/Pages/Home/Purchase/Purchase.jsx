@@ -13,6 +13,7 @@ export default function Purchase() {
         <div className="purchase__inner">
           <div className="purchase__inner-cards">
             <div className="purchase__inner-card">
+              <Link to="/shop?search_term=macbooks">
               {/* <div style={{background:"#D3D3D3"}} className="purchase__inner-card-icon">
                 <img src="images/icons/bell.svg" alt="bell" />
               </div> */}
@@ -42,9 +43,12 @@ export default function Purchase() {
                 src="images/icons/laptop.jpg"
                 alt="bell"
               />
+              </Link>
+
             </div>
 
             <div className="purchase__inner-card">
+              <Link to="/shop?search_term=female clothings">
               <h5>Women’s Fashion</h5>
 
               <img
@@ -52,9 +56,12 @@ export default function Purchase() {
                 src="images/icons/fashion.jpg"
                 alt="bell"
               />
+              </Link>
             </div>
 
             <div className="purchase__inner-card">
+            <Link to="/shop?search_term=makeup kits">
+
               <h5>Beauty picks</h5>
 
               <img
@@ -62,9 +69,12 @@ export default function Purchase() {
                 src="images/icons/beauty.jpg"
                 alt="bell"
               />
+              </Link>
             </div>
 
             <div className="purchase__inner-card">
+            <Link to="/shop?search_term=baby products">
+
               <h5>Babycare</h5>
 
               <img
@@ -72,6 +82,7 @@ export default function Purchase() {
                 src="images/icons/baby.jpg"
                 alt="bell"
               />
+              </Link>
             </div>
           </div>
           <div className="purchase__inner-content">

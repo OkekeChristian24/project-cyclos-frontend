@@ -69,7 +69,6 @@ export default function CartLineItem(props) {
     setNeedUpdate(false);
   };
 
-  console.log("Cart: ", cart);
 
   const updateBtn = {
     margin: "6px",

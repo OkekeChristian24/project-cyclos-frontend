@@ -2,7 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Hero from "../../Base/Hero";
 import { GlobalContext } from "../../Context/GlobalContext";
+import companies from "../../Helpers/constants/companies";
 import Products from "./Products/Products";
+
 
 export default function Shop() {
 
@@ -19,7 +21,7 @@ export default function Shop() {
   const submitSearch = async(e) => {
     e.preventDefault();
     setIsSearching(true);
-    await searchProducts(searchTerm);
+    await searchProducts(searchTerm, companies[0].domain);
     setIsSearching(false);
   };
 
@@ -35,6 +37,7 @@ export default function Shop() {
   useEffect(() => {
     getCart();
     const searchTerm = searchParams.get("search_term");
+    console.log("search term: ", searchTerm);
     if(searchTerm != null){
       clearProducts();
       (async() => {

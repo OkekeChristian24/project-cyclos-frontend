@@ -37,10 +37,10 @@ export default function Footer() {
                 
                 <Link to="/cart" style={{color: "#fff", fontSize: '20px', fontweight:1500}}> Cart</Link>
               </a>
-              <a href="#" className="nav__inner-link">
+              {/* <a href="#" className="nav__inner-link">
               
                <Link to="/bill" style={{color: "#fff", fontSize: '20px', fontweight:1500}}> Bill</Link>
-              </a>
+              </a> */}
 </div>
         
           {/* Below the line */}

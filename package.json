@@ -1,5 +1,6 @@
 {
   "name": "cyclos_ecom",
+  "homepage": "https://cyclos.shop",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

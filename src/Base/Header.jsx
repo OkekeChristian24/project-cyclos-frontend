@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
-
+import detectEthereumProvider from "@metamask/detect-provider";
 import { GlobalContext } from "../Context/GlobalContext";
 import { formatWallet } from "../Helpers/helperFunctions";
+import supportedChains from "../Helpers/chains";
 import NetOptions from "../Components/NetOptions";
 import netSwitchOrAdd from "../Helpers/netSwitchOrAdd";
-import detectEthereumProvider from "@metamask/detect-provider";
 import "./header.css"
-const chainIDs = ["Fantom Opera", "Binance Smart Chain"];
+// const chainIDs = ["Fantom Opera", "Binance Smart Chain"];
+const chainIDs = supportedChains.map(chain => ({name: chain.name, logo: chain.logoUrl}));
+
 
 export default function Header() {
 
@@ -20,8 +22,9 @@ export default function Header() {
   // Component local states
   const [menu, setMenu] = useState(false);
   const [showNetOptions, setShowNetOptions] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(chainIDs[0]);
+  const [selectedValue, setSelectedValue] = useState(chainIDs[0].name);
   const [metaMaskProvider, setMetaMaskProvider] = useState({});
+  
 
 
 
