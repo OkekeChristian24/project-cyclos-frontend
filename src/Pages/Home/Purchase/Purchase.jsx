@@ -92,11 +92,10 @@ export default function Purchase() {
             <h2> Pay with stablecoins</h2>
 
             <p>
-            Add items to your shopping cart. You can pay using the Binance smart chain and Fantom Opera.
+            Add items to your shopping cart. You can pay with stablecoins on the Binance smart chain and Fantom Opera.
             </p>
-            <a href="#" className="button primary">
-              Place Order
-            </a>
+            <Link className="button primary" to="/shop">Place Order</Link>
+            
           </div>
         </div>
       </div>

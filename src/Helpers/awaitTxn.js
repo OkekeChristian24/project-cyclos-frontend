@@ -6,7 +6,7 @@
 // @param timout in seconds 
 // @param callback - callback(error, transaction_receipt) 
 //
-module.exports.awaitBlockConsensus = function(web3s, txhash, blockCount, timeout, callback) {
+export const awaitBlockConsensus = function(web3s, txhash, blockCount, timeout, callback) {
      
   var txWeb3 = web3s[0];
   var startBlock = Number.MAX_SAFE_INTEGER;

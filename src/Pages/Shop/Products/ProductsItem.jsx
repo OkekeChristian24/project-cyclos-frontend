@@ -32,6 +32,7 @@ export default function ProductsItem(props) {
       link: props.link,
       quantity: 1
     };
+    console.log("cartItem: ", cartProduct);
 
     if(addToCart(cartProduct)){
       setAdded(true);

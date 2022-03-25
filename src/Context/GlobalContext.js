@@ -212,6 +212,7 @@ export const GlobalProvider = ({ children }) => {
     try {
       const response = await axios.get(`${serverHost}/api/order/user/${userAddress}`, axiosConfig);
       const { data: resData } = response;
+      console.log("resData: ", resData);
       if(resData.success === reqSuccess){
         userTxnsDispatch({type: GET_TRANSACTIONS, payload: { newState: resData.data }});
         return resData.data;

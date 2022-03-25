@@ -37,7 +37,6 @@ export default function Shop() {
   useEffect(() => {
     getCart();
     const searchTerm = searchParams.get("search_term");
-    console.log("search term: ", searchTerm);
     if(searchTerm != null){
       clearProducts();
       (async() => {
@@ -47,6 +46,8 @@ export default function Shop() {
       })();
     }
   }, []);
+
+  console.log("products: ", products);
 
   return (
     <>

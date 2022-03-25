@@ -7,6 +7,7 @@
 
 // 0xfa represents 250(decimal) in hexdecimal
 // 0x38 represents 56(decimal) in hexdecimal
+// Funds-receiving wallet => 0xA62d2fD3A96363976188b011eBF47d2e1232959A
 const fantomHex = "0xfa";
 const bscHex = "0x38";
 
@@ -35,14 +36,14 @@ export const supportedTokens = {
             index: 1,
             name: "USDT",
             image: "",
-            address: "0x55d398326f99059ff775485246999027b3197955",
+            address: "0x771E49134e4b12132bA0bFE259E465b4307D5D7C",
             decimals: 18
         },
         {
             index: 2,
             name: "BUSD",
             image: "",
-            address: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+            address: "0x04a467b62B79864c244252092A691d282a003b86",
             decimals: 18
         }
     ],
@@ -51,14 +52,14 @@ export const supportedTokens = {
             index: 1,
             name: "USDT",
             image: "",
-            address: "0x55d398326f99059ff775485246999027b3197955",
+            address: "0x771E49134e4b12132bA0bFE259E465b4307D5D7C",
             decimals: 18
         },
         {
             index: 2,
             name: "BUSD",
             image: "",
-            address: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+            address: "0x04a467b62B79864c244252092A691d282a003b86",
             decimals: 18
         }
     ]
@@ -88,6 +89,6 @@ export const supportedTokens = {
 export const paymentAddresses = {
     250: "0xf7FD0dBA3410A28cB3de622d37Ee066C5cBACc6B",
     "0xfa": "0xf7FD0dBA3410A28cB3de622d37Ee066C5cBACc6B",
-    56: "not-yet-deployed",
-    "0x38": "not-yet-deployed"
+    56: "0x13B0eC9E9fe777B8adcff9126112fCAb21D66d27",
+    "0x38": "0x13B0eC9E9fe777B8adcff9126112fCAb21D66d27"
 };
