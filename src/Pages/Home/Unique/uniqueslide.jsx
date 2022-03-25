@@ -94,7 +94,7 @@ export default function ReviewsSlider() {
             <div style={{margin:"0 auto", textAlign: "center"}} className="slider__item-info-text">
                 <h4 style={{marginTop:20}}>Transparency</h4>
                 <p style={{marginTop:20}} >
-                Your trust is of the highest degree of importance to us, so we work hard to earn it. We keep our workings and details of the shipment process transparent, so you always have an accurate picture. Additionally, our customer service is friendly and responsive to answer your questions readily.  
+                We keep our workings and details of the shipment process transparent, so you always have an accurate picture. Additionally, our customer service is friendly and responsive to answer your questions readily.  
             </p>
               </div>
           </div>

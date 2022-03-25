@@ -29,15 +29,15 @@ export default function OrderItems(){
                 const response = await axios.post(`${serverHost}/api/shippings/uid/${transaction.unique_id}`, signed, axiosConfig);
                 (() => toast.success("Good One"))();
             }else{
-                (() => toast.error("Message Not Signed 1"))();
+                (() => toast.error("Message Not Signed"))();
             }
 
         } catch (error) {
-            console.log("Signing error: ", error);
+            console.log(error);
             if(error.code === 4001){
                 (() => toast.error("Message Signing Rejected"))();
             }else{
-                (() => toast.error("Message Not Signed 2"))();
+                (() => toast.error("Message Not Signed"))();
             }
         }
     };
