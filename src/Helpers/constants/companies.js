@@ -1,7 +1,8 @@
 const companies = [
     {
         name: "amazon",
-        domain: "amazon.com"
+        domain: "amazon.com",
+        logoUrl: "/images/companies/amazon.svg"
     }
 ];
 
