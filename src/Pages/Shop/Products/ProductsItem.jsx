@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
 import { GlobalContext } from "../../../Context/GlobalContext";
+import genRandomness from "../../../Helpers/genRandomness";
 
 export default function ProductsItem(props) {
 
-  // findIndex  
   // Global states and functions
   const { cart, removeItem, addToCart } = useContext(GlobalContext);
 
@@ -25,14 +25,16 @@ export default function ProductsItem(props) {
       return;
     }
     const cartProduct = {
+      id: genRandomness(),
       asin: props.asin,
       title: props.title,
       price: props.price,
       image: props.image,
       link: props.link,
-      quantity: 1
+      quantity: 1,
+      color: "",
+      size: ""
     };
-    console.log("cartItem: ", cartProduct);
 
     if(addToCart(cartProduct)){
       setAdded(true);

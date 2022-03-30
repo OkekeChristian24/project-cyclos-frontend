@@ -28,9 +28,10 @@ export default function Cart() {
     })();
   }, []);
 
+  console.log("cart: ", cart);
+
   return (
     <>
-      
       <Hero>
           
         <div className="cart">
@@ -63,14 +64,16 @@ export default function Cart() {
               {cart.products.map((CartLineItems) => {
                 return (
                   <CartLineItem
-                    key={CartLineItems.asin}
-                    id={CartLineItems.asin}
+                    key={CartLineItems.id}
+                    id={CartLineItems.id}
                     asin={CartLineItems.asin}
                     image={CartLineItems.image}
                     alt={CartLineItems.alt}
                     link={CartLineItems.link}
                     quantity={CartLineItems.quantity}
                     title={CartLineItems.title}
+                    color={CartLineItems.color}
+                    size={CartLineItems.size}
                     price={CartLineItems.price}
                     subtotal={CartLineItems.price}
                   />
@@ -140,8 +143,6 @@ export default function Cart() {
         {/*  */}
         </div>
       </div>
-      
-      
     </>
   );
 }

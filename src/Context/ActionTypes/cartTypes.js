@@ -3,4 +3,7 @@ export const GET_STORED_CART = "GET_STORED_CART";
 export const UPDATE_CART = "UPDATE_CART";
 export const DELETE_CART = "DELETE_CART";
 export const UPDATE_ITEM = "UPDATE_ITEM";
+export const DUPLICATE_ITEM = "DUPLICATE_ITEM";
+export const UPDATE_ITEM_COLOR = "UPDATE_ITEM_COLOR";
+export const UPDATE_ITEM_SIZE = "UPDATE_ITEM_SIZE";
 export const REMOVE_ITEM = "REMOVE_ITEM";

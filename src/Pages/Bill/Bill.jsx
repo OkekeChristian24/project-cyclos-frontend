@@ -126,12 +126,14 @@ export default function Bill() {
       const totalQty = cart.totalQty;
       let products = [];
       for(let i=0; i<cart.products.length; i++){
-        let price = (new BigNumber(cart.products[i].price*10**tokenDecimals).toFixed(0));
+        let price = (new BigNumber(cart.products[i].price*10**tokenDecimals).toFixed());
         let product = {
           asin: cart.products[i].asin,
           price: price,
           title: cart.products[i].title,
           image: cart.products[i].image,
+          color: cart.products[i].color,
+          size: cart.products[i].size,
           quantity: cart.products[i].quantity
         };
         products = [...products, product];

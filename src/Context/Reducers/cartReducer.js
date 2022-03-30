@@ -1,10 +1,14 @@
+import genRandomness from "../../Helpers/genRandomness";
 import { 
     ADD_TO_CART,
     GET_STORED_CART,
     UPDATE_CART,
     DELETE_CART,
-    REMOVE_ITEM,
-    UPDATE_ITEM
+    UPDATE_ITEM,
+    DUPLICATE_ITEM,
+    UPDATE_ITEM_COLOR,
+    UPDATE_ITEM_SIZE,
+    REMOVE_ITEM
   } from "../ActionTypes/cartTypes";
   
 const initCart = {
@@ -45,6 +49,7 @@ const cartReducer = (state = {}, action) => {
                 return newState_ADD_TO_CART;
             }
             return state;
+
         case UPDATE_CART:
 
             const newState_UPDATE_CART = {
@@ -58,26 +63,29 @@ const cartReducer = (state = {}, action) => {
 
 
         case REMOVE_ITEM:
-            const itemIndex = state.products.findIndex(product => product.asin === action.payload.asin);
+            const itemIndex = state.products.findIndex(product => product.id === action.payload.id);
             if(itemIndex === -1){
                 return state;
             }
+
             const item = state.products[itemIndex];
             
             const newState_REMOVE_ITEM =  {
                 ...state,
                 totalQty: state.totalQty - item.quantity,
                 totalPrice: state.totalPrice - (item.quantity * item.price),
-                products: state.products.filter(product => product.asin !== item.asin)
+                products: state.products.filter(product => product.id !== item.id)
             };
+
             window.localStorage.setItem(process.env.REACT_APP_CART_NAME, JSON.stringify(newState_REMOVE_ITEM));
+            
             return newState_REMOVE_ITEM;
         
         case UPDATE_ITEM:
-            const updateItemIndex = state.products.findIndex(product => product.asin === action.payload.product.asin);
+            const updateItemIndex = state.products.findIndex(product => product.id === action.payload.product.id);
             if(updateItemIndex !== -1){
                 const itemToUpdate = state.products[updateItemIndex];
-                const filteredProducts = state.products.filter(product => product.asin !== itemToUpdate.asin);
+                const filteredProducts = state.products.filter(product => product.id !== itemToUpdate.id);
                 const filteredState = {
                     ...state,
                     totalQty: (state.totalQty - itemToUpdate.quantity),
@@ -93,8 +101,29 @@ const cartReducer = (state = {}, action) => {
                 window.localStorage.setItem(process.env.REACT_APP_CART_NAME, JSON.stringify(newState_UPDATE_ITEM));
                 return newState_UPDATE_ITEM;
             }
-
             return state;
+
+        case DUPLICATE_ITEM:
+            const dupItemIndex = state.products.findIndex(product => product.id === action.payload.id);
+            if(dupItemIndex === -1){
+                return state;
+            }
+            const dupItem = state.products[dupItemIndex];
+            dupItem.id = genRandomness();
+            const newState_DUP_ITEM = {
+                ...state,
+                totalQty: (state.totalQty + dupItem.quantity),
+                totalPrice: state.totalPrice + (dupItem.quantity * dupItem.price),
+                products: [dupItem, ...state.products]
+            };
+            window.localStorage.setItem(process.env.REACT_APP_CART_NAME, JSON.stringify(newState_DUP_ITEM));
+            return newState_DUP_ITEM;
+
+        case UPDATE_ITEM_COLOR: 
+            return;
+
+        case UPDATE_ITEM_SIZE: 
+             return;
 
         case DELETE_CART:
             window.localStorage.removeItem(process.env.REACT_APP_CART_NAME);

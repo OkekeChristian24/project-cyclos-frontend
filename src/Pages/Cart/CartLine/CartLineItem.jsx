@@ -20,7 +20,7 @@ export default function CartLineItem(props) {
   };
 
   const handleItemDelete = () => {
-    removeItem(props.asin);
+    removeItem(props.id);
   };
 
   
@@ -29,10 +29,11 @@ export default function CartLineItem(props) {
       return;
     }
     if(itemQty <= 0){
-      removeItem(props.asin);
+      removeItem(props.id);
       return;
     }
     const cartProduct = {
+      id: props.id,
       asin: props.asin,
       title: props.title,
       price: props.price,
@@ -42,6 +43,66 @@ export default function CartLineItem(props) {
     };
     updateItem(cartProduct);
     setNeedUpdate(false);
+  };
+
+  const increaseQty = () => {
+    const cartProduct = {
+      id: props.id,
+      asin: props.asin,
+      title: props.title,
+      price: props.price,
+      image: props.image,
+      link: props.link,
+      quantity: (props.quantity + 1)
+    };
+    updateItem(cartProduct);
+
+  };
+
+  const decreaseQty = () => {
+    if(props.quantity === 1){
+      return;
+    }
+    const cartProduct = {
+      id: props.id,
+      asin: props.asin,
+      title: props.title,
+      price: props.price,
+      image: props.image,
+      link: props.link,
+      quantity: (props.quantity - 1)
+    };
+    updateItem(cartProduct);
+  };
+
+  const handleColorChange = (event) => {
+    const cartProduct = {
+      id: props.id,
+      asin: props.asin,
+      title: props.title,
+      price: props.price,
+      image: props.image,
+      color: event.target.value,
+      size: props.size,
+      link: props.link,
+      quantity: props.quantity
+    };
+    updateItem(cartProduct);
+  };
+
+  const handleSizeChange = (event) => {
+    const cartProduct = {
+      id: props.id,
+      asin: props.asin,
+      title: props.title,
+      price: props.price,
+      image: props.image,
+      color: props.color,
+      size: event.target.value,
+      link: props.link,
+      quantity: props.quantity
+    };
+    updateItem(cartProduct);
   };
 
 
