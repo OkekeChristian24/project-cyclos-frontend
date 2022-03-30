@@ -8,6 +8,8 @@ export default function CartLineItem(props) {
 
   // Local states
   const [itemQty, setItemQty] = useState(props.quantity);
+  const [color, setColor] = useState(props.color);
+  const [size, setSize] = useState(props.size);
   const [needUpdate, setNeedUpdate] = useState(false);
 
   const handleQtyChange = (event) => {
@@ -18,14 +20,34 @@ export default function CartLineItem(props) {
     setItemQty(Number(event.target.value));
     setNeedUpdate(true);
   };
+  //handle color 
+  const handleColorChange = (event) => {
+    if((event.target.value)){
+      setColor(event.target.value);
+      return;
+    }
+    setColor(String(event.target.value));
+    setNeedUpdate(true);
+  };
 
   const handleItemDelete = () => {
     removeItem(props.id);
   };
+    //handle size
+    const handleSizeChange = (event) => {
+      if(isNaN(event.target.value)){
+        setSize(event.target.value);
+        return;
+      }
+      setSize(Number(event.target.value));
+      setNeedUpdate(true);
+    };
+  
+  
 
   
   const handleItemUpdate = () => {
-    if(typeof itemQty !== "number"){
+    if(typeof itemQty !== "number" &&  typeof size !== "number" &&  typeof color !== "string" ){
       return;
     }
     if(itemQty <= 0){
@@ -75,35 +97,35 @@ export default function CartLineItem(props) {
     updateItem(cartProduct);
   };
 
-  const handleColorChange = (event) => {
-    const cartProduct = {
-      id: props.id,
-      asin: props.asin,
-      title: props.title,
-      price: props.price,
-      image: props.image,
-      color: event.target.value,
-      size: props.size,
-      link: props.link,
-      quantity: props.quantity
-    };
-    updateItem(cartProduct);
-  };
+  // const handleColorChange = (event) => {
+  //   const cartProduct = {
+  //     id: props.id,
+  //     asin: props.asin,
+  //     title: props.title,
+  //     price: props.price,
+  //     image: props.image,
+  //     color: event.target.value,
+  //     size: props.size,
+  //     link: props.link,
+  //     quantity: props.quantity
+  //   };
+  //   updateItem(cartProduct);
+  // };
 
-  const handleSizeChange = (event) => {
-    const cartProduct = {
-      id: props.id,
-      asin: props.asin,
-      title: props.title,
-      price: props.price,
-      image: props.image,
-      color: props.color,
-      size: event.target.value,
-      link: props.link,
-      quantity: props.quantity
-    };
-    updateItem(cartProduct);
-  };
+  // const handleSizeChange = (event) => {
+  //   const cartProduct = {
+  //     id: props.id,
+  //     asin: props.asin,
+  //     title: props.title,
+  //     price: props.price,
+  //     image: props.image,
+  //     color: props.color,
+  //     size: event.target.value,
+  //     link: props.link,
+  //     quantity: props.quantity
+  //   };
+  //   updateItem(cartProduct);
+  // };
 
 
   const updateBtn = {
@@ -139,14 +161,35 @@ export default function CartLineItem(props) {
             <input type="text" onChange={handleQtyChange} value={itemQty} />
           </div>
         </div>
+
+
+        <div className="cart__table-col">
+          <span className="mobileTitle">Color</span>
+          <div className="cartLine__quantity">
+            <input type="text" onChange={handleColorChange} value={color} />
+          </div>
+        </div>
+        <div className="cart__table-col">
+          <span className="mobileTitle">Size</span>
+          <div className="cartLine__quantity">
+            <input type="text" onChange={handleSizeChange} value={size} />
+          </div>
+        </div>
         <div className="cart__table-col">
           <span className="mobileTitle">Subtotal</span>
           <div className="cartLine__price">${props.subtotal}</div>
         </div>
-        <div className="cart__table-col">
+
+ 
+     <div style={{flexDirection:"row", justifyContent: "center", alignContent: "center"}}className="cart__table-col">
           <button onClick={handleItemUpdate} disabled={!needUpdate} style={updateBtn} className="">Update Cart</button>
         </div>
+ 
       </div>
+      <div style={{width: "100%", flexDirection:"row", justifyContent: "flex-end", alignContent: "center"}}className="cart__table-col">
+          <button onClick={handleItemUpdate} disabled={!needUpdate} style={{marginTop: 20}}className="button add">Duplicate</button>
+  
+        </div>
     </div>
   );
 }

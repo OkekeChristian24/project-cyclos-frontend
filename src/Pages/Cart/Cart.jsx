@@ -52,6 +52,12 @@ export default function Cart() {
                 <div className="cart__table-col">
                   <div className="cart__table-col-title">Quantity</div>
                 </div>
+                <div  className="cart__table-col">
+                  <div className="cart__table-col-title">Color</div>
+                </div>
+                <div className="cart__table-col">
+                  <div className="cart__table-col-title">Size</div>
+                </div>
                 <div className="cart__table-col">
                   <div className="cart__table-col-title">Subtotal</div>
                 </div>
@@ -82,7 +88,7 @@ export default function Cart() {
             </div>
             <div className="cart__table-footer">
               <div className="cart__table-footer-row">
-                <button className="button extra">Coupon c</button>
+                <button className="button extra">Coupon </button>
                 <button className="button primary">Apply coupon</button>
               </div>
               <div className="cart__table-footer-row">
