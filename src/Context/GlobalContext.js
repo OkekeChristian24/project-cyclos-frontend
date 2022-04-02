@@ -34,7 +34,8 @@ import {
   UPDATE_CART,
   DELETE_CART,
   UPDATE_ITEM,
-  REMOVE_ITEM
+  REMOVE_ITEM,
+  DUPLICATE_ITEM
 } from './ActionTypes/cartTypes';
 
 import { GET_TX_DETAILS, MAKE_PAYMENT, PAYMENT_ERROR } from './ActionTypes/paymentTypes';
@@ -275,7 +276,7 @@ export const GlobalProvider = ({ children }) => {
   };
 
   const duplicateItem = (id) => {
-    cartDispatch({type: UPDATE_ITEM, payload: { id }});
+    cartDispatch({type: DUPLICATE_ITEM, payload: { id }});
 
   };
 

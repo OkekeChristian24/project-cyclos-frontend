@@ -92,11 +92,15 @@ const cartReducer = (state = {}, action) => {
                     totalPrice: state.totalPrice - (itemToUpdate.quantity * itemToUpdate.price),
                     products: filteredProducts
                 };
+                // arr.splice(index, 0, item);
+                // [action.payload.product, ...filteredState.products]
+                // filteredState.products.splice(updateItemIndex, 0, action.payload.product)
+                filteredState.products.splice(updateItemIndex, 0, action.payload.product);
                 const newState_UPDATE_ITEM = {
                     ...filteredState,
                     totalQty: (filteredState.totalQty + action.payload.product.quantity),
                     totalPrice: (filteredState.totalPrice) + (action.payload.product.quantity * action.payload.product.price),
-                    products: [action.payload.product, ...filteredState.products]
+                    products: [...filteredState.products]
                 };
                 window.localStorage.setItem(process.env.REACT_APP_CART_NAME, JSON.stringify(newState_UPDATE_ITEM));
                 return newState_UPDATE_ITEM;
@@ -109,12 +113,15 @@ const cartReducer = (state = {}, action) => {
                 return state;
             }
             const dupItem = state.products[dupItemIndex];
-            dupItem.id = genRandomness();
+            const newID = genRandomness();
+            dupItem.id = newID;
+            state.products.splice((dupItemIndex + 1), 0, dupItem);
+
             const newState_DUP_ITEM = {
                 ...state,
                 totalQty: (state.totalQty + dupItem.quantity),
                 totalPrice: state.totalPrice + (dupItem.quantity * dupItem.price),
-                products: [dupItem, ...state.products]
+                products: [...state.products]
             };
             window.localStorage.setItem(process.env.REACT_APP_CART_NAME, JSON.stringify(newState_DUP_ITEM));
             return newState_DUP_ITEM;

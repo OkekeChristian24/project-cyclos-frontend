@@ -21,6 +21,7 @@ export default function Cart() {
   useEffect(() => {
     (async() => {
       const fees = await getFeesPercent(companies[0].name);
+      console.log('Fees: ', fees);
       if(fees !== null){
         setChargePercent(fees.charge);
         setTaxPercent(fees.tax);
@@ -61,9 +62,9 @@ export default function Cart() {
                 <div className="cart__table-col">
                   <div className="cart__table-col-title">Subtotal</div>
                 </div>
-                <div className="cart__table-col">
+                {/* <div className="cart__table-col">
                   <div className="cart__table-col-title"></div>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="cart__table-body">
@@ -87,10 +88,10 @@ export default function Cart() {
               })}
             </div>
             <div className="cart__table-footer">
-              <div className="cart__table-footer-row">
+              {/* <div className="cart__table-footer-row">
                 <button className="button extra">Coupon </button>
                 <button className="button primary">Apply coupon</button>
-              </div>
+              </div> */}
               <div className="cart__table-footer-row">
                 <button onClick={handleCartDelete} className="button secondary">Clear cart</button>
               </div>
@@ -123,11 +124,11 @@ export default function Cart() {
               </div>
               <div className="total__inner-row">
                 <h4>Charge</h4>
-                <span>{`${chargePercent}%`}</span>
+                <span>{chargePercent == null ? "0%" : `${chargePercent}%`}</span>
               </div>
               <div className="total__inner-row">
                 <h4>Tax</h4>
-                <span>{`${taxPercent}%`}</span>
+                <span>{ taxPercent == null ? "0%" : `${taxPercent}%`}</span>
               </div>
               <div className="total__inner-row">
                 <h4>Total</h4>

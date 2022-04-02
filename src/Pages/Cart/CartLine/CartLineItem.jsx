@@ -3,8 +3,9 @@ import { GlobalContext } from "../../../Context/GlobalContext";
 
 export default function CartLineItem(props) {
 
+
   // global states
-  const { updateItem, removeItem } = useContext(GlobalContext);
+  const { updateItem, removeItem, duplicateItem } = useContext(GlobalContext);
 
   // Local states
   const [itemQty, setItemQty] = useState(props.quantity);
@@ -14,60 +15,90 @@ export default function CartLineItem(props) {
 
   const handleQtyChange = (event) => {
     if(isNaN(event.target.value)){
-      setItemQty(event.target.value);
       return;
     }
+    
     setItemQty(Number(event.target.value));
-    setNeedUpdate(true);
+    const cartProduct = {
+      id: props.id,
+      asin: props.asin,
+      title: props.title,
+      price: props.price,
+      image: props.image,
+      link: props.link,
+      quantity: Number(event.target.value)
+    };
+    updateItem(cartProduct);
+    
+    // setNeedUpdate(true);
   };
-  //handle color 
+  
+  // Handle color change
   const handleColorChange = (event) => {
-    if((event.target.value)){
-      setColor(event.target.value);
-      return;
-    }
+    
     setColor(String(event.target.value));
-    setNeedUpdate(true);
+    
+    const cartProduct = {
+      id: props.id,
+      asin: props.asin,
+      title: props.title,
+      price: props.price,
+      image: props.image,
+      color: String(event.target.value),
+      size: props.size,
+      link: props.link,
+      quantity: props.quantity
+    };
+    
+    updateItem(cartProduct);
   };
 
   const handleItemDelete = () => {
     removeItem(props.id);
   };
-    //handle size
-    const handleSizeChange = (event) => {
-      if(isNaN(event.target.value)){
-        setSize(event.target.value);
-        return;
-      }
-      setSize(Number(event.target.value));
-      setNeedUpdate(true);
-    };
-  
-  
 
-  
-  const handleItemUpdate = () => {
-    if(typeof itemQty !== "number" &&  typeof size !== "number" &&  typeof color !== "string" ){
-      return;
-    }
-    if(itemQty <= 0){
-      removeItem(props.id);
-      return;
-    }
+  // Handle size change
+  const handleSizeChange = (event) => {
+    setSize(String(event.target.value));
     const cartProduct = {
       id: props.id,
       asin: props.asin,
       title: props.title,
       price: props.price,
       image: props.image,
+      color: props.color,
+      size: String(event.target.value),
       link: props.link,
-      quantity: itemQty
+      quantity: props.quantity
     };
     updateItem(cartProduct);
-    setNeedUpdate(false);
+    
   };
+  
+  // const handleItemUpdate = () => {
+  //   if(typeof itemQty !== "number" &&  typeof size !== "number" &&  typeof color !== "string" ){
+  //     return;
+  //   }
+  //   if(itemQty <= 0){
+  //     removeItem(props.id);
+  //     return;
+  //   }
+  //   const cartProduct = {
+  //     id: props.id,
+  //     asin: props.asin,
+  //     title: props.title,
+  //     price: props.price,
+  //     image: props.image,
+  //     link: props.link,
+  //     quantity: itemQty
+  //   };
+  //   updateItem(cartProduct);
+  //   setNeedUpdate(false);
+  // };
 
   const increaseQty = () => {
+    setItemQty(itemQty => itemQty + 1);
+
     const cartProduct = {
       id: props.id,
       asin: props.asin,
@@ -75,8 +106,9 @@ export default function CartLineItem(props) {
       price: props.price,
       image: props.image,
       link: props.link,
-      quantity: (props.quantity + 1)
+      quantity: Number(props.quantity + 1)
     };
+    // setItemQty(itemQty => itemQty + 1);
     updateItem(cartProduct);
 
   };
@@ -85,6 +117,7 @@ export default function CartLineItem(props) {
     if(props.quantity === 1){
       return;
     }
+    setItemQty(itemQty => itemQty - 1);
     const cartProduct = {
       id: props.id,
       asin: props.asin,
@@ -92,41 +125,14 @@ export default function CartLineItem(props) {
       price: props.price,
       image: props.image,
       link: props.link,
-      quantity: (props.quantity - 1)
+      quantity: Number(props.quantity - 1)
     };
     updateItem(cartProduct);
   };
 
-  // const handleColorChange = (event) => {
-  //   const cartProduct = {
-  //     id: props.id,
-  //     asin: props.asin,
-  //     title: props.title,
-  //     price: props.price,
-  //     image: props.image,
-  //     color: event.target.value,
-  //     size: props.size,
-  //     link: props.link,
-  //     quantity: props.quantity
-  //   };
-  //   updateItem(cartProduct);
-  // };
-
-  // const handleSizeChange = (event) => {
-  //   const cartProduct = {
-  //     id: props.id,
-  //     asin: props.asin,
-  //     title: props.title,
-  //     price: props.price,
-  //     image: props.image,
-  //     color: props.color,
-  //     size: event.target.value,
-  //     link: props.link,
-  //     quantity: props.quantity
-  //   };
-  //   updateItem(cartProduct);
-  // };
-
+  const handleDuplicate = () => {
+    duplicateItem(props.id);
+  }
 
   const updateBtn = {
     margin: "6px",
@@ -158,7 +164,9 @@ export default function CartLineItem(props) {
           <span className="mobileTitle">Quantity</span>
 
           <div className="cartLine__quantity">
+            <button onClick={decreaseQty}>-</button>
             <input type="text" onChange={handleQtyChange} value={itemQty} />
+            <button onClick={increaseQty}>+</button>
           </div>
         </div>
 
@@ -181,13 +189,13 @@ export default function CartLineItem(props) {
         </div>
 
  
-     <div style={{flexDirection:"row", justifyContent: "center", alignContent: "center"}}className="cart__table-col">
-          <button onClick={handleItemUpdate} disabled={!needUpdate} style={updateBtn} className="">Update Cart</button>
-        </div>
+     {/* <div style={{flexDirection:"row", justifyContent: "center", alignContent: "center"}}className="cart__table-col">
+          <button onClick={handleQtyChange} disabled={!needUpdate} style={updateBtn} className="">Update Cart</button>
+      </div> */}
  
       </div>
       <div style={{width: "100%", flexDirection:"row", justifyContent: "flex-end", alignContent: "center"}}className="cart__table-col">
-          <button onClick={handleItemUpdate} disabled={!needUpdate} style={{marginTop: 20}}className="button add">Duplicate</button>
+          <button onClick={handleDuplicate} style={{marginTop: 20}}className="button add">Duplicate</button>
   
         </div>
     </div>
