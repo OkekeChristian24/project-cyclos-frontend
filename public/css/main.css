@@ -352,6 +352,20 @@ p.sm {
   width: 20px;
 }
 
+.incBtn{
+  padding: 8px 12px;
+  border-radius: 9px;
+  font-weight: 700;
+  color: #100a21;
+}
+
+.decBtn{
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: 700;
+  color: #100a21;
+}
+
 .switch {
   position: fixed;
   bottom: 50px;
@@ -2087,6 +2101,7 @@ p.sm {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  width: 100%;
 }
 .cart__table-col {
   width: 140px;
@@ -2226,9 +2241,21 @@ p.sm {
   text-align: center;
 }
 .cartLine__quantity {
-  width: 80px;
+  width: 200px;
   height: 80px;
   margin: 0 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+  width: 100%;
+  
 }
 .cartLine__quantity input {
   border: 1px solid var(--search-border);
