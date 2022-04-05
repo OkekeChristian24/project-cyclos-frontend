@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { GlobalContext } from "../../../Context/GlobalContext";
+import genRandomness from "../../../Helpers/genRandomness";
 
 export default function CartLineItem(props) {
 
@@ -105,6 +106,8 @@ export default function CartLineItem(props) {
       title: props.title,
       price: props.price,
       image: props.image,
+      color: props.color,
+      size: props.size,
       link: props.link,
       quantity: Number(props.quantity + 1)
     };
@@ -124,6 +127,8 @@ export default function CartLineItem(props) {
       title: props.title,
       price: props.price,
       image: props.image,
+      color: props.color,
+      size: props.size,
       link: props.link,
       quantity: Number(props.quantity - 1)
     };
@@ -131,7 +136,8 @@ export default function CartLineItem(props) {
   };
 
   const handleDuplicate = () => {
-    duplicateItem(props.id);
+    const newID = genRandomness();
+    duplicateItem(props.id, newID);
   }
 
   const updateBtn = {
@@ -151,7 +157,7 @@ export default function CartLineItem(props) {
         <div className="cart__table-col">
           <span className="mobileTitle">Product</span>
           <div className="cartLine__image">
-            <img src={props.image} alt={props.alt} />
+            <img src={props.image} alt="product" />
           </div>
           <div className="cartLine__desc">{props.title}</div>
         </div>
@@ -164,9 +170,9 @@ export default function CartLineItem(props) {
           <span className="mobileTitle">Quantity</span>
 
           <div className="cartLine__quantity">
-            <button onClick={decreaseQty}>-</button>
+            <button className="decBtn" onClick={decreaseQty}>-</button>
             <input type="text" onChange={handleQtyChange} value={itemQty} />
-            <button onClick={increaseQty}>+</button>
+            <button className="incBtn" onClick={increaseQty}>+</button>
           </div>
         </div>
 
@@ -189,15 +195,14 @@ export default function CartLineItem(props) {
         </div>
 
  
-     {/* <div style={{flexDirection:"row", justifyContent: "center", alignContent: "center"}}className="cart__table-col">
-          <button onClick={handleQtyChange} disabled={!needUpdate} style={updateBtn} className="">Update Cart</button>
-      </div> */}
+     <div style={{flexDirection:"row", justifyContent: "center", alignContent: "center"}}className="cart__table-col">
+          <button onClick={handleDuplicate} className="button add">Duplicate</button>
+      </div>
  
       </div>
-      <div style={{width: "100%", flexDirection:"row", justifyContent: "flex-end", alignContent: "center"}}className="cart__table-col">
-          <button onClick={handleDuplicate} style={{marginTop: 20}}className="button add">Duplicate</button>
-  
-        </div>
+      {/* <div style={{width: "100%", flexDirection:"row", justifyContent: "flex-end", alignContent: "center"}}className="cart__table-col">
+        <button onClick={handleDuplicate} style={{marginTop: 20}}className="button add">Duplicate</button>
+      </div> */}
     </div>
   );
 }

@@ -92,9 +92,6 @@ const cartReducer = (state = {}, action) => {
                     totalPrice: state.totalPrice - (itemToUpdate.quantity * itemToUpdate.price),
                     products: filteredProducts
                 };
-                // arr.splice(index, 0, item);
-                // [action.payload.product, ...filteredState.products]
-                // filteredState.products.splice(updateItemIndex, 0, action.payload.product)
                 filteredState.products.splice(updateItemIndex, 0, action.payload.product);
                 const newState_UPDATE_ITEM = {
                     ...filteredState,
@@ -112,9 +109,11 @@ const cartReducer = (state = {}, action) => {
             if(dupItemIndex === -1){
                 return state;
             }
-            const dupItem = state.products[dupItemIndex];
-            const newID = genRandomness();
-            dupItem.id = newID;
+            const dupItem = {
+                ...state.products[dupItemIndex],
+                id: action.payload.newID
+            };
+            
             state.products.splice((dupItemIndex + 1), 0, dupItem);
 
             const newState_DUP_ITEM = {

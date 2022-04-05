@@ -21,7 +21,6 @@ export default function Cart() {
   useEffect(() => {
     (async() => {
       const fees = await getFeesPercent(companies[0].name);
-      console.log('Fees: ', fees);
       if(fees !== null){
         setChargePercent(fees.charge);
         setTaxPercent(fees.tax);
@@ -29,7 +28,7 @@ export default function Cart() {
     })();
   }, []);
 
-  console.log("cart: ", cart);
+
 
   return (
     <>
@@ -62,9 +61,9 @@ export default function Cart() {
                 <div className="cart__table-col">
                   <div className="cart__table-col-title">Subtotal</div>
                 </div>
-                {/* <div className="cart__table-col">
+                <div className="cart__table-col">
                   <div className="cart__table-col-title"></div>
-                </div> */}
+                </div>
               </div>
             </div>
             <div className="cart__table-body">
@@ -75,14 +74,13 @@ export default function Cart() {
                     id={CartLineItems.id}
                     asin={CartLineItems.asin}
                     image={CartLineItems.image}
-                    alt={CartLineItems.alt}
                     link={CartLineItems.link}
                     quantity={CartLineItems.quantity}
                     title={CartLineItems.title}
                     color={CartLineItems.color}
                     size={CartLineItems.size}
                     price={CartLineItems.price}
-                    subtotal={CartLineItems.price}
+                    subtotal={Number(CartLineItems.price) * Number(CartLineItems.quantity)}
                   />
                 );
               })}

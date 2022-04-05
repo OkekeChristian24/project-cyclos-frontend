@@ -275,8 +275,8 @@ export const GlobalProvider = ({ children }) => {
     cartDispatch({type: UPDATE_ITEM, payload: { product: productToUpdate }});
   };
 
-  const duplicateItem = (id) => {
-    cartDispatch({type: DUPLICATE_ITEM, payload: { id }});
+  const duplicateItem = (id, newID) => {
+    cartDispatch({type: DUPLICATE_ITEM, payload: { id, newID }});
 
   };
 
