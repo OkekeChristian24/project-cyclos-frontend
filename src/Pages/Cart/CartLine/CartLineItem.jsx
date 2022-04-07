@@ -140,14 +140,7 @@ export default function CartLineItem(props) {
     duplicateItem(props.id, newID);
   }
 
-  const updateBtn = {
-    margin: "6px",
-    padding: "4px",
-    color: needUpdate ? "green" : "grey",
-    border: "2px solid black",
-    borderRadius: "12px"
-  };
-
+  
   return (
     <div className="cartLine">
       <div className="cartLine__delete">
@@ -164,7 +157,7 @@ export default function CartLineItem(props) {
         <div className="cart__table-col">
           <span className="mobileTitle">Price</span>
 
-          <div className="cartLine__price">${props.price}</div>
+          <div className="cartLine__price">${Number(props.price).toFixed(3)}</div>
         </div>
         <div className="cart__table-col">
           <span className="mobileTitle">Quantity</span>
@@ -191,7 +184,7 @@ export default function CartLineItem(props) {
         </div>
         <div className="cart__table-col">
           <span className="mobileTitle">Subtotal</span>
-          <div className="cartLine__price">${props.subtotal}</div>
+          <div className="cartLine__price">${Number(props.subtotal).toFixed(3)}</div>
         </div>
 
  
