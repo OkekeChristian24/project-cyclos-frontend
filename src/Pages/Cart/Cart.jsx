@@ -28,9 +28,10 @@ export default function Cart() {
     })();
   }, []);
 
+
+
   return (
     <>
-      
       <Hero>
           
         <div className="cart">
@@ -51,6 +52,12 @@ export default function Cart() {
                 <div className="cart__table-col">
                   <div className="cart__table-col-title">Quantity</div>
                 </div>
+                <div  className="cart__table-col">
+                  <div className="cart__table-col-title">Color</div>
+                </div>
+                <div className="cart__table-col">
+                  <div className="cart__table-col-title">Size</div>
+                </div>
                 <div className="cart__table-col">
                   <div className="cart__table-col-title">Subtotal</div>
                 </div>
@@ -63,25 +70,26 @@ export default function Cart() {
               {cart.products.map((CartLineItems) => {
                 return (
                   <CartLineItem
-                    key={CartLineItems.asin}
-                    id={CartLineItems.asin}
+                    key={CartLineItems.id}
+                    id={CartLineItems.id}
                     asin={CartLineItems.asin}
                     image={CartLineItems.image}
-                    alt={CartLineItems.alt}
                     link={CartLineItems.link}
                     quantity={CartLineItems.quantity}
                     title={CartLineItems.title}
+                    color={CartLineItems.color}
+                    size={CartLineItems.size}
                     price={CartLineItems.price}
-                    subtotal={CartLineItems.price}
+                    subtotal={Number(CartLineItems.price) * Number(CartLineItems.quantity)}
                   />
                 );
               })}
             </div>
             <div className="cart__table-footer">
-              <div className="cart__table-footer-row">
-                <button className="button extra">Coupon c</button>
+              {/* <div className="cart__table-footer-row">
+                <button className="button extra">Coupon </button>
                 <button className="button primary">Apply coupon</button>
-              </div>
+              </div> */}
               <div className="cart__table-footer-row">
                 <button onClick={handleCartDelete} className="button secondary">Clear cart</button>
               </div>
@@ -114,11 +122,11 @@ export default function Cart() {
               </div>
               <div className="total__inner-row">
                 <h4>Charge</h4>
-                <span>{`${chargePercent}%`}</span>
+                <span>{chargePercent == null ? "0%" : `${chargePercent}%`}</span>
               </div>
               <div className="total__inner-row">
                 <h4>Tax</h4>
-                <span>{`${taxPercent}%`}</span>
+                <span>{ taxPercent == null ? "0%" : `${taxPercent}%`}</span>
               </div>
               <div className="total__inner-row">
                 <h4>Total</h4>
@@ -140,8 +148,6 @@ export default function Cart() {
         {/*  */}
         </div>
       </div>
-      
-      
     </>
   );
 }

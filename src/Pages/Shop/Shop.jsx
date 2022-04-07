@@ -21,6 +21,7 @@ export default function Shop() {
   const submitSearch = async(e) => {
     e.preventDefault();
     setIsSearching(true);
+    clearProducts();
     await searchProducts(searchTerm, companies[0].domain);
     setIsSearching(false);
   };
@@ -47,8 +48,7 @@ export default function Shop() {
     }
   }, []);
 
-  console.log("products: ", products);
-
+  console.log("In shop, products: ", products);
   return (
     <>
       <Hero>

@@ -27,7 +27,7 @@ export default function OrderItems(){
             if(signed !== undefined){
                 // Send signed message
                 const response = await axios.post(`${serverHost}/api/shippings/uid/${transaction.unique_id}`, signed, axiosConfig);
-                (() => toast.success("Good One"))();
+                (() => toast.success("Message Signed"))();
             }else{
                 (() => toast.error("Message Not Signed"))();
             }

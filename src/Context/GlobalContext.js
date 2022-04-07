@@ -34,7 +34,8 @@ import {
   UPDATE_CART,
   DELETE_CART,
   UPDATE_ITEM,
-  REMOVE_ITEM
+  REMOVE_ITEM,
+  DUPLICATE_ITEM
 } from './ActionTypes/cartTypes';
 
 import { GET_TX_DETAILS, MAKE_PAYMENT, PAYMENT_ERROR } from './ActionTypes/paymentTypes';
@@ -244,6 +245,7 @@ export const GlobalProvider = ({ children }) => {
       console.log(error);
     }
   };
+
   const addToCart = (productToAdd) => {
     const productCart = JSON.parse(window.localStorage.getItem(process.env.REACT_APP_CART_NAME));
     if(productCart){
@@ -255,19 +257,27 @@ export const GlobalProvider = ({ children }) => {
     cartDispatch({type: ADD_TO_CART, payload: { product: productToAdd }});
     return true;
   };
+
   const updateCart = (updatedState) => {
     cartDispatch({type: UPDATE_CART, payload: { updatedState }});
   };
+
   const deleteCart = () => {
     cartDispatch({type: DELETE_CART});
 
   };
-  const removeItem = (asin) => {
-    cartDispatch({type: REMOVE_ITEM, payload: { asin }});
+
+  const removeItem = (id) => {
+    cartDispatch({type: REMOVE_ITEM, payload: { id }});
   };
 
   const updateItem = (productToUpdate) => {
     cartDispatch({type: UPDATE_ITEM, payload: { product: productToUpdate }});
+  };
+
+  const duplicateItem = (id, newID) => {
+    cartDispatch({type: DUPLICATE_ITEM, payload: { id, newID }});
+
   };
 
   // == End of Cart actions == //
@@ -447,6 +457,7 @@ export const GlobalProvider = ({ children }) => {
       removeItem,
       deleteCart,
       updateItem,
+      duplicateItem,
       getUserTransactions
     }}>
       {children}
