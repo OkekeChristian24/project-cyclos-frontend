@@ -146,7 +146,7 @@ export default function Bill() {
       const timeStampInMs = window.performance && window.performance.now && window.performance.timing && window.performance.timing.navigationStart ? window.performance.now() + window.performance.timing.navigationStart : Date.now();
       const orderID = uuidv4() + web3Info.address + timeStampInMs.toString();
       // makePayment(orderID, tokenIndex, totalPriceBN, totalQty, products).send({from: buyer})
-      const data = await paymentContract.methods.makePayment(orderID, tokenIndex, totalPriceBN, totalQty, products).send({from: web3Info.address});
+      const data = await paymentContract.methods.makePayment(orderID, tokenIndex, totalPriceBN, totalQty).send({from: web3Info.address});
       const txHash = data.transactionHash;
       awaitBlockConsensus([web3Info.web3], txHash, 2, 750, async(error, txnReceipt) => {
         try{
@@ -182,6 +182,8 @@ export default function Bill() {
               shipping: shippingDetails,
               company: companies[0].name
             };
+
+            // 
 
                         
     
