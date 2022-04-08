@@ -53,7 +53,7 @@ export default function ReviewsSlider() {
             <img width={100} src="images/howItWorks/search.png" alt="" />
             </div> */}
             <div style={{margin:"0 auto", textAlign: "center"}} className="slider__item-info-text">
-                <h4 style={{marginTop:20}}>No Threat of Cyber Hack</h4>
+                <h4 style={{marginTop:20}}>Secured</h4>
                 <p style={{marginTop:20}} >
                 One of the most significant problems facing the e-commerce industry is the threat to consumer data. With the use of Blockchain technology, this threat is eliminated, ensuring the security of your data.
             </p>
@@ -61,10 +61,6 @@ export default function ReviewsSlider() {
           </div>
    {/* step 2 */}
    <div  className="slider__item">
-        
-            {/* <div  style={{margin:"0 auto", width:130, height:130,borderRadius:100, background:"#01062D", display:"flex", justifyContent:"center", alignItems:"center"}}>
-            <img style={{margin:"0 auto"}} width={100} src="images/howItWorks/cart.png" alt="" />
-            </div> */}
             <div style={{margin:"0 auto", textAlign: "center"}} className="slider__item-info-text">
                 <h4 style={{marginTop:20}}>Seamless Digital Payment</h4>
                 <p style={{marginTop:20}} >
@@ -74,9 +70,6 @@ export default function ReviewsSlider() {
           </div>
              {/* step 3*/}
    <div  className="slider__item">
-            {/* <div  style={{margin:"0 auto", width:130, height:130,borderRadius:100, background:"#01062D", display:"flex", justifyContent:"center", alignItems:"center"}}>
-              <img  width={100} src="images/howItWorks/checkout.png" alt="" />
-            </div> */}
             <div style={{margin:"0 auto", textAlign: "center"}} className="slider__item-info-text">
                 <h4 style={{marginTop:20}}>Affordable</h4>
                 <p style={{marginTop:20}} >
