@@ -2,6 +2,47 @@ const ABI = [
 	{
 		"inputs": [
 			{
+				"internalType": "address",
+				"name": "newTokenAddress",
+				"type": "address"
+			}
+		],
+		"name": "addPaymentToken",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "orderId",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "tokenIndex",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "totalPrice",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "totalQty",
+				"type": "uint256"
+			}
+		],
+		"name": "makePayment",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "address payable",
 				"name": "_wallet",
 				"type": "address"
@@ -62,6 +103,26 @@ const ABI = [
 		"type": "event"
 	},
 	{
+		"inputs": [],
+		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address payable",
+				"name": "newWallet",
+				"type": "address"
+			}
+		],
+		"name": "setWallet",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -90,11 +151,11 @@ const ABI = [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "newTokenAddress",
+				"name": "newOwner",
 				"type": "address"
 			}
 		],
-		"name": "addPaymentToken",
+		"name": "transferOwnership",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -166,11 +227,6 @@ const ABI = [
 						"type": "uint256"
 					},
 					{
-						"internalType": "uint256",
-						"name": "numOfProducts",
-						"type": "uint256"
-					},
-					{
 						"internalType": "address",
 						"name": "buyer",
 						"type": "address"
@@ -182,56 +238,6 @@ const ABI = [
 			}
 		],
 		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "orderId",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "tokenIndex",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "totalPrice",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "totalQty",
-				"type": "uint256"
-			},
-			{
-				"components": [
-					{
-						"internalType": "string",
-						"name": "asin",
-						"type": "string"
-					},
-					{
-						"internalType": "uint256",
-						"name": "price",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "quantity",
-						"type": "uint256"
-					}
-				],
-				"internalType": "struct Payment.Product[]",
-				"name": "products",
-				"type": "tuple[]"
-			}
-		],
-		"name": "makePayment",
-		"outputs": [],
-		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -267,26 +273,6 @@ const ABI = [
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "renounceOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address payable",
-				"name": "newWallet",
-				"type": "address"
-			}
-		],
-		"name": "setWallet",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -306,19 +292,6 @@ const ABI = [
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"inputs": [],
 		"name": "wallet",
 		"outputs": [
@@ -332,5 +305,10 @@ const ABI = [
 		"type": "function"
 	}
 ];
+
+
+
+
+
 
 export default ABI;

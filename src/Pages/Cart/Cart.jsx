@@ -118,7 +118,7 @@ export default function Cart() {
               </div>
               <div className="total__inner-row">
                 <h4>Subtotal</h4>
-                <span>{`$${Number(cart.totalPrice).toFixed(5)}`}</span>
+                <span>{`$${Number(cart.totalPrice).toFixed(3)}`}</span>
               </div>
               <div className="total__inner-row">
                 <h4>Charge</h4>
