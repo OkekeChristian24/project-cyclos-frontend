@@ -35,16 +35,14 @@ export default function App() {
   return (
     <GlobalProvider>
       <BrowserRouter>
-        <div className="switch">
+        {/* <div className="switch">
           <input
-            defaultChecked={initTheme}
-            type="checkbox"
-            onChange={() => {
-              setLightMode(!lightMode);
-            }}
+            // defaultChecked={initTheme}
+            type="button"
+      
           />
           <label></label>
-        </div>
+        </div> */}
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
