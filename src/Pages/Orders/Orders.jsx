@@ -116,7 +116,6 @@ export default function Orders() {
       })();
     }
   }, [web3Info.address]);
-  console.log("pendingData: ", pendingData);
   return (
     <Hero>
       <div style={{width: "100%", display: "flex", justifyContent:"space-evenly", alignItems: "center", marginBottom: "20px"}}>
