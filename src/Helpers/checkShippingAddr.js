@@ -65,7 +65,6 @@ const checkShippingAddr = (shippingAddress, phoneNum) => {
 
             break;
           case "street":
-            console.log("Street: ", (shippingAddress[key]));
             if(!validStreetReg.test(shippingAddress[key])){
               updatedShipAddrErr = {
                 ...updatedShipAddrErr,

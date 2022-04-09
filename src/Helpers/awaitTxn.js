@@ -26,7 +26,6 @@ export const awaitBlockConsensus = function(web3s, txhash, blockCount, timeout, 
         if (txInfo.blockHash != null) {
           startBlock = txInfo.blockNumber;
           savedTxInfo = txInfo;
-          console.log("mined");
           pollState = stateEnum.mined;
         }
       });
@@ -36,7 +35,6 @@ export const awaitBlockConsensus = function(web3s, txhash, blockCount, timeout, 
           if (e) {
             return; // XXX silently drop errors
           }
-          console.log("blockNum: ", blockNum);
           if (blockNum >= (blockCount + startBlock)) {
             pollState = stateEnum.awaited;
           }
