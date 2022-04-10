@@ -29,9 +29,7 @@ export default function Intro() {
             Bridging the crypto-retail divide.  
 To make a purchase, look through our catalogue.
             </p>
-            <a href="#" className="button primary">
-            <Link to="/shop"> Explore</Link>
-            </a>
+            <Link className="button primary" to="/shop"> Explore</Link>
           </div>
           <div id="cart" className="intro__inner-image">
             <img  src="images/cart2.png" alt="" />
