@@ -183,11 +183,7 @@ export default function Bill() {
               company: companies[0].name
             };
 
-            // 
-
-                        
     
-            // console.log("Order for backend: ", orderBody);
             return axios.post(`${serverHost}/api/order`, orderBody, axiosConfig);
 
           }).then(function(res){
@@ -292,17 +288,30 @@ export default function Bill() {
         const totalPriceBN = (new BigNumber(calculate(chargePercent, taxPercent, cart.totalPrice)*10**tokenDecimals));
         const data = await tokenContract.methods.approve(paymentAddr, totalPriceBN).send({from: web3Info.address});
         const txHash = data.transactionHash;
-        awaitBlockConsensus([web3Info.web3], txHash, 2, 750, (error, txnReceipt) => {
-          if(error){
-            console.log(error);
+        awaitBlockConsensus([web3Info.web3], txHash, 2, 750, async(error, txnReceipt) => {
+          try {
+            if(error){
+              console.log(error);
+              setIsApprovalLoading(false);
+  
+              throw new Error("Approval Failed");
+            }
             setIsApprovalLoading(false);
-
-            throw new Error("Approval Failed");
+            setIsApproved(true);
+            (() => toast.success("Approval Successful"))();
+            return;
+            
+          } catch (error) {
+            console.log(error);
+            if(error.custom){
+              (() => toast.error(error.message))();
+            }else{
+              (() => toast.error("Approval Failed"))();
+            }
+            setIsApprovalLoading(false);
+            await checkAllowance();
+            // await getWalletBalance();
           }
-          setIsApprovalLoading(false);
-          setIsApproved(true);
-          (() => toast.success("Approval Successful"))();
-          return;
         });
       }
     }catch(error){
