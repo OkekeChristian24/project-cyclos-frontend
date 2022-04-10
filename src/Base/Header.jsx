@@ -143,7 +143,10 @@ export default function Header() {
       <div className="auto__container">
         <div className="header__inner">
           <div className="header__inner-logo">
+          <Link to="/"> 
             <img id="image" style={{width:200}} src="images/logo/Logo white.png" alt="logo" />
+          
+          </Link>
           </div>
           <nav className={"nav " + (menu ? "active" : "")} id="menu">
             <div className="nav__inner">

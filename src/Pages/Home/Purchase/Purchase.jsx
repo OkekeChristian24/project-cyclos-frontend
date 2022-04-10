@@ -92,7 +92,7 @@ export default function Purchase() {
             <p>
               Purchase your favorite item(s) on Amazon using cryptocurrencies ( USDT, USDC and BUSD). You can pay on the Binance Smart Chain and Fantom Opera
             </p>
-            <h5 id="our_solution_heading">Our solution:</h5>
+            <h4 id="our_solution_heading">Our solution:</h4>
             <ul id="our_solution">
               <li><img src="/images/white-check.jpg" alt="check" /><span>Saves time</span></li>
               <li><img src="/images/white-check.jpg" alt="check" /><span>Saves money</span></li>

@@ -5,6 +5,7 @@
 
     #our_solution_heading{
         color: #293b7a;
+        font-weight: 900;
     }
 
     ul#our_solution{
@@ -15,14 +16,15 @@
     #our_solution li{
         display: flex;
         align-items: flex-start;
-        color: #1b1e29;
         font-size: 16px;
         font-weight: 500 !important;
     }
-
+    
     #our_solution li span{
         display: inline-block;
+        color: #5e6b8e;
         margin-left: 5px;
+        font-weight: 600;
     }
 
     
