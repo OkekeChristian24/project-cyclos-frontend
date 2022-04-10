@@ -1,0 +1,35 @@
+@media screen and (min-width: 0px){
+    #shop_amazon{
+        font-size: 25px;
+    }
+
+    #our_solution_heading{
+        color: #293b7a;
+    }
+
+    ul#our_solution{
+        color: #293b7a;
+        margin-bottom: 20px;
+    }
+    
+    #our_solution li{
+        display: flex;
+        align-items: flex-start;
+        color: #1b1e29;
+        font-size: 16px;
+        font-weight: 500 !important;
+    }
+
+    #our_solution li span{
+        display: inline-block;
+        margin-left: 5px;
+    }
+
+    
+}
+
+@media screen and (min-width: 576px){
+    #shop_amazon{
+        font-size: 30px;
+    }
+}

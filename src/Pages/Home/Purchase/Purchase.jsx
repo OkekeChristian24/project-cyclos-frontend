@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-
 export default function Purchase() {
   return (
     <section className="purchase">
@@ -89,11 +88,17 @@ export default function Purchase() {
             <div className="purchase__inner-content-bg">
               <img src="images/index/oval.svg" alt="" />
             </div>
-            <h2> Pay with stablecoins</h2>
-
+            <h2 id="shop_amazon">Shop for items on Amazon</h2>
             <p>
-            Add items to your shopping cart. You can pay with stablecoins on the Binance smart chain and Fantom Opera.
+              Purchase your favorite item(s) on Amazon using cryptocurrencies ( USDT, USDC and BUSD). You can pay on the Binance Smart Chain and Fantom Opera
             </p>
+            <h5 id="our_solution_heading">Our solution:</h5>
+            <ul id="our_solution">
+              <li><img src="/images/white-check.jpg" alt="check" /><span>Saves time</span></li>
+              <li><img src="/images/white-check.jpg" alt="check" /><span>Saves money</span></li>
+              <li><img src="/images/white-check.jpg" alt="check" /><span>Offers the best exchange rate. 1(USDT/USDC/BUSD) = 1 US Dollar</span></li>
+              <li><img src="/images/white-check.jpg" alt="check" /><span>Offers a competitive door-step delivery service</span></li>
+            </ul>
             <Link className="button primary" to="/shop">Place Order</Link>
             
           </div>
