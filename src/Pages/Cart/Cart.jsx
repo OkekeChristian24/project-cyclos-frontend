@@ -133,11 +133,11 @@ export default function Cart() {
                 <span>{`$${calculate(chargePercent, taxPercent, cart.totalPrice)}`}</span>
               </div>
               <div className="total__inner-submit">
-                <button className="button primary">
-                  <Link to="/bill">
+                  <Link className="button primary" style={{textAlign: 'center'}} to="/bill">
                     Proceed to checkout
                   </Link>
-                </button>
+                {/* <button className="button primary">
+                </button> */}
               </div>
             </div>
           </div>

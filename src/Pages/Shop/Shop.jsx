@@ -48,7 +48,6 @@ export default function Shop() {
     }
   }, []);
 
-  console.log("In shop, products: ", products);
   return (
     <>
       <Hero>

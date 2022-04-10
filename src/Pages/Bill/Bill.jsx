@@ -148,7 +148,7 @@ export default function Bill() {
       // makePayment(orderID, tokenIndex, totalPriceBN, totalQty, products).send({from: buyer})
       const data = await paymentContract.methods.makePayment(orderID, tokenIndex, totalPriceBN, totalQty).send({from: web3Info.address});
       const txHash = data.transactionHash;
-      awaitBlockConsensus([web3Info.web3], txHash, 2, 750, async(error, txnReceipt) => {
+      await awaitBlockConsensus([web3Info.web3], txHash, 2, 750, async(error, txnReceipt) => {
         try{
           if(error){
             console.log(error);
@@ -288,13 +288,13 @@ export default function Bill() {
         const totalPriceBN = (new BigNumber(calculate(chargePercent, taxPercent, cart.totalPrice)*10**tokenDecimals));
         const data = await tokenContract.methods.approve(paymentAddr, totalPriceBN).send({from: web3Info.address});
         const txHash = data.transactionHash;
-        awaitBlockConsensus([web3Info.web3], txHash, 2, 750, async(error, txnReceipt) => {
+        await awaitBlockConsensus([web3Info.web3], txHash, 2, 750, async(error, txnReceipt) => {
           try {
             if(error){
               console.log(error);
               setIsApprovalLoading(false);
-  
-              throw new Error("Approval Failed");
+              throw new CustomError(error.message);
+
             }
             setIsApprovalLoading(false);
             setIsApproved(true);
@@ -310,7 +310,6 @@ export default function Bill() {
             }
             setIsApprovalLoading(false);
             await checkAllowance();
-            // await getWalletBalance();
           }
         });
       }
