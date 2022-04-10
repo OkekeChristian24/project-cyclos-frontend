@@ -6,7 +6,7 @@
 // @param timout in seconds 
 // @param callback - callback(error, transaction_receipt) 
 //
-export const awaitBlockConsensus = function(web3s, txhash, blockCount, timeout, callback) {
+export const awaitBlockConsensus = async function(web3s, txhash, blockCount, timeout, callback) {
      
   var txWeb3 = web3s[0];
   var startBlock = Number.MAX_SAFE_INTEGER;
@@ -17,7 +17,7 @@ export const awaitBlockConsensus = function(web3s, txhash, blockCount, timeout, 
 
   var pollState = stateEnum.start;
 
-  var poll = function() {
+  var poll = async function() {
     if (pollState === stateEnum.start) {
       txWeb3.eth.getTransaction(txhash, function(e, txInfo) {
         if (e || txInfo == null) {
@@ -41,7 +41,7 @@ export const awaitBlockConsensus = function(web3s, txhash, blockCount, timeout, 
         });
     }
     else if (pollState == stateEnum.awaited) {
-        txWeb3.eth.getTransactionReceipt(txhash, function(e, receipt) {
+        txWeb3.eth.getTransactionReceipt(txhash, async function(e, receipt) {
           if (e || receipt == null) {
             return; // XXX silently drop errors.  TBD callback error?
           }
@@ -50,10 +50,10 @@ export const awaitBlockConsensus = function(web3s, txhash, blockCount, timeout, 
           clearInterval(interval);
           if (receipt.gasUsed >= savedTxInfo.gas) {
             pollState = stateEnum.unconfirmed;
-            callback(new Error("Out Of Gas, Not Confirmed!"), null);
+            await callback(new Error("Out Of Gas, Not Confirmed!"), null);
           } else {
             pollState = stateEnum.confirmed;
-            callback(null, receipt);
+            await callback(null, receipt);
           }
       });
     } else {
@@ -65,10 +65,10 @@ export const awaitBlockConsensus = function(web3s, txhash, blockCount, timeout, 
     if (attempts > timeout) {
       clearInterval(interval);
       pollState = stateEnum.unconfirmed;
-      callback(new Error("Timed Out, Not Confirmed"), null);
+      await callback(new Error("Timed Out, Not Confirmed"), null);
     }
   };
 
   interval = setInterval(poll, 1000);
-  poll();
+  await poll();
 };
