@@ -221,26 +221,45 @@ const supportedChains = [
     logoUrl: "/images/chains/SmartChain/SmartChain.svg",
     blockExplorerUrl: "https://bscscan.com/"
   },
-  {
-    name: "Fantom Opera",
-    short_name: "FTM",
-    chain: "Fantom",
-    network: "mainnet",
-    chain_id_hex: "0xfa",
-    chain_id: 250,
-    network_id: 250,
-    rpc_url: "https://rpc.ftm.tools/",
-    native_currency: {
-      symbol: "FTM",
-      name: "Fantom",
-      decimals: 18,
-      contractAddress: "",
-      balance: ""
-    },
-    logoUrl: "/images/chains/Fantom/Fantom.svg",
-    blockExplorerUrl: "https://ftmscan.com/"
-  }
-  
+  // {
+  //   name: "Fantom Opera",
+  //   short_name: "FTM",
+  //   chain: "Fantom",
+  //   network: "mainnet",
+  //   chain_id_hex: "0xfa",
+  //   chain_id: 250,
+  //   network_id: 250,
+  //   rpc_url: "https://rpc.ftm.tools/",
+  //   native_currency: {
+  //     symbol: "FTM",
+  //     name: "Fantom",
+  //     decimals: 18,
+  //     contractAddress: "",
+  //     balance: ""
+  //   },
+  //   logoUrl: "/images/chains/Fantom/Fantom.svg",
+  //   blockExplorerUrl: "https://ftmscan.com/"
+  // },
+
+  // {
+  //   name: "Polygon",
+  //   short_name: "MATIC",
+  //   chain: "Polygon",
+  //   network: "mainnet",
+  //   chain_id_hex: "0x89",
+  //   chain_id: 137,
+  //   network_id: 137,
+  //   rpc_url: "https://polygon-rpc.com",
+  //   native_currency: {
+  //     symbol: "MATIC",
+  //     name: "Polygon",
+  //     decimals: 18,
+  //     contractAddress: "",
+  //     balance: ""
+  //   },
+  //   logoUrl: "/images/chains/Polygon/Polygon.svg",
+  //   blockExplorerUrl: "https://polygonscan.com/"
+  // }
 ];
 
 

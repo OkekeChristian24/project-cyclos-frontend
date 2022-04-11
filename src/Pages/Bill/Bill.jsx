@@ -84,7 +84,7 @@ export default function Bill() {
   
   const handleChange = async(event) => {
     setTokenIndex(event.target.value);
-    setTokenDecimals(supportedTokens[web3Info.chainID][event.target.value - 1].decimals);
+    setTokenDecimals(supportedTokens[web3Info.chainID][Number(event.target.value) - 1].decimals);
     await getWalletBalance();
   };
 
@@ -288,6 +288,7 @@ export default function Bill() {
         const totalPriceBN = (new BigNumber(calculate(chargePercent, taxPercent, cart.totalPrice)*10**tokenDecimals));
         const data = await tokenContract.methods.approve(paymentAddr, totalPriceBN).send({from: web3Info.address});
         const txHash = data.transactionHash;
+        
         await awaitBlockConsensus([web3Info.web3], txHash, 2, 750, async(error, txnReceipt) => {
           try {
             if(error){
@@ -415,11 +416,21 @@ export default function Bill() {
     color: "red"
   };
 
+  const menuItemStyle = {
+    width: "130px"
+  }
+
+  const paymentTokenStyle = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  }
+
   
   return (
     <Hero>
       <div className="bill">
-        <div className="bill__header">
+        {/* <div className="bill__header">
           <div className="bill__header-icon">
             <svg
               aria-hidden="true"
@@ -435,7 +446,7 @@ export default function Bill() {
             Have a Coupon?
             <span> Click here to enter your code</span>
           </div>
-        </div>
+        </div> */}
         <form className="bill__body">
           <h3>Shipping details</h3>
           {
@@ -508,7 +519,7 @@ export default function Bill() {
           &&
           cart.totalPrice !== 0
           &&
-          <h5>Total Price: ${calculate(chargePercent, taxPercent, cart.totalPrice)}</h5>
+          <h6>Total Price: ${calculate(chargePercent, taxPercent, cart.totalPrice)}</h6>
           }
         </div>
         <div style={payStyling}>
@@ -522,7 +533,7 @@ export default function Bill() {
           &&
           <>
             
-            <Box sx={{ maxWidth: 200, minWidth: 160 }}>
+            <Box sx={{ maxWidth: 140, minWidth: 130 }}>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Payment Token</InputLabel>
                 <Select
@@ -536,7 +547,12 @@ export default function Bill() {
                     supportedNet
                     &&
                     supportedTokens[web3Info.chainID].map(
-                      (token) => <MenuItem key={token.index} value={token.index}><h5>{token.name}</h5></MenuItem>
+                      (token) => (<MenuItem sx={menuItemStyle} key={token.index} value={token.index}>
+                        <div style={paymentTokenStyle}>
+                        <h6 style={{ display: "inline-block"}}>{token.name}</h6>
+                        <img style={{marginLeft: "12px"}} width={25} height={25} src={token.image} alt="token"/>
+                        </div>
+                      </MenuItem>)
                     )
                   }
                 </Select>
@@ -546,7 +562,7 @@ export default function Bill() {
           }
       
           
-          <h5 style={balanceStyling}>{tokenIndex !== null ? "Balance: $" + Number(userBalance).toFixed(3) : ""}</h5>
+          <h6 style={balanceStyling}>{tokenIndex !== null ? "Balance: $" + Number(userBalance).toFixed(3) : ""}</h6>
         </div>
         <div className="bill__footer">
           {
