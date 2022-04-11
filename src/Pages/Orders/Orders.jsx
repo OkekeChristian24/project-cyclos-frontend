@@ -42,13 +42,13 @@ export default function Orders() {
     if(pendingTxns.length > 0){
       const data = pendingTxns.map((txn, index) => {
         const txnObj = {
-          orderId: formatInputData(txn.unique_id),
+          orderId: formatInputData(txn.order_unique_id),
           paymentId: formatInputData(txn.payment_unique_id),
           // buyer: formatInputData(txn.buyer_addr),
           price: txn.total_amount,
           chainId: `${txn.chain_id}`,
           hash: formatInputData(txn.tx_hash),
-          allData: <button className="button primary"><Link to={`/item/${index}`}> View products</Link></button>
+          allData: <Link className="button primary" to={`/item/${index}`}> View products</Link>
         };
         return txnObj;
       });
@@ -62,12 +62,12 @@ export default function Orders() {
     if(historyTxns.length > 0){
       const data = historyTxns.map((txn, index) => {
         const txnObj = {
-          orderId: formatInputData(txn.unique_id),
+          orderId: formatInputData(txn.order_unique_id),
           paymentId: formatInputData(txn.payment_unique_id),
           price: txn.total_amount,
           chainId: `${txn.chain_id}`,
           hash: formatInputData(txn.tx_hash),
-          products: <button className="button primary"><Link to={`/item/${index}`}> View products</Link></button>
+          products: <Link className="button primary" to={`/item/${index}`}> View products</Link>
         };
         return txnObj;
       });
@@ -100,6 +100,7 @@ export default function Orders() {
           // const response = await axios.get(`${serverHost}/api/order/user/${user}`, axiosConfig);
           const allTxns = await getUserTransactions(user);
           if(allTxns.length > 0){
+            console.log("user data: ", allTxns);
             setPendingData(filterPendingData(allTxns));
             setHistoryData(filterHistoryData(allTxns));
           }

@@ -9,12 +9,16 @@ import genRandomness from "../../Helpers/genRandomness";
 import { formatInputData } from "../../Helpers/helperFunctions";
 import signMessage from "../../Helpers/signMessage";
 import "../../CustomStyles/orderItems.css";
+import { reqSuccess } from "../../Helpers/constants/reqStatus";
+import { RestaurantRounded } from "@mui/icons-material";
 
 
 export default function OrderItems(){
-    const { userTransactions } = useContext(GlobalContext);
+    const { userTransactions, web3Info } = useContext(GlobalContext);
     const { index } = useParams();
     const transaction = userTransactions[index];
+
+    const [shippingInfo, setShippingInfo] = useState(null);
     
     // const [transaction, setTransaction] = useState([]);
     // useEffect(() => {
@@ -22,12 +26,41 @@ export default function OrderItems(){
     // }, []);
     const getShippingDetails = async() => {
         try {
+            if(web3Info.address === ""){
+                (() => toast.error("Please Connect Wallet"))();
+                return;
+            }
+            console.log("txn unique id: ", transaction);
             const message = `Please sign this random message below. This signing does NOT cost gas. This is to authenticate endpoint caller. ${genRandomness()}`;
             const signed = await signMessage(message);
+            const payload = {
+                message,
+                signature: signed,
+                address: web3Info.address
+            };
+            /**
+             * 
+             * const orderUID = req.params.id;
+        const message = req.body.message;
+        const signature = req.body.signature
+        const signer = req.params.address;
+        
+             */
             if(signed !== undefined){
                 // Send signed message
-                const response = await axios.post(`${serverHost}/api/shippings/uid/${transaction.unique_id}`, signed, axiosConfig);
-                (() => toast.success("Message Signed"))();
+                const response = await axios.post(`${serverHost}/api/shippings/uid/${transaction.order_unique_id}`, payload, axiosConfig);
+                const { data: resData } = response;
+                if(resData.success === reqSuccess){
+                    if(resData.data.length > 0){
+                        console.log("shipping det: ", resData.data[0]);
+                        setShippingInfo(resData.data[0])
+                    }else{
+                        (() => toast.error("No Shipping Details"))();
+                    }
+                }else{
+                    (() => toast.error("Could Not Get Shipping Details"))();
+                }
+
             }else{
                 (() => toast.error("Message Not Signed"))();
             }
@@ -37,15 +70,14 @@ export default function OrderItems(){
             if(error.code === 4001){
                 (() => toast.error("Message Signing Rejected"))();
             }else{
-                (() => toast.error("Message Not Signed"))();
+                (() => toast.error("Could Not Get Shipping Details"))();
             }
         }
     };
     return (
         <Hero>
-            <button className="button primary">
-                <Link to="/dashboard"> Go back</Link>
-            </button>
+            <Link className="button primary" to="/dashboard"> Go back</Link>
+            
             <div className="order">
                 <h4>Details</h4>
                 <div className="order-details">
@@ -83,12 +115,23 @@ export default function OrderItems(){
                         <h5>Date/Time</h5>
                         <p>{transaction.created_at}</p>
                     </div>
-                    <div>
-                        <button onClick={getShippingDetails} className="button primary">View shipping details </button>
-                    </div>
+                    {
+                        shippingInfo === null &&
+                        <div>
+                            <button onClick={getShippingDetails} className="button primary">View shipping details </button>
+                        </div>
+                    }
+                    {
+                        shippingInfo != null && 
+                        <div>
+                            <h5>Shipping Info</h5>
+                            <div>
+
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
-
             <div>
                 <h4>Products</h4>
                 <div>
