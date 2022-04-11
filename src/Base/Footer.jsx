@@ -25,22 +25,36 @@ export default function Footer() {
      <img style={{width:200}} src="images/logo/Logo white.png" alt="" />
      </div>
      {/* Links */}
-<div id="links" className="links" style={{display: "flex", justifyContent: "space-evenly", alignItems:"center", marginBottom: "60px"}}> 
-              <a href="" className="nav__inner-link">
-              <Link to="/" style={{color: "#fff", fontSize: '20px', fontweight:1500}}> Home</Link>
+<div id="links" className="links" style={{display: "flex", justifyContent: "space-between", alignItems:"center", marginBottom: "30px"}}> 
+{/* column 1 */}
+<div id="col1" style={{display: "flex",   justifyContent: "space-evenly", alignItems:"center"}}>
+<a href="" className="nav__inner-link">
+              <Link to="/" style={{color: "#fff", fontSize: '15px', fontweight:1500}}> Home</Link>
               </a>
               <a href="#" className="nav__inner-link">
               
-                <Link to="/shop" style={{color: "#fff", fontSize: '20px', fontweight:1500}}>   Shop</Link>
+                <Link to="/shop" style={{color: "#fff", fontSize: '15px', fontweight:1500}}>   Shop</Link>
               </a>
               <a href="#" className="nav__inner-link">
                 
-                <Link to="/cart" style={{color: "#fff", fontSize: '20px', fontweight:1500}}> Cart</Link>
+                <Link to="/cart" style={{color: "#fff", fontSize: '15px', fontweight:1500}}> Cart</Link>
               </a>
-              {/* <a href="#" className="nav__inner-link">
+</div>
+{/* column 2 */}
+<div id="col2"  style={{display: "flex",  justifyContent: "space-evenly", alignItems:"center"}}>
+<a href="" className="nav__inner-link">
+              <Link to="/" style={{color: "#fff", fontSize: '15px', fontweight:1500}}> Terms and condition</Link>
+              </a>
+              <a href="#" className="nav__inner-link">
               
-               <Link to="/bill" style={{color: "#fff", fontSize: '20px', fontweight:1500}}> Bill</Link>
-              </a> */}
+                <Link to="/shop" style={{color: "#fff", fontSize: '15px', fontweight:1500}}>   Privacy policy </Link>
+              </a>
+              <a href="#" className="nav__inner-link">
+                
+                <Link to="/cart" style={{color: "#fff", fontSize: '15px', fontweight:1500}}> Return and refund policy </Link>
+              </a>
+</div>
+           
 </div>
         
           {/* Below the line */}
