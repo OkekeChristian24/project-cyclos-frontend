@@ -42,16 +42,16 @@ export default function Footer() {
 </div>
 {/* column 2 */}
 <div id="col2"  style={{display: "flex",  justifyContent: "space-evenly", alignItems:"center"}}>
-<a href="" className="nav__inner-link">
-              <Link to="/" style={{color: "#fff", fontSize: '15px', fontweight:1500}}> Terms and condition</Link>
+<a href="https://www.privacypolicies.com/live/437da669-cc1e-4daf-9cd9-abfc7e1e676c" style={{color: "#fff", fontSize: '15px', fontweight:1500}}  className="nav__inner-link" > Terms and condition
+             
               </a>
-              <a href="#" className="nav__inner-link">
-              
-                <Link to="/shop" style={{color: "#fff", fontSize: '15px', fontweight:1500}}>   Privacy policy </Link>
+              <a href="https://www.privacypolicies.com/live/d63cb759-2341-4bbe-bb0f-c749d3971c8a" style={{color: "#fff", fontSize: '15px', fontweight:1500}} className="nav__inner-link">
+              Privacy policy
+
               </a>
-              <a href="#" className="nav__inner-link">
-                
-                <Link to="/cart" style={{color: "#fff", fontSize: '15px', fontweight:1500}}> Return and refund policy </Link>
+              <a href="https://www.privacypolicies.com/live/7282793a-55c1-45ec-baed-25c51bc7c571"  style={{color: "#fff", fontSize: '15px', fontweight:1500}} className="nav__inner-link">
+              Return and refund policy
+
               </a>
 </div>
            
