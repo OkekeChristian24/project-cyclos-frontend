@@ -1,0 +1,21 @@
+@media screen and (min-width: 0px) {
+    .logo_and_price{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 300px;
+        width: 100%;
+        margin: 0 auto;
+    }
+    .domain_logo{
+        width: 122px;
+    }
+}
+
+@media screen and (min-width: 360px) {
+    .logo_and_price{
+        flex-direction: row;
+        max-width: 300px;
+    }
+}

@@ -1,0 +1,37 @@
+@media screen and (min-width: 0px) {
+    .demo_title{
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .demo-style{
+        /* max-width: 1050px; */
+        /* min-width: 300px; */
+        margin: 10px;
+        width: 100%;
+    }
+
+    .demo_video-title{
+        margin-top: 10px;
+        color: var(--main);
+        text-align: center;
+    }
+
+    .demo_video-container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media screen and (min-width: 965px){
+
+    .demo_title{
+        margin-bottom: 40px;
+    }
+    .demo_video-container{
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}

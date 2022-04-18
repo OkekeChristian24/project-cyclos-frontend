@@ -113,7 +113,10 @@ const initialCart = {
 };
 
 // Initial states
-const initialProducts = [];
+const initialProducts = {
+  domain: "",
+  products: []
+};
 
 // Create context
 export const GlobalContext = createContext();
@@ -194,7 +197,7 @@ export const GlobalProvider = ({ children }) => {
       const res = await axios.post(`${serverHost}/api/products`, term, axiosConfig);
       const responseProducts = res.data.data.search_results;
       const products = responseProducts.filter(product => product.price !== undefined);
-      productDispatch({type: SEARCH_PRODUCT, payload: products});
+      productDispatch({type: SEARCH_PRODUCT, payload: { domain, products }});
     } catch (error) {
       console.log(error);
     }

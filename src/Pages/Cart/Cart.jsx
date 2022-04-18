@@ -143,7 +143,7 @@ export default function Cart() {
           </div>
           </>
           :
-          <h4>No item in the cart</h4>
+          <h4>{""}</h4>
           }
         {/*  */}
         </div>

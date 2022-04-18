@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { GlobalContext } from "../../../Context/GlobalContext";
 import genRandomness from "../../../Helpers/genRandomness";
+import "../shop.css";
 
 export default function ProductsItem(props) {
 
@@ -55,7 +56,10 @@ export default function ProductsItem(props) {
       <div className="products__footer">
         {/* <div className="discount">{props.discount == null ? "" : `Discount: ${props.discount}`}</div> */}
         {props.discount == null ? "" : <div className="discount">{`Discount: ${props.discount}`}</div>}
-        <div className="price">${props.price}</div>
+        <div className="logo_and_price">
+          <img className="domain_logo" src={`images/companies/${props.domain}.svg`} alt="company"/>
+          <div className="price">${props.price}</div>
+        </div>
         <div className="products__footer-submit">
           <a href={props.link} target="_blank" rel="noreferrer noopener" className="button add">
             <img src="images/icons/search.png" alt="" />
@@ -67,11 +71,11 @@ export default function ProductsItem(props) {
               added
               ?
               // <span style={{color: "green"}}>Added</span>
-              <img src="images/icons/greentick-1.svg" alt="" />
+              <img src="images/icons/greentick-1.svg" alt="check" />
 
               :
               <>
-              <img src="images/icons/cart.png" alt="" />
+              <img src="images/icons/cart.png" alt="cart" />
               Cart
               </>
             }
