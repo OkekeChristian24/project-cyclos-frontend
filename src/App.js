@@ -11,7 +11,6 @@ import OrderItems from "./Pages/OrderItems/OrderItems";
 import Demo from "./Pages/Demo/Demo";
 
 import { GlobalProvider } from "./Context/GlobalContext";
-import ReactGA from 'react-ga';
 
 
 
