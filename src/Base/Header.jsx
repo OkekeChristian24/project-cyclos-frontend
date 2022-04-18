@@ -7,7 +7,7 @@ import { formatWallet } from "../Helpers/helperFunctions";
 import supportedChains from "../Helpers/chains";
 import NetOptions from "../Components/NetOptions";
 import netSwitchOrAdd from "../Helpers/netSwitchOrAdd";
-import "./header.css"
+import "./header.css";
 // const chainIDs = ["Fantom Opera", "Binance Smart Chain"];
 const chainIDs = supportedChains.map(chain => ({name: chain.name, logo: chain.logoUrl}));
 
@@ -150,33 +150,19 @@ export default function Header() {
           </div>
           <nav className={"nav " + (menu ? "active" : "")} id="menu">
             <div className="nav__inner">
-              <a href="" className="nav__inner-link">
-                <Link to="/"> Home</Link>
-              </a>
-              <a href="#" className="nav__inner-link">
-                <Link to="/demo">Demo</Link>
-              </a>
-              <a href="#" className="nav__inner-link">
-                <Link to="/shop">   Shop</Link>
-              </a>
-              <a href="#" className="nav__inner-link">
-                <Link to="/cart"> Cart</Link>
-              </a>
-              {/* <a href="#" className="nav__inner-link">
+              <Link className="nav__inner-link" to="/"> Home</Link>
+              <Link className="nav__inner-link" to="/demo">Demo</Link>
+              <Link className="nav__inner-link" to="/shop">   Shop</Link>
+              <Link className="nav__inner-link" to="/cart"> Cart</Link>
               
-               <Link to="/bill"> Bill</Link>
-              </a> */}
               {
                 web3Info.address !== undefined
                 &&
-                <a href="#" className="nav__inner-link">
-                
-                <Link to="/dashboard"> Dashboard</Link>
-                </a>
+                <Link className="nav__inner-link" to="/dashboard"> Dashboard</Link>
               }
               
             
-              <button style={{width:215, fontSize:16}} onClick={!web3Info.connected ? connectWalletHandler : undefined} className="button connect">
+              <button style={{width: "215px", fontSize: "16px"}} onClick={!web3Info.connected ? connectWalletHandler : undefined} className="button connect wallet-connect">
                 <img src="images/icons/wallet.svg" alt="wallet" />
                 {web3Info.connected ? formatWallet(web3Info.address) : "Connect Wallet"}
               </button>
