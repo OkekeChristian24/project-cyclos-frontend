@@ -19,11 +19,19 @@ export default function Shop() {
   const [isSearching, setIsSearching] = useState(false);
 
   const submitSearch = async(e) => {
+    // if(searchTerm === ""){
+    //   return;
+    // }
     e.preventDefault();
-    setIsSearching(true);
-    clearProducts();
-    await searchProducts(searchTerm, companies[0].domain);
-    setIsSearching(false);
+    try {
+      setIsSearching(true);
+      clearProducts();
+      await searchProducts(searchTerm, companies[0].domain);
+      setIsSearching(false);
+    } catch (error) {
+      console.log(error);
+      setIsSearching(false);
+    }
   };
 
   const handleClick = () => {
@@ -42,11 +50,13 @@ export default function Shop() {
       clearProducts();
       (async() => {
         setIsSearching(true);
-        await searchProducts(searchTerm);
+        await searchProducts(searchTerm, companies[0].domain);
         setIsSearching(false);
       })();
     }
   }, []);
+
+  console.log("Products: ", products);
 
   return (
     <>
@@ -63,10 +73,10 @@ export default function Shop() {
         </form>
       </Hero>
       {
-        products.length > 0
+        products.products.length > 0
         // true
         &&
-        <Products products={products} />
+        <Products domain={products.domain} products={products.products} />
       }
     </>
   );

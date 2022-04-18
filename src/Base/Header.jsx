@@ -154,6 +154,9 @@ export default function Header() {
                 <Link to="/"> Home</Link>
               </a>
               <a href="#" className="nav__inner-link">
+                <Link to="/demo">Demo</Link>
+              </a>
+              <a href="#" className="nav__inner-link">
                 <Link to="/shop">   Shop</Link>
               </a>
               <a href="#" className="nav__inner-link">

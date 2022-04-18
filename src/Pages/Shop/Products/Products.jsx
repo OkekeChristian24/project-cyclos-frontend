@@ -1,12 +1,10 @@
 import React, { useEffect } from "react";
 import ProductsItem from "./ProductsItem";
 
-export default function Products({ products }) {
+export default function Products({ domain, products }) {
 
-  useEffect(() => {
-    //
-  }, []);
   
+  // console.log("Products: ", products);
   return (
     <div className="products__outer">
       <div className="products__outer-bg">
@@ -20,6 +18,7 @@ export default function Products({ products }) {
           {products.map((product, index) => {
             return (
               <ProductsItem
+                domain={domain}
                 key={index}
                 asin={product.asin}
                 image={product.image}

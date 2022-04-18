@@ -28,17 +28,18 @@ export default function Footer() {
 <div id="links" className="links" style={{display: "flex", justifyContent: "space-between", alignItems:"center", marginBottom: "30px"}}> 
 {/* column 1 */}
 <div id="col1" style={{display: "flex",   justifyContent: "space-evenly", alignItems:"center"}}>
-<a href="" className="nav__inner-link">
-              <Link to="/" style={{color: "#fff", fontSize: '15px', fontweight:1500}}> Home</Link>
-              </a>
-              <a href="#" className="nav__inner-link">
-              
-                <Link to="/shop" style={{color: "#fff", fontSize: '15px', fontweight:1500}}>   Shop</Link>
-              </a>
-              <a href="#" className="nav__inner-link">
-                
-                <Link to="/cart" style={{color: "#fff", fontSize: '15px', fontweight:1500}}> Cart</Link>
-              </a>
+  <a href="" className="nav__inner-link">
+    <Link to="/" style={{color: "#fff", fontSize: '15px', fontweight:1500}}>Home</Link>
+  </a>
+  <a href="" className="nav__inner-link">
+    <Link to="/demo" style={{color: "#fff", fontSize: '15px', fontweight:1500}}>Demo</Link>
+  </a>
+  <a href="#" className="nav__inner-link">
+    <Link to="/shop" style={{color: "#fff", fontSize: '15px', fontweight:1500}}>Shop</Link>
+  </a>
+  <a href="#" className="nav__inner-link">
+    <Link to="/cart" style={{color: "#fff", fontSize: '15px', fontweight:1500}}>Cart</Link>
+  </a>
 </div>
 {/* column 2 */}
 <div id="col2"  style={{display: "flex",  justifyContent: "space-evenly", alignItems:"center"}}>
