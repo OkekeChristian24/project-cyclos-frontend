@@ -5,10 +5,9 @@
     }
 
     .demo-style{
-        /* max-width: 1050px; */
-        /* min-width: 300px; */
         margin: 10px;
         width: 100%;
+        margin-bottom: 30px;
     }
 
     .demo_video-title{
