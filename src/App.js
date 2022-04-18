@@ -11,9 +11,21 @@ import OrderItems from "./Pages/OrderItems/OrderItems";
 import Demo from "./Pages/Demo/Demo";
 
 import { GlobalProvider } from "./Context/GlobalContext";
+import ReactGA from 'react-ga';
+
+
 
 export default function App() {
-
+// const setGa =() => {
+//   ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_CODE, {
+//     debug: true,
+//     titleCase: false,
+//     gaOptions: {
+//       userId: 123
+//     }
+//   });
+//   ReactGA.pageview(window.location.pathname + window.location.search);
+// }
   const initTheme =
     localStorage.getItem("lightMode") === "true"
       ? true 
@@ -32,18 +44,12 @@ export default function App() {
     }
   }, [lightMode]);
 
-
+// useEffect(() => {
+// setGa()
+// })
   return (
     <GlobalProvider>
       <BrowserRouter>
-        {/* <div className="switch">
-          <input
-            // defaultChecked={initTheme}
-            type="button"
-      
-          />
-          <label></label>
-        </div> */}
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
