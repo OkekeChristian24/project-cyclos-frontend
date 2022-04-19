@@ -153,7 +153,10 @@ export default function Header() {
               <Link className="nav__inner-link" to="/"> Home</Link>
               <Link className="nav__inner-link" to="/demo">Demo</Link>
               <Link className="nav__inner-link" to="/shop">   Shop</Link>
+              <Link className="nav__inner-link" to="/aboutus">   About us</Link>
               <Link className="nav__inner-link" to="/cart"> Cart</Link>
+            
+               {/* <a href="#" className="nav__inner-link"> */}
               
               {
                 web3Info.address !== undefined
