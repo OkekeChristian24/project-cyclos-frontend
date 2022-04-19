@@ -23,14 +23,20 @@ export default function Demo({props}){
       <div className="hero__shape">
         <img src="images/index/shapes.png" alt="" />
       </div>
-      <div className="auto__container">
+      <div className="auto__container demo_container">
         <h3 className="demo_title">How it works</h3>
-        <div className="auto__container demo_video-container">
-          <VideoDemo videoID={"37WBB7CdKfo"} videoTitle={"How to search for an item on CYCLOS"} />
-          <VideoDemo videoID={"nWlThD4v7_Y"} videoTitle={"How to view paid items"} />
+        <div className="first_thing">
+          <p>
+            The first thing to do is to download a Metamask or any Web3 wallet following the description in this {" "}
+            <a target="_blank" rel="noreferrer noopener" href="https://docs.featured.market/featured-by-binance/how-to-guides/getting-started/how-to-download-metamask"> link <img width={15} src="images/external-link.svg" alt="link"/> </a>
+          </p>
         </div>
         <div className="auto__container demo_video-container">
+          <VideoDemo videoID={"37WBB7CdKfo"} videoTitle={"How to search for an item on CYCLOS"} />
           <VideoDemo videoID={"MUpau1INPzQ"} videoTitle={"How to add item to cart and check out from cart"} />
+        </div>
+        <div className="auto__container demo_video-container">
+          <VideoDemo videoID={"nWlThD4v7_Y"} videoTitle={"How to view paid items"} />
           <VideoDemo videoID={"wpN91zb6a4c"} videoTitle={"What you need to know about shipping"} />
         </div>
         {/* <div>
