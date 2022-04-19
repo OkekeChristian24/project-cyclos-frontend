@@ -1,4 +1,34 @@
 @media screen and (min-width: 0px) {
+
+    .demo_container{
+        /* margin-top: 50px; */
+    }
+
+    .first_thing{
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 10px 5px;
+        max-width: 800px;
+        width: 100%;
+        margin: 0 auto;
+        margin-bottom: 20px;
+    }
+
+    .first_thing p{
+        margin-bottom: 0;
+    }
+
+    .first_thing a{
+        color: #ffffff;
+        background-color: rgb(62, 62, 236);
+        border-radius: 7px;
+        padding: 1px 6px;
+    }
+
+    .first_thing img{
+        color: white;
+    }
+
     .demo_title{
         text-align: center;
         margin-bottom: 20px;
