@@ -11,9 +11,7 @@ export default function Home() {
     <>
       <Intro />
       <Purchase />
-      {/* <Unique /> */}
-    
-      {/* <Reviews /> */}
+   
     </>
   );
 }
