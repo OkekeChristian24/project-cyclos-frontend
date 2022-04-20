@@ -26,7 +26,7 @@ export default function Intro() {
           <div className="intro__inner-content">
             <h1> About Us</h1>
             <p id ="text" className="bg">
-            Cyclos - Connecting global brands to the African consumers.
+           
             </p>
             {/* <Link className="button primary" to="/shop"> Explore</Link> */}
           </div>

@@ -21,9 +21,10 @@ export default function Purchase() {
             <div className="purchase__inner-content-bg">
               <img src="images/index/oval.svg" alt="" />
             </div>
-            <h2 id="shop_amazon">Why Do We Do This?</h2>
+            <h2 id="shop_amazon">Why we built Cyclos?</h2>
             <p>
-            Our innovative idea is a result of a deep-seated problem for Africans - the lack of easy access to quality, affordable, and luxury items from across the world. While there were hundreds of eCommerce platforms dedicated to serving the needs of Africans, there was an absence of a trustworthy, safe, and reliable platform designed to provide them with what they want in a stress-free way. This is why we adopted the idea of cryptocurrency for cross-border shopping purposes.
+            Our innovative idea is a result of a deep-seated problem for Africans - the lack of easy access to quality, affordable, and luxury items from across the world. While there are hundreds of eCommerce platforms dedicated to serving the needs of Africans, there is an absence of a trustworthy, safe, and reliable platform that connects African consumers to global brands in a cost-effective and  stress-free way. <br/><br/>
+We have identified how to solve this problem utilizing the blockchain technology and Web3.
             </p>
 
           </div>
@@ -34,10 +35,14 @@ export default function Purchase() {
             <div className="purchase__inner-content-bg">
               <img src="images/index/oval.svg" alt="" />
             </div>
-            <h2 id="shop_amazon">What Do We Do?</h2>
+            <h2 id="shop_amazon">What we do at Cyclos?
+</h2>
             <p>
-            Our model is composed to solve the problems prevalent in the African e-commerce industry. While this industry is enormous, with total revenue expected to increase to $46 billion by 2050, there is a need to establish a platform that customers can trust easily. The foundation of our business is reliance and affordability for our customers. Therefore, we are committed to offering a simple, hassle-free, and cost-effective method to make purchases virtually and have your parcel delivered to your doorstep. We will go out of our way to earn your trust, so you can buy what you want without any problems.
- We work day and night to provide more value to those who put their trust in us. We aim to expand cross-border shipping across Africa so its residents can wisely utilize their cryptocurrency savings according to their wishes. Additionally, we plan on incorporating shipments from the UK, USA, and UAE to provide our customers access to a broader market.
+            Our model is composed to connect global brands to African consumers. While the e-commerce industry is enormous, with total revenue expected to increase to $46 billion by 2025, there is a need to establish a platform that rewards not only the creators but also the customers and this is achievable using Web3. <br /> <br />
+
+At our core, we are focused on delivering the best shopping experience on the blockchain and this is why we are committed to offering a simple, hassle-free, and cost-effective method to pay for items on the blockchain and have your parcel delivered to your doorstep.<br /> <br />
+
+We are starting with connecting American brands to our customers and aim to extend to UK, UAE, China to provide our customers access to a broader market.
             </p>
           </div>
              <div className="purchase__inner-card">
