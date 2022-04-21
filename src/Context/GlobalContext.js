@@ -72,35 +72,39 @@ function initWeb3(provider) {
 let initialWeb3Info = {};
 
 (async() => {
+  try {
+    const WProvider = await detectEthereumProvider();
+    if(WProvider === window.ethereum || window.web3){
+      const web3 = initWeb3(WProvider);
+      const accounts = await web3.eth.getAccounts();
+      const address = accounts[0];
+      const networkID = await web3.eth.net.getId();
+      const chainID = await web3.eth.chainId();
+      initialWeb3Info = {
+        web3,
+        provider: WProvider,
+        networkID,
+        chainID,
+        address,
+        connected: false,
+        showModal: false,
+      };
+    }else{
+      initialWeb3Info = {
   
-  const WProvider = await detectEthereumProvider();
-  if(WProvider === window.ethereum || window.web3){
-    const web3 = initWeb3(WProvider);
-    const accounts = await web3.eth.getAccounts();
-    const address = accounts[0];
-    const networkID = await web3.eth.net.getId();
-    const chainID = await web3.eth.chainId();
-    initialWeb3Info = {
-      web3,
-      provider: WProvider,
-      networkID,
-      chainID,
-      address,
-      connected: false,
-      showModal: false,
-    };
-  }else{
-    initialWeb3Info = {
-
-      networkID: null,
-      chainID: null,
-      web3: null,
-      provider: null,
-      address: "",
-      connected: false,
-      showModal: false,
-    };
-  
+        networkID: null,
+        chainID: null,
+        web3: null,
+        provider: null,
+        address: "",
+        connected: false,
+        showModal: false,
+      };
+    
+    }
+    
+  } catch (error) {
+    console.log(error);
   }
 
 })();
@@ -249,15 +253,20 @@ export const GlobalProvider = ({ children }) => {
   };
 
   const addToCart = (productToAdd) => {
-    const productCart = JSON.parse(window.localStorage.getItem(process.env.REACT_APP_CART_NAME));
-    if(productCart){
-      const index = productCart.products.findIndex(product => product.asin === productToAdd.asin);
-      if(index !== -1){
-        return false;
+    try {
+      const productCart = JSON.parse(window.localStorage.getItem(process.env.REACT_APP_CART_NAME));
+      if(productCart){
+        const index = productCart.products.findIndex(product => product.asin === productToAdd.asin);
+        if(index !== -1){
+          return false;
+        }
       }
+      cartDispatch({type: ADD_TO_CART, payload: { product: productToAdd }});
+      return true;
+      
+    } catch (error) {
+      return false;
     }
-    cartDispatch({type: ADD_TO_CART, payload: { product: productToAdd }});
-    return true;
   };
 
   const updateCart = (updatedState) => {
@@ -288,16 +297,24 @@ export const GlobalProvider = ({ children }) => {
 
   // == Wallet provider callbacks == //
   const resetApp = async() => {
-    const { web3 } = web3Info;
-    if (web3 && web3.currentProvider && web3.currentProvider.close) {
-      await web3.currentProvider.close();
+    try {
+      const { web3 } = web3Info;
+      if (web3 && web3.currentProvider && web3.currentProvider.close) {
+        await web3.currentProvider.close();
+      }
+      web3Modal.clearCachedProvider();
+    } catch (error) {
+      console.log(error);
     }
-    web3Modal.clearCachedProvider();
 
   };
 
   const closeCallBack = () => {
-    resetApp();
+    (
+      async() => {
+        resetApp(); 
+      }
+    )();
   };
 
   const acctChangeCallBack = (accounts) => {
@@ -305,39 +322,50 @@ export const GlobalProvider = ({ children }) => {
   };
 
   const chainChangeCallBack = async(chainId) => {
-    // const { web3 } = localWeb3Info.current || web3Info;
-    const web3 = initWeb3(window.detectedProvider);
-    const chainID = web3.utils.isHex(chainId) ? web3.utils.hexToNumber(chainId) : chainId;
-    
-    const networkID = await web3.eth.net.getId();
-    // web3InfoDispatch({type: CHAIN_CHANGE,  payload: {chainID}});
-    if(getNetwork(chainID) === ""){
-      // (() => toast.error(`Chain ID ${chainID} is Not Supported!`))();
-      window.location.reload();
-      return;
+    try {
+      // const { web3 } = localWeb3Info.current || web3Info;
+      const web3 = initWeb3(window.detectedProvider);
+      const chainID = web3.utils.isHex(chainId) ? web3.utils.hexToNumber(chainId) : chainId;
+      
+      const networkID = await web3.eth.net.getId();
+      // web3InfoDispatch({type: CHAIN_CHANGE,  payload: {chainID}});
+      if(getNetwork(chainID) === ""){
+        // (() => toast.error(`Chain ID ${chainID} is Not Supported!`))();
+        window.location.reload();
+        return;
+      }
+      web3InfoDispatch({type: CHAIN_CHANGE,  payload: {chainID, networkID}});
+      // const chainName = getChainData(chainID).chain;
+      // (() => toast.success(`You Are Connected To ${chainName}`))();
+      
+    } catch (error) {
+      console.log(error);
+      
     }
-    web3InfoDispatch({type: CHAIN_CHANGE,  payload: {chainID, networkID}});
-    // const chainName = getChainData(chainID).chain;
-    // (() => toast.success(`You Are Connected To ${chainName}`))();
   };
   
   const netChangeCallBack = async(networkID) => {
-    const web3 = initWeb3(window.detectedProvider);
-  
-    const chainId = await web3.eth.chainId();
-    web3.utils.isHex(chainId);
-    const chainID = web3.utils.isHex(chainId) ? web3.utils.hexToNumber(chainId) : chainId;
+    try {
+      const web3 = initWeb3(window.detectedProvider);
     
-
-    if(getNetwork(chainID) === ""){
-      (() => toast.error(`Chain ID ${chainID} is Not Supported!`))();
-      window.location.reload();
-      return;
+      const chainId = await web3.eth.chainId();
+      web3.utils.isHex(chainId);
+      const chainID = web3.utils.isHex(chainId) ? web3.utils.hexToNumber(chainId) : chainId;
+      
+  
+      if(getNetwork(chainID) === ""){
+        (() => toast.error(`Chain ID ${chainID} is Not Supported!`))();
+        window.location.reload();
+        return;
+      }
+      web3InfoDispatch({type: NETWORK_CHANGE,  payload: {chainID, networkID}});
+  
+      const chainName = getChainData(chainID).chain;
+      (() => toast.success(`You Are Connected To ${chainName}`))();
+      
+    } catch (error) {
+      console.log(error);
     }
-    web3InfoDispatch({type: NETWORK_CHANGE,  payload: {chainID, networkID}});
-
-    const chainName = getChainData(chainID).chain;
-    (() => toast.success(`You Are Connected To ${chainName}`))();
   };
 
   // == End of Wallet provider callbacks == //
@@ -345,61 +373,67 @@ export const GlobalProvider = ({ children }) => {
 
   // == Wallet actions == //
   const connectWallet = async(chainid="") => {
-    let idToCheck = "";
-    if(chainid !== ""){
-      idToCheck = chainid;
-    }else{
-      idToCheck = window.detectedProvider.chainId;
-    }
-    if(getNetwork(idToCheck) === ""){
-      // Check if it's 
-      // window.detectedProvider.chainId
-      // detectedProvider.isMetaMask
-      if(detectedProvider.isMetaMask){
-        // Show network options modal
-        throw {isMetaMask: true}
+    try {
+      let idToCheck = "";
+      if(chainid !== ""){
+        idToCheck = chainid;
+      }else{
+        idToCheck = window.detectedProvider.chainId;
       }
-      setSupportedNet(false);
+      if(getNetwork(idToCheck) === ""){
+        // Check if it's 
+        // window.detectedProvider.chainId
+        // detectedProvider.isMetaMask
+        if(detectedProvider.isMetaMask){
+          // Show network options modal
+          throw {isMetaMask: true}
+        }
+        setSupportedNet(false);
+        
+        throw {isMetaMask: false, message: "Network Not Supported!"};
+      }
+  
+      setSupportedNet(true);
+      const web3Modal = new Web3Modal({
+        network: window.detectedProvider.chainId && getNetwork(window.detectedProvider.chainId),
+        cacheProvider: true,
+        providerOptions: getProviderOptions()
+      });
+  
+      setWeb3Modal(web3Modal);
+      const provider = await web3Modal.connect();
+      subscribeProvider(
+        provider, 
+        closeCallBack,
+        acctChangeCallBack,
+        chainChangeCallBack,
+        netChangeCallBack
+      );
+  
+      const web3 = initWeb3(provider);
       
-      throw {isMetaMask: false, message: "Network Not Supported!"};
+      const accounts = await web3.eth.getAccounts();
+      const address = accounts[0];
+      const networkID = await web3.eth.net.getId();
+      const chainId = await web3.eth.chainId();
+      web3.utils.isHex(chainId);
+      const chainID = web3.utils.isHex(chainId) ? web3.utils.hexToNumber(chainId) : chainId;
+      const details = {
+        web3,
+        provider,
+        networkID,
+        chainID,
+        address,
+        connected: true,
+        isMetaMask: provider.isMetaMask
+      };
+  
+      web3InfoDispatch({type: CONNECT_WALLET,  payload: details});
+      
+    } catch (error) {
+      console.log(error);
+      throw new Error("Wallet Not Connected");
     }
-
-    setSupportedNet(true);
-    const web3Modal = new Web3Modal({
-      network: window.detectedProvider.chainId && getNetwork(window.detectedProvider.chainId),
-      cacheProvider: true,
-      providerOptions: getProviderOptions()
-    });
-
-    setWeb3Modal(web3Modal);
-    const provider = await web3Modal.connect();
-    subscribeProvider(
-      provider, 
-      closeCallBack,
-      acctChangeCallBack,
-      chainChangeCallBack,
-      netChangeCallBack
-    );
-
-    const web3 = initWeb3(provider);
-    
-    const accounts = await web3.eth.getAccounts();
-    const address = accounts[0];
-    const networkID = await web3.eth.net.getId();
-    const chainId = await web3.eth.chainId();
-    web3.utils.isHex(chainId);
-    const chainID = web3.utils.isHex(chainId) ? web3.utils.hexToNumber(chainId) : chainId;
-    const details = {
-      web3,
-      provider,
-      networkID,
-      chainID,
-      address,
-      connected: true,
-      isMetaMask: provider.isMetaMask
-    };
-
-    web3InfoDispatch({type: CONNECT_WALLET,  payload: details});
 
   };
 
@@ -421,19 +455,24 @@ export const GlobalProvider = ({ children }) => {
   
   useEffect(() => {
     (async() => {
-      const MetaMProvider = await detectEthereumProvider();
-      window.detectedProvider = MetaMProvider;
-      if(MetaMProvider === window.ethereum){
-        setWeb3Installed(true);
-        setDetectedProvider(MetaMProvider);
-        if(getNetwork(MetaMProvider.chainId) === ""){
-          setSupportedNet(false);
-        }else{
-          setSupportedNet(true);
+      try {
+        const MetaMProvider = await detectEthereumProvider();
+        window.detectedProvider = MetaMProvider;
+        if(MetaMProvider === window.ethereum){
+          setWeb3Installed(true);
+          setDetectedProvider(MetaMProvider);
+          if(getNetwork(MetaMProvider.chainId) === ""){
+            setSupportedNet(false);
+          }else{
+            setSupportedNet(true);
+          }
+        }else if(MetaMProvider === window.web3){
+          setWeb3Installed(true);
+          setDetectedProvider(MetaMProvider);
         }
-      }else if(MetaMProvider === window.web3){
-        setWeb3Installed(true);
-        setDetectedProvider(MetaMProvider);
+        
+      } catch (error) {
+        console.log(error);
       }
       
     })();
