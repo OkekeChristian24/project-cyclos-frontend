@@ -5,6 +5,7 @@ import Header from "./Base/Header";
 import Bill from "./Pages/Bill/Bill";
 import Cart from "./Pages/Cart/Cart";
 import Home from "./Pages/Home/Home";
+import About from "./Pages/About/About";
 import Shop from "./Pages/Shop/Shop";
 import Orders from "./Pages/Orders/Orders";
 import OrderItems from "./Pages/OrderItems/OrderItems";
@@ -26,6 +27,7 @@ export default function App() {
 //   });
 //   ReactGA.pageview(window.location.pathname + window.location.search);
 // }
+
   const initTheme =
     localStorage.getItem("lightMode") === "true"
       ? true 
@@ -59,6 +61,7 @@ export default function App() {
           <Route path="/bill" element={<Bill />} />
           <Route path="/cart" element={<Cart></Cart>} />
           <Route path="/dashboard" element={<Orders />} />
+          <Route path="/aboutus" element={<About />} />
           <Route path="/item/:index" element={<OrderItems />} />
 
           {/* 
