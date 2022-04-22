@@ -373,67 +373,63 @@ export const GlobalProvider = ({ children }) => {
 
   // == Wallet actions == //
   const connectWallet = async(chainid="") => {
-    try {
-      let idToCheck = "";
-      if(chainid !== ""){
-        idToCheck = chainid;
-      }else{
-        idToCheck = window.detectedProvider.chainId;
+    let idToCheck = "";
+    if(chainid !== ""){
+      idToCheck = chainid;
+    }else{
+      idToCheck = window.detectedProvider.chainId;
+    }
+    if(getNetwork(idToCheck) === ""){
+      // Check if it's 
+      // window.detectedProvider.chainId
+      // detectedProvider.isMetaMask
+      if(detectedProvider.isMetaMask){
+        // Show network options modal
+        throw {isMetaMask: true}
       }
-      if(getNetwork(idToCheck) === ""){
-        // Check if it's 
-        // window.detectedProvider.chainId
-        // detectedProvider.isMetaMask
-        if(detectedProvider.isMetaMask){
-          // Show network options modal
-          throw {isMetaMask: true}
-        }
-        setSupportedNet(false);
-        
-        throw {isMetaMask: false, message: "Network Not Supported!"};
-      }
-  
-      setSupportedNet(true);
-      const web3Modal = new Web3Modal({
-        network: window.detectedProvider.chainId && getNetwork(window.detectedProvider.chainId),
-        cacheProvider: true,
-        providerOptions: getProviderOptions()
-      });
-  
-      setWeb3Modal(web3Modal);
-      const provider = await web3Modal.connect();
-      subscribeProvider(
-        provider, 
-        closeCallBack,
-        acctChangeCallBack,
-        chainChangeCallBack,
-        netChangeCallBack
-      );
-  
-      const web3 = initWeb3(provider);
+      setSupportedNet(false);
       
-      const accounts = await web3.eth.getAccounts();
-      const address = accounts[0];
-      const networkID = await web3.eth.net.getId();
-      const chainId = await web3.eth.chainId();
-      web3.utils.isHex(chainId);
-      const chainID = web3.utils.isHex(chainId) ? web3.utils.hexToNumber(chainId) : chainId;
-      const details = {
-        web3,
-        provider,
-        networkID,
-        chainID,
-        address,
-        connected: true,
-        isMetaMask: provider.isMetaMask
-      };
-  
-      web3InfoDispatch({type: CONNECT_WALLET,  payload: details});
-      
-    } catch (error) {
-      console.log(error);
+      throw {isMetaMask: false, message: "Network Not Supported!"};
     }
 
+    setSupportedNet(true);
+    const web3Modal = new Web3Modal({
+      network: window.detectedProvider.chainId && getNetwork(window.detectedProvider.chainId),
+      cacheProvider: true,
+      providerOptions: getProviderOptions()
+    });
+
+    setWeb3Modal(web3Modal);
+    const provider = await web3Modal.connect();
+    subscribeProvider(
+      provider, 
+      closeCallBack,
+      acctChangeCallBack,
+      chainChangeCallBack,
+      netChangeCallBack
+    );
+
+    const web3 = initWeb3(provider);
+    
+    const accounts = await web3.eth.getAccounts();
+    const address = accounts[0];
+    const networkID = await web3.eth.net.getId();
+    const chainId = await web3.eth.chainId();
+    web3.utils.isHex(chainId);
+    const chainID = web3.utils.isHex(chainId) ? web3.utils.hexToNumber(chainId) : chainId;
+    const details = {
+      web3,
+      provider,
+      networkID,
+      chainID,
+      address,
+      connected: true,
+      isMetaMask: provider.isMetaMask
+    };
+
+    web3InfoDispatch({type: CONNECT_WALLET,  payload: details});
+    
+    
   };
 
   const disconnectWallet = () => {
