@@ -1,8 +1,15 @@
-/* @media screen and (max-width:900px) {
-    #cart{
-        visibility: hidden !important;
+@media screen and (min-width: 0px) {
+
+    .about_text{
+        text-align: center;
     }
-    #text{
-        z-index: 10;
+
+}
+
+@media screen and (min-width: 801px){
+
+    .about_text{
+        text-align: left;
     }
-} */
+}
+

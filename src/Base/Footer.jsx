@@ -30,6 +30,7 @@ export default function Footer() {
 <div id="col1" style={{display: "flex",   justifyContent: "space-evenly", alignItems:"center"}}>
   <Link className="nav__inner-link" to="/" style={{color: "#fff", fontSize: '15px', fontweight:1500}}>Home</Link>
   <Link className="nav__inner-link" to="/demo" style={{color: "#fff", fontSize: '15px', fontweight:1500}}>Demo</Link>
+  <Link className="nav__inner-link" to="/buycoin" style={{color: "#fff", fontSize: '15px', fontweight:1500}}>Buy Crypto</Link>
   <Link className="nav__inner-link" to="/shop" style={{color: "#fff", fontSize: '15px', fontweight:1500}}>Shop</Link>
   <Link className="nav__inner-link" to="/cart" style={{color: "#fff", fontSize: '15px', fontweight:1500}}>Cart</Link>
 </div>
