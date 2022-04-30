@@ -63,8 +63,8 @@ We are starting with connecting American brands to our customers and aim to exte
              <div style={{}}className="purchase__inner-card">
           
               <img
-                style={{ width: "100%", clipPath: "circle(40%)", position: "center" }}
-                src="images/icons/harry.png"
+                style={{ width: "100%", clipPath: "circle(50%)", position: "center" }}
+                src="images/icons/harry.jpg"
                 alt="bell"
               />
          
@@ -83,7 +83,7 @@ We are starting with connecting American brands to our customers and aim to exte
 
             <div className="purchase__inner-card">
               <img
-               style={{ width: "100%", clipPath: "circle(40%)" }}
+               style={{ width: "100%", clipPath: "circle(50%)" }}
                 src="images/icons/chris.png"
                 alt="bell"
               />
@@ -104,7 +104,7 @@ We are starting with connecting American brands to our customers and aim to exte
             <div style={{ }} className="purchase__inner-card">
          
               <img
-               style={{ width: "100%", clipPath: "circle(40%)" }}
+               style={{ width: "100%", clipPath: "circle(45%)" }}
                 src="images/icons/tacha.png"
                 alt="bell"
               />
@@ -125,8 +125,8 @@ We are starting with connecting American brands to our customers and aim to exte
             <div style={{ }} className="purchase__inner-card">
          
               <img
-               style={{ width: "100%", clipPath: "circle(40%)" }}
-                src="images/icons/ogure.png"
+               style={{ width: "100%", clipPath: "circle(43%)" }}
+                src="images/icons/ogure.jpg"
                 alt="bell"
               />
            
@@ -146,7 +146,7 @@ We are starting with connecting American brands to our customers and aim to exte
             <div className="purchase__inner-card">
          
               <img
-               style={{ width: "100%",clipPath: "circle(40%)" }}
+               style={{ width: "100%",clipPath: "circle(50%)" }}
                 src="images/icons/muazu.png"
                 alt="bell"
               />
