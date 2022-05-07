@@ -13,6 +13,7 @@ import Demo from "./Pages/Demo/Demo";
 
 import { GlobalProvider } from "./Context/GlobalContext";
 import BuyCoin from "./Pages/BuyCoin/BuyCoin";
+import HowToUse from "./Pages/HowToUse/HowToUse";
 
 
 
@@ -56,7 +57,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
-          <Route path="/demo" element={<Demo />} />
+          {/* <Route path="/demo" element={<Demo />} /> */}
+          <Route path="/demo" element={<HowToUse />} />
           <Route path="/buycoin" element={<BuyCoin />} />
           <Route path="/bill" element={<Bill />} />
           <Route path="/cart" element={<Cart></Cart>} />
