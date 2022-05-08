@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import Hero from "../../Base/Hero";
 import { GlobalContext } from "../../Context/GlobalContext";
 import companies from "../../Helpers/constants/companies";
+import isValidUrl from "../../Helpers/isValidUrl";
 import Products from "./Products/Products";
 
 
@@ -18,12 +19,32 @@ export default function Shop() {
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const submitSearch = async(e) => {
+    const AsinREGEX = new RegExp('\/[dg]p\/([^\/]+)');
+    
+    // if(searchTerm === ""){
+    //   return;
+    // }
 
     e.preventDefault();
     try {
       setIsSearching(true);
-      clearProducts();
-      await searchProducts(searchTerm, companies[0].domain);
+      // clearProducts();
+    
+      if(isValidUrl(searchTerm)){
+        const seenMatches = searchTerm.match(AsinREGEX);
+        if(seenMatches !== null){
+          const asin = seenMatches[1];
+          if(asin.length > 10){
+            await searchProducts(asin.slice(0, 10), companies[0].domain);
+          }else{
+            await searchProducts(asin, companies[0].domain);
+          }
+        }else{
+          await searchProducts(searchTerm, companies[0].domain);
+        }
+      }else{
+        await searchProducts(searchTerm, companies[0].domain);
+      }
       setIsSearching(false);
     } catch (error) {
       console.log(error);
@@ -53,7 +74,7 @@ export default function Shop() {
     }
   }, []);
 
-  console.log("Products: ", products);
+  // console.log("Products: ", products);
 
   return (
     <>
