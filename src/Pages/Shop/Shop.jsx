@@ -17,11 +17,8 @@ export default function Shop() {
   // Local states
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-
   const submitSearch = async(e) => {
-    // if(searchTerm === ""){
-    //   return;
-    // }
+
     e.preventDefault();
     try {
       setIsSearching(true);
