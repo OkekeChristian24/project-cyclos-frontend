@@ -84,7 +84,7 @@ We are starting with connecting American brands to our customers and aim to exte
             <div className="purchase__inner-card">
             {/* <div style={{ width:"150px",height:"150px", borderRadius: "50%", position:"relative",backgroundSize:"contain" , backgroundPosition: "center" ,  border:"1px solid #FD8B72", marginBottom: 20}}> */}
           <img
-               style={{ width: "100%",clipPath: "circle(60%)" }}
+               style={{ width: "100%",clipPath: "circle(50%)" }}
                 src="images/icons/chris.jpg"
                 alt="bell"
               />
@@ -122,11 +122,10 @@ We are starting with connecting American brands to our customers and aim to exte
               </div>
             </div>
 
-            <div style={{ }} className="purchase__inner-card">
-         
+            <div  className="purchase__inner-card">
               <img
-               style={{ width: "100%", clipPath: "circle(45%)" }}
-                src="images/icons/tacha.jpg"
+               style={{ width: "100%", clipPath: "circle(50%)" }}
+                src="images/icons/Tacha.png"
                 alt="bell"
               />
            
