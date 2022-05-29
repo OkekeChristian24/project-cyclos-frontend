@@ -29,6 +29,9 @@ export const supportedTokens = {
     //         decimals: 18
     //     }
     // ],
+    //
+    //Test on BSC = 0x771E49134e4b12132bA0bFE259E465b4307D5D7C
+    //Main on BSC = 0x55d398326f99059fF775485246999027B3197955
     56: [
 
         {
@@ -148,12 +151,16 @@ export const supportedTokens = {
 //     }
 
 // };
-
+/**
+ * Test on BSC = 0x4A1162c4dF3dDCA06818C2bbc622EBFb870d2673
+ * Main on BSC = 0x2683D33da0B1c182bd8c2D46C9C9B7F51051a54D
+ */
 export const paymentAddresses = {
     // 250: "0xb18B3e3967C8dF8c989594a73FE6C29AEBa214d8",
     // "0xfa": "0xb18B3e3967C8dF8c989594a73FE6C29AEBa214d8",
     // 137: "0xb18B3e3967C8dF8c989594a73FE6C29AEBa214d8",
     // "0x89": "0xb18B3e3967C8dF8c989594a73FE6C29AEBa214d8",
+    
     56: "0x2683D33da0B1c182bd8c2D46C9C9B7F51051a54D",
     "0x38": "0x2683D33da0B1c182bd8c2D46C9C9B7F51051a54D"
 };

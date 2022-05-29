@@ -1,4 +1,5 @@
 import genRandomness from "../../Helpers/genRandomness";
+import { PRECISION_FACTOR } from "../../utils/bignum";
 import { 
     ADD_TO_CART,
     GET_STORED_CART,
@@ -42,7 +43,7 @@ const cartReducer = (state = {}, action) => {
                 const newState_ADD_TO_CART = {
                     ...state,
                     totalQty: (state.totalQty + action.payload.product.quantity),
-                    totalPrice: state.totalPrice + (action.payload.product.quantity * action.payload.product.price),
+                    totalPrice: ((state.totalPrice*PRECISION_FACTOR) + (action.payload.product.quantity * action.payload.product.price*PRECISION_FACTOR))/PRECISION_FACTOR,
                     products: [action.payload.product, ...state.products]
                 };
                 window.localStorage.setItem(process.env.REACT_APP_CART_NAME, JSON.stringify(newState_ADD_TO_CART));
@@ -58,6 +59,7 @@ const cartReducer = (state = {}, action) => {
                 totalPrice: action.payload.updatedState.totalPrice,
                 products: [...action.payload.updatedState.products]
             };
+            
             window.localStorage.setItem(process.env.REACT_APP_CART_NAME, JSON.stringify(newState_UPDATE_CART));
             return newState_UPDATE_CART;
 
@@ -73,7 +75,7 @@ const cartReducer = (state = {}, action) => {
             const newState_REMOVE_ITEM =  {
                 ...state,
                 totalQty: state.totalQty - item.quantity,
-                totalPrice: state.totalPrice - (item.quantity * item.price),
+                totalPrice: ((state.totalPrice*PRECISION_FACTOR) - (item.quantity * item.price*PRECISION_FACTOR))/PRECISION_FACTOR,
                 products: state.products.filter(product => product.id !== item.id)
             };
 
@@ -89,14 +91,14 @@ const cartReducer = (state = {}, action) => {
                 const filteredState = {
                     ...state,
                     totalQty: (state.totalQty - itemToUpdate.quantity),
-                    totalPrice: state.totalPrice - (itemToUpdate.quantity * itemToUpdate.price),
+                    totalPrice: ((state.totalPrice*PRECISION_FACTOR) - (itemToUpdate.quantity * itemToUpdate.price*PRECISION_FACTOR))/PRECISION_FACTOR,
                     products: filteredProducts
                 };
                 filteredState.products.splice(updateItemIndex, 0, action.payload.product);
                 const newState_UPDATE_ITEM = {
                     ...filteredState,
                     totalQty: (filteredState.totalQty + action.payload.product.quantity),
-                    totalPrice: (filteredState.totalPrice) + (action.payload.product.quantity * action.payload.product.price),
+                    totalPrice: ((filteredState.totalPrice*PRECISION_FACTOR) + (action.payload.product.quantity * action.payload.product.price*PRECISION_FACTOR))/PRECISION_FACTOR,
                     products: [...filteredState.products]
                 };
                 window.localStorage.setItem(process.env.REACT_APP_CART_NAME, JSON.stringify(newState_UPDATE_ITEM));
@@ -115,11 +117,10 @@ const cartReducer = (state = {}, action) => {
             };
             
             state.products.splice((dupItemIndex + 1), 0, dupItem);
-
             const newState_DUP_ITEM = {
                 ...state,
                 totalQty: (state.totalQty + dupItem.quantity),
-                totalPrice: state.totalPrice + (dupItem.quantity * dupItem.price),
+                totalPrice: ((state.totalPrice*PRECISION_FACTOR) + (dupItem.quantity * dupItem.price*PRECISION_FACTOR))/PRECISION_FACTOR,
                 products: [...state.products]
             };
             window.localStorage.setItem(process.env.REACT_APP_CART_NAME, JSON.stringify(newState_DUP_ITEM));

@@ -1,5 +1,6 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { Box } from "@mui/system";
+import { ethers } from 'ethers';
 import BigNumber from "bignumber.js";
 import React, { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -22,11 +23,11 @@ import axios from "axios";
 import getFeesPercent from "../../Helpers/getFeesPercent";
 import companies from "../../Helpers/constants/companies";
 import calculate from "../../Helpers/calculate";
+import { BIG_TEN } from "../../utils/bignum";
 
 
+BigNumber.config({ EXPONENTIAL_AT: 1e+9 });
 
-const testErrArr = ["Error message One", "Error message Two", "Error message Three"];
-const testErr = "Error message One";
 
 export default function Bill() {
 
@@ -45,7 +46,7 @@ export default function Bill() {
   const [shippingAddrError, setShippingAddrError] = useState(initShipAddrErr);
   const [shipAddrErrMsg, setShipAddrErrMsg] = useState(initShipAddrErrMsg);
   const [isBackendErr, setIsBackendErr] = useState(false);
-  const [backendErrMsg, setBackendErrMsg] = useState(testErrArr);
+  const [backendErrMsg, setBackendErrMsg] = useState([]);
   const [chargePercent, setChargePercent] = useState(null);
   const [taxPercent, setTaxPercent] = useState(null);
   
@@ -104,7 +105,7 @@ export default function Bill() {
         throw new CustomError("No Products Selected");
       }
 
-      if(calculate(chargePercent, taxPercent, cart.totalPrice) > Number(userBalance).toFixed(3)){
+      if(Number(calculate(chargePercent, taxPercent, cart.totalPrice)) > Number(userBalance).toFixed(3)){
         throw new CustomError("Insufficient Token Balance");
       }
 
@@ -122,23 +123,25 @@ export default function Bill() {
       }
       // Initialise contracts
       const paymentContract = new web3.eth.Contract(paymentABI, paymentAddr);
-      const totalPriceBN = (new BigNumber(calculate(chargePercent, taxPercent, cart.totalPrice)*10**tokenDecimals));
+      //  const totalPriceBN = (new BigNumber(calculate(chargePercent, taxPercent, cart.totalPrice)).times(BIG_TEN.pow(tokenDecimals)));
+      
+      const totalPriceBN = (new BigNumber(calculate(chargePercent, taxPercent, cart.totalPrice)).times(BIG_TEN.pow(tokenDecimals)));
       const totalQty = cart.totalQty;
-      let products = [];
-      for(let i=0; i<cart.products.length; i++){
-        let price = (new BigNumber(cart.products[i].price*10**tokenDecimals).toFixed());
-        let product = {
-          asin: cart.products[i].asin,
-          price: price,
-          title: cart.products[i].title,
-          image: cart.products[i].image,
-          color: cart.products[i].color,
-          size: cart.products[i].size,
-          quantity: cart.products[i].quantity
-        };
-        products = [...products, product];
-        product = "";
-      }
+      // let products = [];
+      // for(let i=0; i<cart.products.length; i++){
+      //   let price = (new BigNumber(cart.products[i].price*10**tokenDecimals).toFixed());
+      //   let product = {
+      //     asin: cart.products[i].asin,
+      //     price: price,
+      //     title: cart.products[i].title,
+      //     image: cart.products[i].image,
+      //     color: cart.products[i].color,
+      //     size: cart.products[i].size,
+      //     quantity: cart.products[i].quantity
+      //   };
+      //   products = [...products, product];
+      //   product = "";
+      // }
 
       if (!Date.now) {
         Date.now = function() { return new Date().getTime(); }
@@ -146,7 +149,13 @@ export default function Bill() {
       const timeStampInMs = window.performance && window.performance.now && window.performance.timing && window.performance.timing.navigationStart ? window.performance.now() + window.performance.timing.navigationStart : Date.now();
       const orderID = uuidv4() + web3Info.address + timeStampInMs.toString();
       // makePayment(orderID, tokenIndex, totalPriceBN, totalQty, products).send({from: buyer})
-      const data = await paymentContract.methods.makePayment(orderID, tokenIndex, totalPriceBN, totalQty).send({from: web3Info.address});
+      const data = await paymentContract.methods.makePayment(orderID, tokenIndex, totalPriceBN.toString(), totalQty).send(
+        {
+          from: web3Info.address,
+          gas: 667016
+
+        }
+      );
       const txHash = data.transactionHash;
       await awaitBlockConsensus([web3Info.web3], txHash, 2, 750, async(error, txnReceipt) => {
         try{
@@ -171,7 +180,7 @@ export default function Bill() {
 
             const orderBody = {
               buyer: String(web3Info.address),
-              totalPrice: (Number(cart.totalPrice)).toFixed(5),
+              totalPrice: (BigNumber(cart.totalPrice)).toFixed(15),
               totalQty: Number(cart.totalQty),
               paymentID: String(paymentDetails.paymentID),
               orderID: String(orderID),
@@ -182,6 +191,9 @@ export default function Bill() {
               shipping: shippingDetails,
               company: companies[0].name
             };
+            console.log('cart: ', cart);
+            console.log('paymentDetails: ', paymentDetails);
+            console.log('orderBody: ', orderBody);
 
     
             return axios.post(`${serverHost}/api/order`, orderBody, axiosConfig);
@@ -276,7 +288,7 @@ export default function Bill() {
       if(cart.products.length <= 0){
         throw new CustomError("No Products Selected");
       }
-      if(calculate(chargePercent, taxPercent, cart.totalPrice) > Number(userBalance).toFixed(3)){
+      if(calculate(chargePercent, taxPercent, cart.totalPrice) > Number(userBalance)){
         throw new CustomError("Insufficient Token Balance");
       }
       
@@ -285,8 +297,12 @@ export default function Bill() {
         const tokenAddress = supportedTokens[web3Info.chainID][tokenIndex - 1].address;    
         const paymentAddr = paymentAddresses[web3Info.chainID];
         const tokenContract = new web3Info.web3.eth.Contract(tokenABI, tokenAddress);
-        const totalPriceBN = (new BigNumber(calculate(chargePercent, taxPercent, cart.totalPrice)*10**tokenDecimals));
-        const data = await tokenContract.methods.approve(paymentAddr, totalPriceBN).send({from: web3Info.address});
+        // BIG_TEN
+        // console.log('stake value: ', new BigNumber(amount).times(BIG_TEN.pow(decimals)).toString() )
+    
+        // const totalPriceBN = (new BigNumber(calculate(chargePercent, taxPercent, cart.totalPrice)).times(BIG_TEN.pow(tokenDecimals)));
+        // const data = await tokenContract.methods.approve(paymentAddr, totalPriceBN.toFixed()).send({from: web3Info.address});
+        const data = await tokenContract.methods.approve(paymentAddr, ethers.constants.MaxUint256).send({from: web3Info.address});
         const txHash = data.transactionHash;
         
         await awaitBlockConsensus([web3Info.web3], txHash, 2, 750, async(error, txnReceipt) => {
@@ -359,12 +375,13 @@ export default function Bill() {
     try{
       if(web3Info.connected !== undefined && web3Info.connected && tokenIndex !== null){
         const tokenAddress = supportedTokens[web3Info.chainID][tokenIndex - 1].address;
+        const tokenDecimals = supportedTokens[web3Info.chainID][tokenIndex - 1].decimals;
         if(tokenAddress === undefined){
           throw new CustomError(`Unsupported Chain ID ${web3Info.chainID}`);
         }
         const tokenContract = new web3Info.web3.eth.Contract(tokenABI, tokenAddress);
         const tokenBal = await tokenContract.methods.balanceOf(web3Info.address).call();
-        const tokenBalance = web3Info.web3.utils.toBN(Number((parseFloat(tokenBal)/10**18).toFixed(0)));
+        const tokenBalance = (Number((parseFloat(tokenBal)/10**tokenDecimals).toFixed(3)));
         setUserBalance(tokenBalance);
       }
     }catch(error){
@@ -519,7 +536,7 @@ export default function Bill() {
           &&
           cart.totalPrice !== 0
           &&
-          <h6>Total Price: ${calculate(chargePercent, taxPercent, cart.totalPrice)}</h6>
+          <h6>Total Price: ${Number(calculate(chargePercent, taxPercent, cart.totalPrice)).toFixed(5)}</h6>
           }
         </div>
         <div style={payStyling}>

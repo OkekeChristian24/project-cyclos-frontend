@@ -130,7 +130,8 @@ export default function Cart() {
               </div>
               <div className="total__inner-row">
                 <h4>Total</h4>
-                <span>{`$${calculate(chargePercent, taxPercent, cart.totalPrice)}`}</span>
+                {/* <span>{`$${calculate(chargePercent, taxPercent, cart.totalPrice)}`}</span> */}
+                <span>{`$${Number(calculate(chargePercent, taxPercent, cart.totalPrice)).toFixed(4)}`}</span>
               </div>
               <div className="total__inner-submit">
                   <Link className="button primary" style={{textAlign: 'center'}} to="/bill">
