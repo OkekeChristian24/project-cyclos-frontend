@@ -18,7 +18,6 @@ export default function Shop() {
   // Local states
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-
   const submitSearch = async(e) => {
     const AsinREGEX = new RegExp('\/[dg]p\/([^\/]+)');
     

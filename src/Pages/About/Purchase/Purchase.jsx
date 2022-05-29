@@ -1,3 +1,4 @@
+import { Circle } from "@mui/icons-material";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -26,10 +27,8 @@ export default function Purchase() {
             Our innovative idea is a result of a deep-seated problem for Africans - the lack of easy access to quality, affordable, and luxury items from across the world. While there are hundreds of eCommerce platforms dedicated to serving the needs of Africans, there is an absence of a trustworthy, safe, and reliable platform that connects African consumers to global brands in a cost-effective and  stress-free way. <br/><br/>
 We have identified how to solve this problem utilizing the blockchain technology and Web3.
             </p>
-
           </div>
         </div>
-
         <div className="purchase__inner">
         <div className="purchase__inner-content">
             <div className="purchase__inner-content-bg">
@@ -41,7 +40,6 @@ We have identified how to solve this problem utilizing the blockchain technology
             Our model is composed to connect global brands to African consumers. While the e-commerce industry is enormous, with total revenue expected to increase to $46 billion by 2025, there is a need to establish a platform that rewards not only the creators but also the customers and this is achievable using Web3. <br /> <br />
 
 At our core, we are focused on delivering the best shopping experience on the blockchain and this is why we are committed to offering a simple, hassle-free, and cost-effective method to pay for items on the blockchain and have your parcel delivered to your doorstep.<br /> <br />
-
 We are starting with connecting American brands to our customers and aim to extend to UK, UAE, China to provide our customers access to a broader market.
             </p>
           </div>
@@ -60,13 +58,14 @@ We are starting with connecting American brands to our customers and aim to exte
 
         <h2 style={{textAlign: "center", marginTop:15, marginBottom: 65 }}id="shop_amazon">Meet Our Team</h2>
         <div className="purchase__inner">
-             <div style={{}}className="purchase__inner-card">
-          
-              <img
-                style={{ width: "100%", clipPath: "circle(50%)", position: "center" }}
+             <div className="purchase__inner-card">
+            
+          <img
+               style={{ width: "100%",clipPath: "circle(50%)"}}
                 src="images/icons/harry.jpg"
                 alt="bell"
               />
+        
          
               <div style={{textAlign:"center", lineHeight:0, }}>
               <h2 style={{fontSize:"20px"}}>Oladipo Bello </h2>
@@ -80,14 +79,17 @@ We are starting with connecting American brands to our customers and aim to exte
               </a>
               </div>
             </div>
+            
 
             <div className="purchase__inner-card">
-              <img
-               style={{ width: "100%", clipPath: "circle(50%)" }}
-                src="images/icons/chris.png"
+            {/* <div style={{ width:"150px",height:"150px", borderRadius: "50%", position:"relative",backgroundSize:"contain" , backgroundPosition: "center" ,  border:"1px solid #FD8B72", marginBottom: 20}}> */}
+          <img
+               style={{ width: "100%",clipPath: "circle(50%)" }}
+                src="images/icons/chris.jpg"
                 alt="bell"
               />
-            
+           {/* </div> */}
+
               <div style={{textAlign:"center", lineHeight:0, }}>
               <h2 style={{fontSize:"20px"}}>Christian Okeke </h2>
               <h2 style={{fontSize:"15px"}}>CTO</h2>
@@ -101,11 +103,29 @@ We are starting with connecting American brands to our customers and aim to exte
               </div>
             </div>
 
-            <div style={{ }} className="purchase__inner-card">
-         
+            <div className="purchase__inner-card">
               <img
-               style={{ width: "100%", clipPath: "circle(45%)" }}
-                src="images/icons/tacha.png"
+               style={{ width: "100%",clipPath: "circle(50%)" }}
+                src="images/icons/muazu.jpg"
+                alt="bell"
+              />
+              <div style={{textAlign:"center", lineHeight:0, }}>
+              <h2 style={{fontSize:"20px"}}>Muazu Abu </h2>
+              <h2 style={{fontSize:"15px"}}>Senior Software Engineer</h2>
+              <a style={{cursor: "pointer"}} href="https://www.linkedin.com/in/muazu">
+              <img
+                style={{ width: "30%",}}
+                src="images/icons/logo.png"
+                alt="bell"
+              />
+              </a>
+              </div>
+            </div>
+
+            <div  className="purchase__inner-card">
+              <img
+               style={{ width: "100%", clipPath: "circle(50%)" }}
+                src="images/icons/Tacha.png"
                 alt="bell"
               />
            
@@ -144,17 +164,15 @@ We are starting with connecting American brands to our customers and aim to exte
             </div>
 
             <div className="purchase__inner-card">
-         
               <img
                style={{ width: "100%",clipPath: "circle(50%)" }}
-                src="images/icons/muazu.png"
+                src="images/icons/fortune.jpg"
                 alt="bell"
               />
-            
               <div style={{textAlign:"center", lineHeight:0, }}>
-              <h2 style={{fontSize:"20px"}}>Muazu Abu </h2>
-              <h2 style={{fontSize:"15px"}}>Senior Software Engineer</h2>
-              <a style={{cursor: "pointer"}} href="https://www.linkedin.com/in/muazu">
+              <h2 style={{fontSize:"20px"}}>Fortune Ephraim  </h2>
+              <h2 style={{fontSize:"15px"}}>Data Analyst</h2>
+              <a style={{cursor: "pointer"}} href="https://www.linkedin.com/in/fortune-ephraim-a2078771">
               <img
                 style={{ width: "30%",}}
                 src="images/icons/logo.png"
@@ -163,6 +181,8 @@ We are starting with connecting American brands to our customers and aim to exte
               </a>
               </div>
             </div>
+
+
         </div>
 
       </div>
