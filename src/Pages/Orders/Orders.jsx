@@ -95,8 +95,8 @@ export default function Orders() {
       try {
         
         if(web3Info.address !== undefined){
-          const user = "0xd6cE06a65591f1C7967C74BCd841FdE7f26Ca065";
-          // const user = web3Info.address;
+          // const user = "0xd6cE06a65591f1C7967C74BCd841FdE7f26Ca065";
+          const user = web3Info.address;
           // const response = await axios.get(`${serverHost}/api/order/user/${user}`, axiosConfig);
           const allTxns = await getUserTransactions(user);
           if(allTxns.length > 0){
