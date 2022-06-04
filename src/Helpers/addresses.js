@@ -30,6 +30,7 @@ export const supportedTokens = {
     //     }
     // ],
     //
+
     //Test on BSC = 0x771E49134e4b12132bA0bFE259E465b4307D5D7C
     //Main on BSC = 0x55d398326f99059fF775485246999027B3197955
     56: [
@@ -129,28 +130,6 @@ export const supportedTokens = {
     // ]
 };
 
-// 
-
-// export const supportedTokens = {
-//     250: {
-//         1: {
-//             address: "",
-//             name: "USDT"
-//         }
-//     },
-
-//     56: {
-//         1: {
-//             address: "",
-//             name: "USDT"
-//         },
-//         2: {
-//             address: "",
-//             name: "BUSD"
-//         }
-//     }
-
-// };
 /**
  * Test on BSC = 0x4A1162c4dF3dDCA06818C2bbc622EBFb870d2673
  * Main on BSC = 0x2683D33da0B1c182bd8c2D46C9C9B7F51051a54D

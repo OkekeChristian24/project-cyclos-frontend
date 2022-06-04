@@ -24,7 +24,7 @@ import getFeesPercent from "../../Helpers/getFeesPercent";
 import companies from "../../Helpers/constants/companies";
 import calculate from "../../Helpers/calculate";
 import { BIG_TEN } from "../../utils/bignum";
-
+import "./bill.css";
 
 BigNumber.config({ EXPONENTIAL_AT: 1e+9 });
 
@@ -157,7 +157,7 @@ export default function Bill() {
         }
       );
       const txHash = data.transactionHash;
-      await awaitBlockConsensus([web3Info.web3], txHash, 2, 750, async(error, txnReceipt) => {
+      await awaitBlockConsensus([web3Info.web3], txHash, 1, 750, async(error, txnReceipt) => {
         try{
           if(error){
             console.log(error);
@@ -191,10 +191,7 @@ export default function Bill() {
               shipping: shippingDetails,
               company: companies[0].name
             };
-            console.log('cart: ', cart);
-            console.log('paymentDetails: ', paymentDetails);
-            console.log('orderBody: ', orderBody);
-
+            
     
             return axios.post(`${serverHost}/api/order`, orderBody, axiosConfig);
 
@@ -305,7 +302,7 @@ export default function Bill() {
         const data = await tokenContract.methods.approve(paymentAddr, ethers.constants.MaxUint256).send({from: web3Info.address});
         const txHash = data.transactionHash;
         
-        await awaitBlockConsensus([web3Info.web3], txHash, 2, 750, async(error, txnReceipt) => {
+        await awaitBlockConsensus([web3Info.web3], txHash, 1, 750, async(error, txnReceipt) => {
           try {
             if(error){
               console.log(error);
@@ -381,7 +378,8 @@ export default function Bill() {
         }
         const tokenContract = new web3Info.web3.eth.Contract(tokenABI, tokenAddress);
         const tokenBal = await tokenContract.methods.balanceOf(web3Info.address).call();
-        const tokenBalance = (Number((parseFloat(tokenBal)/10**tokenDecimals).toFixed(3)));
+        const tokenBalance = (Number((parseFloat(tokenBal)/10**tokenDecimals).toFixed(10)));
+        console.log('User balance: ', tokenBalance);
         setUserBalance(tokenBalance);
       }
     }catch(error){
@@ -583,11 +581,25 @@ export default function Bill() {
         </div>
         <div className="bill__footer">
           {
-            isApproved
+            web3Info.connected === undefined 
             ?
-            <button disabled={isPaymentLoading} onClick={handlePayment} className="button primary">{isPaymentLoading ? "Processing..." : "Make Payment"}</button>
+            <h6 style={{color: "#123456", fontWeight: "600"}}>Connect Wallet To Continue</h6>
             :
-            <button disabled={isApprovalLoading} onClick={handleApproval} className="button primary">{isApprovalLoading ? "Approving..." : "Approve Payment"}</button>
+            (
+              tokenIndex == null
+              ?
+              <h6 style={{color: "#123456", fontWeight: "600"}}>Select Payment Token</h6> 
+              :
+              <div className="approve-pay-btns">
+                {
+                  !isApproved
+                  &&
+                  <button disabled={isApprovalLoading} onClick={handleApproval} className="button primary">{isApprovalLoading ? "Approving..." : "Approve Payment"}</button>
+                }
+                <button disabled={!isApproved || isPaymentLoading} onClick={handlePayment} className="button primary bill-pay-btn">{isPaymentLoading ? "Processing..." : "Make Payment"}</button>
+              </div>
+
+            )
           }
         </div>
       </div>
