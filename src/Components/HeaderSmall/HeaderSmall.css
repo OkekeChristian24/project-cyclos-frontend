@@ -1,0 +1,27 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+.headersmall-header-container{
+        width: 100%;
+            height: var(--navbar-height);
+            background-color: #FFFFFF;
+            display: flex;
+            /* justify-content: center; */
+            align-items: center;
+        
+box-shadow: 0 0 50px #ccc;
+padding: 0 1rem;
+        
+}
+.headersmall-details{
+    font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 500;
+        font-size: var(--font-18);
+        line-height: 27px;
+        /* identical to box height */
+    
+        text-align: center;
+    flex:1;
+        color: var(--admin-text-color);
+       
+}

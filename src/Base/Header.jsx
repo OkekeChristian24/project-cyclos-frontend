@@ -80,10 +80,10 @@ export default function Header() {
   const start = 300;
   const onScroll = () => {
     if (window.scrollY > start) {
-      document.getElementById("header").classList.add("sticky");
+      document.getElementById("header")?.classList?.add("sticky");
     } else {
       if(document.getElementById("header") !== undefined){
-        document.getElementById("header").classList.remove("sticky");
+        document.getElementById("header")?.classList?.remove("sticky");
       }
     }
   };
@@ -105,7 +105,7 @@ export default function Header() {
       document.body.classList.remove("active");
       document.body.removeEventListener("click", menuClose);
     }
-  }, [menu]);
+  }, [menu, menuClose]);
 
   useEffect(() => {
     (async() => {
