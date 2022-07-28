@@ -14,6 +14,8 @@ import Demo from "./Pages/Demo/Demo";
 import { GlobalProvider } from "./Context/GlobalContext";
 import BuyCoin from "./Pages/BuyCoin/BuyCoin";
 import HowToUse from "./Pages/HowToUse/HowToUse";
+import DashboardDetail from "./Pages/DashboardDetails/DashboardDetail";
+import Dashboard from "./Pages/DashboardHome/Dashboard";
 
 
 
@@ -62,9 +64,13 @@ export default function App() {
           <Route path="/buycoin" element={<BuyCoin />} />
           <Route path="/bill" element={<Bill />} />
           <Route path="/cart" element={<Cart></Cart>} />
-          <Route path="/dashboard" element={<Orders />} />
           <Route path="/aboutus" element={<About />} />
-          <Route path="/item/:index" element={<OrderItems />} />
+          {/* <Route path="/dashboard" element={<Orders />} /> */}
+          {/* <Route path="/item/:index" element={<OrderItems />} /> */}
+
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/item/:index" element={<DashboardDetail />} />
+          
 
           {/* 
           <Route path="/cards-group" element={<CardGroup></CardGroup>} /> */}
