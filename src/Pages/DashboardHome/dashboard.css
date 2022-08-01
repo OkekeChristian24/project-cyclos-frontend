@@ -1,279 +1,262 @@
-.admin-landingpage-container{
-    background-color: var(--input-bg);
-    width: 100%;
-min-height: calc(100vh - var(--navbar-height));
-
-
+.admin-landingpage-container {
+  background-color: var(--input-bg);
+  width: 100%;
+  min-height: calc(100vh - var(--navbar-height));
 }
-.calendateDate1{
-    z-index: 100;
-    position: absolute;
-    right: 370px;
-    bottom: 160px;
+.calendateDate1 {
+  z-index: 100;
+  position: absolute;
+  right: 370px;
+  bottom: 160px;
 }
 .calendateDate2 {
-    z-index: 100;
-    position: absolute;
-    right: 10px;
-    bottom: 160px;
-    /* background-color: #ffff; */
+  z-index: 100;
+  position: absolute;
+  right: 10px;
+  bottom: 160px;
+  /* background-color: #ffff; */
 }
- .admin-landingpage-container .admin-landingpage-box{
-padding: 1.5rem 4rem 4rem 4rem;
+.admin-landingpage-container .admin-landingpage-box {
+  padding: 1.5rem 4rem 4rem 4rem;
 }
-.admin-landingpage-box .admin-orders-text{
-    font-family: 'Inter';
-        font-style: normal;
-        font-weight: 600;
-        font-size: var(--font-32);
-        line-height: 39px;
-        color: var(--admin-text-color);
-        margin-bottom: 0.8rem;
+.admin-landingpage-box .admin-orders-text {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--font-32);
+  line-height: 39px;
+  color: var(--admin-text-color);
+  margin-bottom: 0.8rem;
 }
- .admin-landingpage-box .admin-orders-found{
-font-family: 'Inter';
-    font-style: normal;
-    font-weight: 500;
-    font-size: var(--font-16);
-    line-height: 19px;
-    color: var(--color-text);
-        margin-bottom: 1.5rem;
-}
- .admin-landingpage-box .admin-landingpage-input-container{
-display: flex;
-justify-content: space-between;
-max-width: var(--input-width2);
-width: 100%;
-    height: 48px;
-    border: 2px solid #fff;
-background: #FFFFFF;
-    /* search shadow */
+.admin-landingpage-box .admin-orders-found {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--font-16);
+  line-height: 19px;
+  color: var(--color-text);
+  margin-bottom: 1.3rem;
+  margin-top: 1.7rem;
 
-    box-shadow: 0px 4px 16px -4px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    align-items: center;
-    padding-left: 0.3rem;
-        /* margin-bottom: 1.5rem; */
 }
-.admin-double-status{
-    flex: 1;
-    display: flex;
-}
- .admin-double-status div{
-    border: none;
-    font-family: 'Inter';
-        font-style: normal;
-        font-weight: 600;
-        font-size: 18px;
-        line-height: 22px;
-        background-color: transparent;
-        cursor: pointer;
-        border-color: transparent;
- }
- .pending{
-        color: var(--admin-text-color);
-       
- }
+.admin-landingpage-box .admin-landingpage-input-container {
+  display: flex;
+  justify-content: space-between;
+  max-width: var(--input-width2);
+  width: 100%;
+  height: 48px;
+  border: 2px solid #fff;
+  background: #ffffff;
+  /* search shadow */
 
-  .pending::after{
-    content: "";
-        display: block;
-        border-bottom: 2px solid red;
-        width: 4rem;
-        margin-left: 0.5rem;
-    
-  }
- .fulfilled{
-    color: rgba(75, 78, 103, 0.3);
- }
-  .admin-double-status div:last-child{
-    margin-left: 2rem;
-  }
-.admin-date-container{
-    display: flex;
-    height: 100%;
-    align-items: center;
-   
+  box-shadow: 0px 4px 16px -4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  align-items: center;
+  padding-left: 0.3rem;
+  /* margin-bottom: 1.5rem; */
 }
-.admin-date-container-from{
-    display: flex;
-    /* margin-right: 1rem; */
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+.admin-double-status {
+  flex: 1;
+  display: flex;
 }
-.admin-date-container-from:first-child{
-    margin-right: 1rem;
+.admin-double-status div {
+  border: none;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  background-color: transparent;
+  cursor: pointer;
+  border-color: transparent;
 }
-.admin-date-container-from div:first-child{
-font-family: 'Inter';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 19px;
-    color: var(--admin-text-color);
-}
-.admin-date-container-from div:last-child{
-    height: 100%;
-    display: flex;
-    justify-content: center;
-}
-.admin-date-container-from div:last-child button{
-    border:none;
-        border: 2px solid #fff;
-            background:#FFFFFF;
-            /* search shadow */
-        width: 98px;
-      height: 100%;
-            box-shadow: 0px 4px 16px -4px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            cursor: pointer;
-            display: flex;
-           align-items: center;
-           justify-content: center;
-        font-family: 'Inter';
-            font-style: normal;
-            font-weight: 500;
-            font-size: var(--font-14);
-            line-height: 17px;
-            color: var(--admin-text-color);
+.pending {
+  color: var(--admin-text-color);
 }
 
- .admin-landingpage-box .admin-landingpage-input-container input{
-    width: 100%;
-    height: 100%;
-    border: none;
-    outline: none;
-    background-color: #fff;
-    color: black;
- }
+.pending::after {
+  content: "";
+  display: block;
+  border-bottom: 2px solid red;
+  width: 4rem;
+  margin-left: 0.5rem;
+}
+.fulfilled {
+  color: rgba(75, 78, 103, 0.3);
+}
+.admin-double-status div:last-child {
+  margin-left: 2rem;
+}
+.admin-date-container {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+.admin-date-container-from {
+  display: flex;
+  /* margin-right: 1rem; */
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.admin-date-container-from:first-child {
+  margin-right: 1rem;
+}
+.admin-date-container-from div:first-child {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: var(--admin-text-color);
+}
+.admin-date-container-from div:last-child {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+.admin-date-container-from div:last-child button {
+  border: none;
+  border: 2px solid #fff;
+  background: #ffffff;
+  /* search shadow */
+  width: 98px;
+  height: 100%;
+  box-shadow: 0px 4px 16px -4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--font-14);
+  line-height: 17px;
+  color: var(--admin-text-color);
+}
+
+.admin-landingpage-box .admin-landingpage-input-container input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background-color: #fff;
+  color: black;
+}
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 30px white inset !important;
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
 
-  .admin-landingpage-box .admin-landing-page-button-container{
+.admin-landingpage-box .admin-landing-page-button-container {
+  display: flex;
+  justify-content: space-between;
+  height: 48px;
+  align-items: center;
+}
+.landginpage-table-container {
+  margin-top: 2rem;
+}
+.table-header-cell {
+  font-family: "Inter" !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  font-size: var(--font-16) !important;
+  line-height: 19px !important;
+
+  color: rgba(29, 51, 126, 0.61) !important;
+}
+.table-body-cell {
+  font-family: "Inter" !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  font-size: var(--font-18) !important;
+  line-height: 22px !important;
+  /* identical to box height */
+
+  color: var(--table-cell) !important;
+}
+.table-body-cell:last-child {
+  color: var(--bg-color) !important;
+}
+.table-border-bottom {
+  border-bottom: 2px solid var(--bg-color) !important;
+  cursor: pointer !important;
+}
+.landing-page-table-pagination {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0.5rem 0;
+}
+.landing-page-table-pagination .btncontainer button {
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 0.7rem;
+  color: grey;
+}
+.landing-page-table-pagination .btncontainer button:first-child {
+  margin-right: 1rem;
+}
+.landing-page-table-pagination .btncontainer button:last-child {
+  margin-left: 1rem;
+  color: var(--admin-text-color);
+}
+.pagination-text {
+  font-size: var(--font-16);
+  word-spacing: 0.6rem;
+}
+@media screen and (max-width: 768px) {
+  .admin-double-status {
+    width: 100%;
     display: flex;
-    justify-content: space-between;
-    height: 48px;
-    align-items: center;
-}
-.landginpage-table-container{
-    margin-top: 2rem;
-}
-.table-header-cell{
-    font-family: 'Inter'!important;
-        font-style: normal!important;
-        font-weight: 600!important;
-        font-size: var(--font-16)!important;
-        line-height: 19px!important;
-    
-        color: rgba(29, 51, 126, 0.61)!important;
-}
-.table-body-cell{
-    font-family: 'Inter'!important;
-        font-style: normal!important;
-        font-weight: 500!important;
-        font-size: var(--font-18)!important;
-        line-height: 22px!important;
-        /* identical to box height */
-    
-     
-    
-        color: var(--table-cell)!important;
-}
-.table-body-cell:last-child{
-    color: var(--bg-color)!important;
-  
-}
-.table-border-bottom{
-    border-bottom: 2px solid var(--bg-color)!important;
-    cursor: pointer!important;
-}
-.landing-page-table-pagination{
-    display: flex;
-    justify-content: flex-end;
-    margin: .5rem 0
-}
-.landing-page-table-pagination .btncontainer button{
-    border:0;
+    justify-content: space-evenly;
+  }
+
+  .table-header-cell {
+    font-size: 0.7rem !important;
+    line-height: 13px !important;
+  }
+
+  .table-body-cell {
+    font-size: 0.9rem !important;
+    line-height: 22px !important;
+    /* identical to box height */
+  }
+  .admin-double-status div {
+    width: 30%;
+    display: block;
     background-color: transparent;
-    cursor: pointer;
-    font-size: 0.7rem;
-    color: grey;
+  }
+
+  .pending::after {
+    content: "";
+    display: block;
+    border: none;
+    border-bottom: 2px solid red;
+    width: 80%;
+    padding-top: 0.1rem;
+  }
+  .admin-date-container {
+    display: none;
+  }
+  .admin-landingpage-container .admin-landingpage-box {
+    padding: 1.5rem 0.8rem 0.8rem 0.8rem;
+  }
+
+  .admin-landingpage-box .admin-orders-text {
+    margin-bottom: 0.5rem;
+    font-weight: 00;
+  }
+
+  .admin-landingpage-box .admin-orders-found {
+    margin-bottom: 0.8rem;
+    font-weight: 400;
+  }
+  .admin-landingpage-box .admin-landing-page-button-container {
+    flex-direction: column;
+  }
 }
-.landing-page-table-pagination .btncontainer button:first-child{
-    margin-right: 1rem;
-}
-.landing-page-table-pagination .btncontainer button:last-child{
-    margin-left: 1rem;
-    color: var(--admin-text-color);
-}
-.pagination-text{
-    font-size: var(--font-16);
-    word-spacing: 0.6rem;
-}
- @media screen and (max-width: 768px) {
-    .admin-double-status{
-        width: 100%;
-    display: flex;
-   justify-content: space-evenly;
-    }
-
-        .table-header-cell {
-          
-            font-size:0.7rem !important;
-            line-height: 13px !important;
-    
-         
-        }
-
-                .table-body-cell {
-                   
-                    font-size: 0.9rem!important;
-                    line-height: 22px !important;
-                    /* identical to box height */
-        
-        
-        
-                   
-                }
-         .admin-double-status div{
-            width: 30%;
-            display: block;
-            background-color: transparent;
-         }
-
-                   .pending::after {
-                       content: "";
-                       display: block;
-                       border: none;
-                       border-bottom: 2px solid red;
-                       width: 80%;
-                      padding-top: 0.1rem;
-        
-                   }
-    .admin-date-container {
-        display: none;
-    }
-    .admin-landingpage-container .admin-landingpage-box {
-            padding: 1.5rem 0.8rem 0.8rem 0.8rem;
-        }
-
-                .admin-landingpage-box .admin-orders-text {
-               
-                    margin-bottom: 0.5rem;
-                                    font-weight: 00;
-                }
-
-                                 .admin-landingpage-box .admin-orders-found {
-                                
-                                     margin-bottom: .8rem;
-                                     font-weight:400;
-                                 }
-                                                                   .admin-landingpage-box .admin-landing-page-button-container {
-                                                                    flex-direction: column;
-                                                                   }
- }

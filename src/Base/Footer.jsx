@@ -22,7 +22,7 @@ export default function Footer() {
       <div className="auto__container"  >
         <div className="footer__inner">
      <div style={{display: "flex", justifyContent: "center", alignItems: "center", marginBottom: "60px"}}>
-     <img style={{width:200}} src="images/logo/Logo white.png" alt="" />
+     <img style={{width:200}} src="/images/logo/Logo white.png" alt="" />
      </div>
      {/* Links */}
 <div id="links" className="links" style={{display: "flex", justifyContent: "space-between", alignItems:"center", marginBottom: "30px"}}> 

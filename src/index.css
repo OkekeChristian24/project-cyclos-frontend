@@ -1,0 +1,32 @@
+
+
+:root{
+    --bg-color :#FD5D54;
+    --navbar-height:80px;
+    --login-height:527px;
+    --login-width:518px;
+    --input-height:354px;
+    --input-width:56px;
+   --input-width2: 354px;
+    --input-bg:#F4F8FD;
+    --color-text:#171717;
+    --admin-text-color:#293B7A;
+    --table-cell:#4B4E67;
+     --table-header-bg:#F4F5FB;
+   --table-header-height:1160px;
+   --table-header-width: 58px;
+   --search-input-height:437px;
+   --search-input-width: 58px;
+   --border-color:#F4F5FB;
+   --font-18:1.125rem;
+   --font-36: 2.25rem;
+   --font-32: 2rem;
+   --font-16: 1rem;
+   --font-14: 0.875rem;
+   --font-15: 0.938rem;
+   --font-12: 0.75rem;
+   --color:#5C5C5C;
+   
+   
+   
+   }
