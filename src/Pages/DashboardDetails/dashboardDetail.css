@@ -2,6 +2,7 @@
   background-color: var(--input-bg);
   width: 100%;
   min-height: calc(100vh - var(--navbar-height));
+  margin-top: calc(100vh - calc(100vh - var(--navbar-height)));
 }
 
 .admin-details-container .admin-details-box {

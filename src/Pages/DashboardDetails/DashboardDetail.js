@@ -38,8 +38,6 @@ function DashboardDetail() {
   const { userTransactions, web3Info } = React.useContext(GlobalContext);
   const { index } = useParams();
   const transaction = userTransactions[index];
-  console.log("Gotten index: ", index);
-  console.log("Gotten trxn: ", transaction);
 
   const navigate = useNavigate();
 
@@ -145,6 +143,7 @@ function DashboardDetail() {
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <ArrowBackIcon
                 sx={{
+                  color: "#293B7A",
                   fontSize: 30,
                   cursor: "pointer",
                   marginRight: 1,
@@ -316,29 +315,9 @@ function DashboardDetail() {
                         }}
                         onClick={handleOpen}
                       >
-                        Delete
+                        Remove Order
                       </Button>
-                      {transaction?.status === "pending" && (
-                        <Button
-                          variant="contained"
-                          endIcon={<UpgradeIcon />}
-                          onClick={handleOpen2}
-                          sx={{
-                            backgroundColor: "#293B7A",
-
-                            "&:hover": {
-                              backgroundColor: "#293B7A",
-                              boxShadow: "none",
-                            },
-                            "&:active": {
-                              boxShadow: "none",
-                              backgroundColor: "#293B7A",
-                            },
-                          }}
-                        >
-                          Update
-                        </Button>
-                      )}
+                      
                     </Box>
                   </Paper>
                 </Grid>
@@ -346,7 +325,7 @@ function DashboardDetail() {
                   <Paper
                     className="admin-detail-content-container-box1"
                     elevation={1}
-                    sx={{ borderRadius: "8px", padding: 2 }}
+                    sx={{ marginLeft: "30px", borderRadius: "8px", padding: 2 }}
                   >
                     <Box className="admin-detail-sideRight-header">
                       <Box className="sideRight-header-summary"> Summary</Box>

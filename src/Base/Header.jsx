@@ -144,7 +144,7 @@ export default function Header() {
         <div className="header__inner">
           <div className="header__inner-logo">
           <Link to="/"> 
-            <img id="image" style={{width:200}} src="images/logo/Logo white.png" alt="logo" />
+            <img id="image" style={{width:200}} src="/images/logo/Logo white.png" alt="logo" />
           
           </Link>
           </div>
@@ -167,7 +167,7 @@ export default function Header() {
               
             
               <button style={{width: "215px", fontSize: "16px"}} onClick={!web3Info.connected ? connectWalletHandler : undefined} className="button connect wallet-connect">
-                <img src="images/icons/wallet.svg" alt="wallet" />
+                <img src="/images/icons/wallet.svg" alt="wallet" />
                 {web3Info.connected ? formatWallet(web3Info.address) : "Connect Wallet"}
               </button>
 

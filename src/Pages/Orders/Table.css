@@ -43,9 +43,9 @@ overflow-x: scroll;
     width: 20rem;
     max-width: 20rem;
     padding: 1rem;
-    border-bottom: 0.854209px dashed #000000;
-    border-top: 0.854209px dashed #000000;
-    border-right: 0.854209px dashed #000000;
+    /* border-bottom: 0.854209px solid #293B7A;
+    border-top: 0.854209px solid #293B7A;
+    border-right: 0.854209px solid #293B7A; */
     }
 
     .input {
