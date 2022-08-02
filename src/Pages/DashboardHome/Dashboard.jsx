@@ -26,6 +26,7 @@ import TablePagination from "@mui/material/TablePagination";
 // import { viewSingleOrder } from "../../Redux/Slices/AuthSlice";
 import Button from "@mui/material/Button";
 import RotateLeftIcon from "@mui/icons-material/RotateLeft";
+import Hero from "../../Base/Hero";
 function Dashboard() {
   // Global Context
   const { web3Info, userTransactions, getUserTransactions } =
@@ -57,6 +58,7 @@ function Dashboard() {
     //convert input text to lower case
     var lowerCase = e.target.value.toLowerCase();
     setInputText(lowerCase);
+    setFilteredData();
   };
 
   // console.log("Page data: ", pageData);
@@ -128,13 +130,12 @@ function Dashboard() {
   }, [web3Info.address]);
 
   React.useEffect(() => {
-
     const dataFiltered = pageData?.filter((el) => {
       if (inputText) {
         return (
           el.order_unique_id.toLowerCase().includes(inputText) ||
           el.payment_unique_id.toLowerCase().includes(inputText) ||
-          el.buyer_addr.toLowerCase().includes(inputText)
+          el.tx_hash.toLowerCase().includes(inputText)
         );
       }
       if (progress) {
@@ -154,48 +155,46 @@ function Dashboard() {
       }
     });
     setFilteredData(dataFiltered);
-  }, [pageData]);
-  //  console.log(value , 'vvvvvvvv')
-  //  console.log(value2 , 'bbbbbbbb')
+  }, [pageData, inputText, progress, value, value2]);
 
   return (
     <>
       {/* <Header/> */}
+      <Hero>
+        <div className="admin-landingpage-container">
+          <div className="admin-landingpage-box">
+            <h2 className="admin-orders-text">Orders</h2>
+            <p className="admin-orders-found">
+              {filteredData?.length} orders found
+            </p>
 
-      <div className="admin-landingpage-container">
-        <div className="admin-landingpage-box">
-          <h2 className="admin-orders-text">Orders</h2>
-          <p className="admin-orders-found">
-            {filteredData?.length} orders found
-          </p>
-
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginBottom: "1rem",
-            }}
-          >
-            <div className="admin-landingpage-input-container">
-              <SearchIcon
-                sx={{ color: "#4B4E67", paddingRight: 1, fontSize: 30 }}
-              />
-              <input
-                type="text"
-                name="search"
-                id=""
-                placeholder="Search orders"
-                value={inputText}
-                onChange={inputHandler}
-              />
-            </div>
             <Box
               sx={{
-                marginBottom: 1,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginBottom: "1rem",
               }}
             >
-              <Button
+              <div className="admin-landingpage-input-container">
+                <SearchIcon
+                  sx={{ color: "#4B4E67", paddingRight: 1, fontSize: 30 }}
+                />
+                <input
+                  type="text"
+                  name="search"
+                  id=""
+                  placeholder="Search orders"
+                  value={inputText}
+                  onChange={inputHandler}
+                />
+              </div>
+              <Box
+                sx={{
+                  marginBottom: 1,
+                }}
+              >
+                {/* <Button
                 variant="contained"
                 endIcon={<RotateLeftIcon />}
                 onClick={() => {
@@ -219,233 +218,241 @@ function Dashboard() {
                 }}
               >
                 Reset
-              </Button>
+              </Button> */}
+              </Box>
             </Box>
-          </Box>
 
-          <div className="admin-landing-page-button-container">
-            <div className="admin-double-status">
-              <div
-                onClick={() => {
-                  setProgress("pending");
-                  chechStatus();
-                }}
-                className={status === status1 ? "pending" : "fulfilled"}
-              >
-                PENDING
-              </div>
-              <div
-                onClick={() => {
-                  setProgress("fulfilled");
-
-                  chechStatus1();
-                }}
-                className={status === status2 ? "pending" : "fulfilled"}
-              >
-                FULFILLED
-              </div>
-            </div>
-            <div className="admin-date-container">
-              <div className="admin-date-container-from">
-                <div>From:</div>
-                <div>
-                  <button onClick={() => setDisplayDate(!displayDate)}>
-                    <CalendarTodayIcon
-                      sx={{ fontSize: 15, paddingRight: "4px" }}
-                    />
-                    {format(value || 0, "MMM dd, yyyy")}
-                  </button>
-                </div>
-              </div>
-              {displayDate && (
-                <Box className="calendateDate1">
-                  <Calendar onChange={onChange} value={value} />
-                </Box>
-              )}
-
-              <div className="admin-date-container-from">
-                <div>To:</div>
-                <div>
-                  {" "}
-                  <button onClick={() => setDisplayDate2(!displayDate2)}>
-                    <CalendarTodayIcon
-                      sx={{ fontSize: 15, paddingRight: "4px" }}
-                    />
-                    {format(value2, "MMM dd, yyyy")}
-                  </button>
-                </div>
-              </div>
-              {displayDate2 && (
-                <Box className="calendateDate2">
-                  <Calendar onChange={onChange2} value={value2} />
-                </Box>
-              )}
-            </div>
-          </div>
-          {FisLoading ? <DashboardSkeleton /> : null}
-          {!FisLoading && FisError ? (
-            <Box>
-              <Card
-                sx={{
-                  width: {
-                    xs: "100%",
-                    md: "100%",
-                  },
-                  height: 200,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginTop: 5,
-                  backgroundColor: "#FD5D54",
-                }}
-              >
-                <CardContent>
-                  <Typography sx={{ fontSize: 20 }} color="#ffff" gutterBottom>
-                    {Ferror}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Box>
-          ) : null}
-          {!FisLoading && !FisError && (
-            <div className="landginpage-table-container">
-              <TableContainer sx={{ backgroundColor: "#fff", padding: 2 }}>
-                <Table
-                  sx={{
-                    minWidth: 650,
-                    [`& .${tableCellClasses.root}`]: {
-                      borderBottom: "none",
-                    },
+            <div className="admin-landing-page-button-container">
+              <div className="admin-double-status">
+                <div
+                  onClick={() => {
+                    setProgress("pending");
+                    chechStatus();
                   }}
-                  aria-label="simple table"
+                  className={status === status1 ? "pending" : "fulfilled"}
                 >
-                  <TableHead sx={{ backgroundColor: "#F4F5FB" }}>
-                    <TableRow>
-                      <TableCell className="table-header-cell">
-                        Order ID
-                      </TableCell>
-                      <TableCell align="center" className="table-header-cell">
-                        Payment ID
-                      </TableCell>
-                      <TableCell align="center" className="table-header-cell">
-                        Buyer
-                      </TableCell>
-                      <TableCell align="center" className="table-header-cell">
-                        Price
-                      </TableCell>
-                      <TableCell align="center" className="table-header-cell">
-                        Chain ID
-                      </TableCell>
-                      <TableCell align="center" className="table-header-cell">
-                        Txn hash
-                      </TableCell>
-                      <TableCell align="center" className="table-header-cell">
-                        Status
-                      </TableCell>
+                  PENDING
+                </div>
+                <div
+                  onClick={() => {
+                    setProgress("fulfilled");
 
-                      <TableCell align="center" className="table-header-cell">
-                        Action
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {filteredData
-                      ?.slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage
-                      )
-                      .map((item, index) => {
-                        const {
-                          order_unique_id,
-                          payment_unique_id,
-                          buyer_addr,
-                          amount,
-                          chain_id,
-                          tx_hash,
-                          id,
-                          status,
-                        } = item;
-                        return (
-                          <TableRow
-                            sx={{
-                              "&:last-child td, &:last-child th": { border: 0 },
-                            }}
-                            key={order_unique_id}
-                          >
-                            <TableCell component="th" scope="row">
-                              {order_unique_id.slice(0, 12)}...
-                            </TableCell>
-                            <TableCell
-                              align="center"
-                              className="table-body-cell"
+                    chechStatus1();
+                  }}
+                  className={status === status2 ? "pending" : "fulfilled"}
+                >
+                  FULFILLED
+                </div>
+              </div>
+              <div className="admin-date-container">
+                <div className="admin-date-container-from">
+                  <div>From:</div>
+                  <div>
+                    <button onClick={() => setDisplayDate(!displayDate)}>
+                      <CalendarTodayIcon
+                        sx={{ fontSize: 15, paddingRight: "4px" }}
+                      />
+                      {format(value || 0, "MMM dd, yyyy")}
+                    </button>
+                  </div>
+                </div>
+                {displayDate && (
+                  <Box className="calendateDate1">
+                    <Calendar onChange={onChange} value={value} />
+                  </Box>
+                )}
+
+                <div className="admin-date-container-from">
+                  <div>To:</div>
+                  <div>
+                    {" "}
+                    <button onClick={() => setDisplayDate2(!displayDate2)}>
+                      <CalendarTodayIcon
+                        sx={{ fontSize: 15, paddingRight: "4px" }}
+                      />
+                      {format(value2, "MMM dd, yyyy")}
+                    </button>
+                  </div>
+                </div>
+                {displayDate2 && (
+                  <Box className="calendateDate2">
+                    <Calendar onChange={onChange2} value={value2} />
+                  </Box>
+                )}
+              </div>
+            </div>
+            {FisLoading ? <DashboardSkeleton /> : null}
+            {!FisLoading && FisError ? (
+              <Box>
+                <Card
+                  sx={{
+                    width: {
+                      xs: "100%",
+                      md: "100%",
+                    },
+                    height: 200,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: 5,
+                    backgroundColor: "#FD5D54",
+                  }}
+                >
+                  <CardContent>
+                    <Typography
+                      sx={{ fontSize: 20 }}
+                      color="#ffff"
+                      gutterBottom
+                    >
+                      {Ferror}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Box>
+            ) : null}
+            {!FisLoading && !FisError && (
+              <div className="landginpage-table-container">
+                <TableContainer sx={{ backgroundColor: "#fff", padding: 2 }}>
+                  <Table
+                    sx={{
+                      minWidth: 650,
+                      [`& .${tableCellClasses.root}`]: {
+                        borderBottom: "none",
+                      },
+                    }}
+                    aria-label="simple table"
+                  >
+                    <TableHead sx={{ backgroundColor: "#F4F5FB" }}>
+                      <TableRow>
+                        <TableCell className="table-header-cell">
+                          Order ID
+                        </TableCell>
+                        <TableCell align="center" className="table-header-cell">
+                          Payment ID
+                        </TableCell>
+                        {/* <TableCell align="center" className="table-header-cell">
+                        Buyer
+                      </TableCell> */}
+                        <TableCell align="center" className="table-header-cell">
+                          Price
+                        </TableCell>
+                        <TableCell align="center" className="table-header-cell">
+                          Chain ID
+                        </TableCell>
+                        <TableCell align="center" className="table-header-cell">
+                          Txn hash
+                        </TableCell>
+                        <TableCell align="center" className="table-header-cell">
+                          Status
+                        </TableCell>
+
+                        <TableCell align="center" className="table-header-cell">
+                          Action
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {filteredData
+                        ?.slice(
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage
+                        )
+                        .map((item, index) => {
+                          const {
+                            order_unique_id,
+                            payment_unique_id,
+                            buyer_addr,
+                            amount,
+                            chain_id,
+                            tx_hash,
+                            id,
+                            status,
+                          } = item;
+                          return (
+                            <TableRow
+                              sx={{
+                                "&:last-child td, &:last-child th": {
+                                  border: 0,
+                                },
+                              }}
+                              key={order_unique_id}
                             >
-                              {payment_unique_id.slice(0, 12)}...
-                            </TableCell>
-                            <TableCell
+                              <TableCell component="th" scope="row">
+                                {order_unique_id.slice(0, 12)}...
+                              </TableCell>
+                              <TableCell
+                                align="center"
+                                className="table-body-cell"
+                              >
+                                {payment_unique_id.slice(0, 12)}...
+                              </TableCell>
+                              {/* <TableCell
                               align="center"
                               className="table-body-cell"
                             >
                               {buyer_addr.slice(0, 12)}...
-                            </TableCell>
-                            <TableCell
-                              align="center"
-                              className="table-body-cell"
-                            >
-                              ${amount}
-                            </TableCell>
-                            <TableCell
-                              align="center"
-                              className="table-body-cell"
-                            >
-                              {chain_id}
-                            </TableCell>
-                            <TableCell
-                              align="center"
-                              className="table-body-cell"
-                            >
-                              {tx_hash.slice(0, 12)}...
-                            </TableCell>
-                            <TableCell
-                              align="center"
-                              className="table-body-cell"
-                              sx={{
-                                textTransform: "capitalize",
-                              }}
-                            >
-                              {status}
-                            </TableCell>
+                            </TableCell> */}
+                              <TableCell
+                                align="center"
+                                className="table-body-cell"
+                              >
+                                ${amount}
+                              </TableCell>
+                              <TableCell
+                                align="center"
+                                className="table-body-cell"
+                              >
+                                {chain_id}
+                              </TableCell>
+                              <TableCell
+                                align="center"
+                                className="table-body-cell"
+                              >
+                                {tx_hash.slice(0, 12)}...
+                              </TableCell>
+                              <TableCell
+                                align="center"
+                                className="table-body-cell"
+                                sx={{
+                                  textTransform: "capitalize",
+                                }}
+                              >
+                                {status}
+                              </TableCell>
 
-                            <TableCell
-                              align="center"
-                              className="table-body-cell"
-                              onClick={() => {
-                                navigate(`/item/${index}`);
-                                // dispatch(viewSingleOrder(item));
-                                localStorage.setItem(
-                                  "order",
-                                  JSON.stringify(item)
-                                );
-                              }}
-                            >
-                              <span className="table-border-bottom">view</span>
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })}
-                  </TableBody>
-                </Table>
-                <div className="landing-page-table-pagination">
-                  <TablePagination
-                    component="div"
-                    count={filteredData?.length || 0}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    rowsPerPageOptions={[]}
-                  />
-                </div>
+                              <TableCell
+                                align="center"
+                                className="table-body-cell"
+                                onClick={() => {
+                                  navigate(`/item/${index}`);
+                                  // dispatch(viewSingleOrder(item));
+                                  localStorage.setItem(
+                                    "order",
+                                    JSON.stringify(item)
+                                  );
+                                }}
+                              >
+                                <span className="table-border-bottom">
+                                  view
+                                </span>
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })}
+                    </TableBody>
+                  </Table>
+                  <div className="landing-page-table-pagination">
+                    <TablePagination
+                      component="div"
+                      count={filteredData?.length || 0}
+                      rowsPerPage={rowsPerPage}
+                      page={page}
+                      onPageChange={handleChangePage}
+                      rowsPerPageOptions={[]}
+                    />
+                  </div>
 
-                {/* <div className='btncontainer'>   <button>
+                  {/* <div className='btncontainer'>   <button>
           <ArrowBackIosIcon sx={{fontSize:10}}/>
           Prev </button></div>
         <div className='pagination-text'>1 2 3..</div>
@@ -455,11 +462,12 @@ function Dashboard() {
 
           </button>
         </div> */}
-              </TableContainer>
-            </div>
-          )}
+                </TableContainer>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      </Hero>
     </>
   );
 }
