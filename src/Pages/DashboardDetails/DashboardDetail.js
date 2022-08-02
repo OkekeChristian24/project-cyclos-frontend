@@ -337,7 +337,7 @@ function DashboardDetail() {
                       </Box>
                     </Box>
                     <Box className="admin-detail-borderBottom"></Box>
-                    <Box className="sideRight-header-box-content">
+                    {/* <Box className="sideRight-header-box-content">
                       <Box className="sideRight-header-box-content-item1">
                         Order ID
                       </Box>
@@ -354,7 +354,7 @@ function DashboardDetail() {
                       >
                         {transaction?.order_id}
                       </Box>
-                    </Box>
+                    </Box> */}
                     <Box className="sideRight-header-box-content">
                       <Box className="sideRight-header-box-content-item1">
                         Order Unique ID
@@ -391,7 +391,7 @@ function DashboardDetail() {
                         {transaction?.payment_unique_id}
                       </Box>
                     </Box>
-                    <Box className="sideRight-header-box-content">
+                    {/* <Box className="sideRight-header-box-content">
                       <Box className="sideRight-header-box-content-item1">
                         Buyer
                       </Box>
@@ -408,7 +408,7 @@ function DashboardDetail() {
                       >
                         {transaction?.buyer_addr}
                       </Box>
-                    </Box>
+                    </Box> */}
                     <Box className="sideRight-header-box-content">
                       <Box className="sideRight-header-box-content-item1">
                         Chain ID
