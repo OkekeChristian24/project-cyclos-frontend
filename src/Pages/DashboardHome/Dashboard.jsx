@@ -327,16 +327,16 @@ function Dashboard() {
                         <TableCell className="table-header-cell">
                           Order ID
                         </TableCell>
-                        <TableCell align="center" className="table-header-cell">
+                        {/* <TableCell align="center" className="table-header-cell">
                           Payment ID
                         </TableCell>
-                        {/* <TableCell align="center" className="table-header-cell">
+                        <TableCell align="center" className="table-header-cell">
                         Buyer
                       </TableCell> */}
                         <TableCell align="center" className="table-header-cell">
                           Price
                         </TableCell>
-                        <TableCell align="center" className="table-header-cell">
+                        {/* <TableCell align="center" className="table-header-cell">
                           Chain ID
                         </TableCell>
                         <TableCell align="center" className="table-header-cell">
@@ -344,7 +344,7 @@ function Dashboard() {
                         </TableCell>
                         <TableCell align="center" className="table-header-cell">
                           Status
-                        </TableCell>
+                        </TableCell> */}
 
                         <TableCell align="center" className="table-header-cell">
                           Action
@@ -380,13 +380,13 @@ function Dashboard() {
                               <TableCell component="th" scope="row">
                                 {order_unique_id.slice(0, 12)}...
                               </TableCell>
-                              <TableCell
+                              {/* <TableCell
                                 align="center"
                                 className="table-body-cell"
                               >
                                 {payment_unique_id.slice(0, 12)}...
                               </TableCell>
-                              {/* <TableCell
+                              <TableCell
                               align="center"
                               className="table-body-cell"
                             >
@@ -398,7 +398,7 @@ function Dashboard() {
                               >
                                 ${amount}
                               </TableCell>
-                              <TableCell
+                              {/* <TableCell
                                 align="center"
                                 className="table-body-cell"
                               >
@@ -418,7 +418,7 @@ function Dashboard() {
                                 }}
                               >
                                 {status}
-                              </TableCell>
+                              </TableCell> */}
 
                               <TableCell
                                 align="center"

@@ -86,7 +86,7 @@ export default function Shop() {
         <form onSubmit={submitSearch} className="search">
           <input type="text" value={searchTerm} onChange={handleTextChange} placeholder="Enter keyword or Amazon ASIN" />
           <button onClick={handleClick} className="button primary" type="submit">
-            {isSearching ? "Loading..." : "Search"}
+            {isSearching ? "Searching..." : "Search"}
           </button>
         </form>
       </Hero>
