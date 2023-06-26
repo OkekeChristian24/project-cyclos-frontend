@@ -1,5 +1,4 @@
 const otherChains = [
-
   {
     name: "Ethereum Mainnet",
     short_name: "eth",
@@ -14,9 +13,9 @@ const otherChains = [
       name: "Ethereum",
       decimals: 18,
       contractAddress: "",
-      balance: ""
+      balance: "",
     },
-    logoUrl: ""
+    logoUrl: "",
   },
   {
     name: "Ethereum Ropsten",
@@ -32,10 +31,9 @@ const otherChains = [
       name: "Ethereum",
       decimals: 18,
       contractAddress: "",
-      balance: ""
+      balance: "",
     },
-    logoUrl: ""
-
+    logoUrl: "",
   },
   {
     name: "Ethereum Rinkeby",
@@ -51,9 +49,9 @@ const otherChains = [
       name: "Ethereum",
       decimals: 18,
       contractAddress: "",
-      balance: ""
+      balance: "",
     },
-    logoUrl: ""
+    logoUrl: "",
   },
   {
     name: "Ethereum Görli",
@@ -69,9 +67,9 @@ const otherChains = [
       name: "Ethereum",
       decimals: 18,
       contractAddress: "",
-      balance: ""
+      balance: "",
     },
-    logoUrl: ""
+    logoUrl: "",
   },
   {
     name: "RSK Mainnet",
@@ -87,9 +85,9 @@ const otherChains = [
       name: "RSK",
       decimals: 18,
       contractAddress: "",
-      balance: ""
+      balance: "",
     },
-    logoUrl: ""
+    logoUrl: "",
   },
   {
     name: "Ethereum Kovan",
@@ -105,9 +103,9 @@ const otherChains = [
       name: "Ethereum",
       decimals: 18,
       contractAddress: "",
-      balance: ""
+      balance: "",
     },
-    logoUrl: ""
+    logoUrl: "",
   },
   {
     name: "Ethereum Classic Mainnet",
@@ -123,9 +121,9 @@ const otherChains = [
       name: "Ethereum",
       decimals: 18,
       contractAddress: "",
-      balance: ""
+      balance: "",
     },
-    logoUrl: ""
+    logoUrl: "",
   },
   {
     name: "POA Network Sokol",
@@ -141,9 +139,9 @@ const otherChains = [
       name: "POA",
       decimals: 18,
       contractAddress: "",
-      balance: ""
+      balance: "",
     },
-    logoUrl: ""
+    logoUrl: "",
   },
   {
     name: "POA Network Core",
@@ -159,9 +157,9 @@ const otherChains = [
       name: "POA",
       decimals: 18,
       contractAddress: "",
-      balance: ""
+      balance: "",
     },
-    logoUrl: ""
+    logoUrl: "",
   },
   {
     name: "xDAI Chain",
@@ -177,9 +175,9 @@ const otherChains = [
       name: "xDAI",
       decimals: 18,
       contractAddress: "",
-      balance: ""
+      balance: "",
     },
-    logoUrl: ""
+    logoUrl: "",
   },
   {
     name: "Callisto Mainnet",
@@ -195,51 +193,51 @@ const otherChains = [
       name: "CLO",
       decimals: 18,
       contractAddress: "",
-      balance: ""
+      balance: "",
     },
-    logoUrl: ""
-  }
+    logoUrl: "",
+  },
 ];
 
 const supportedChains = [
-  {
-    name: "Binance Smart Chain",
-    short_name: "bsc",
-    chain: "SmartChain",
-    network: "mainnet",
-    chain_id_hex: "0x38",
-    chain_id: 56,
-    network_id: 56,
-    rpc_url: "https://bsc-dataseed1.defibit.io/",
-    native_currency: {
-      symbol: "BNB",
-      name: "BNB",
-      decimals: 18,
-      contractAddress: "",
-      balance: ""
-    },
-    logoUrl: "/images/chains/SmartChain/SmartChain.svg",
-    blockExplorerUrl: "https://bscscan.com/"
-  },
   // {
-  //   name: "Fantom Opera",
-  //   short_name: "FTM",
-  //   chain: "Fantom",
+  //   name: "Binance Smart Chain",
+  //   short_name: "bsc",
+  //   chain: "SmartChain",
   //   network: "mainnet",
-  //   chain_id_hex: "0xfa",
-  //   chain_id: 250,
-  //   network_id: 250,
-  //   rpc_url: "https://rpc.ftm.tools/",
+  //   chain_id_hex: "0x38",
+  //   chain_id: 56,
+  //   network_id: 56,
+  //   rpc_url: "https://bsc-dataseed1.defibit.io/",
   //   native_currency: {
-  //     symbol: "FTM",
-  //     name: "Fantom",
+  //     symbol: "BNB",
+  //     name: "BNB",
   //     decimals: 18,
   //     contractAddress: "",
-  //     balance: ""
+  //     balance: "",
   //   },
-  //   logoUrl: "/images/chains/Fantom/Fantom.svg",
-  //   blockExplorerUrl: "https://ftmscan.com/"
+  //   logoUrl: "/images/chains/SmartChain/SmartChain.svg",
+  //   blockExplorerUrl: "https://bscscan.com/",
   // },
+  {
+    name: "Fantom Opera",
+    short_name: "FTM",
+    chain: "Fantom",
+    network: "mainnet",
+    chain_id_hex: "0xfa",
+    chain_id: 250,
+    network_id: 250,
+    rpc_url: "https://rpc.ftm.tools/",
+    native_currency: {
+      symbol: "FTM",
+      name: "Fantom",
+      decimals: 18,
+      contractAddress: "",
+      balance: "",
+    },
+    logoUrl: "/images/chains/Fantom/Fantom.svg",
+    blockExplorerUrl: "https://ftmscan.com/",
+  },
 
   // {
   //   name: "Polygon",
@@ -262,8 +260,4 @@ const supportedChains = [
   // }
 ];
 
-
-
-  
-  export default supportedChains;
-  
+export default supportedChains;
