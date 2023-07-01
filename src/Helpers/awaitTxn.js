@@ -1,25 +1,36 @@
 // @method awaitBlockConsensus
-// @param web3s[0] is the node you submitted the transaction to,  the other web3s 
+// @param web3s[0] is the node you submitted the transaction to,  the other web3s
 //    are for cross verification, because you shouldn't trust one node.
 // @param txhash is the transaction hash from when you submitted the transaction
 // @param blockCount is the number of blocks to wait for.
-// @param timout in seconds 
-// @param callback - callback(error, transaction_receipt) 
+// @param timout in seconds
+// @param callback - callback(error, transaction_receipt)
 //
-export const awaitBlockConsensus = async function(web3s, txhash, blockCount, timeout, callback) {
-     
+export const awaitBlockConsensus = async function (
+  web3s,
+  txhash,
+  blockCount,
+  timeout,
+  callback
+) {
   var txWeb3 = web3s[0];
   var startBlock = Number.MAX_SAFE_INTEGER;
   var interval;
-  var stateEnum = { start: 1, mined: 2, awaited: 3, confirmed: 4, unconfirmed: 5 };
+  var stateEnum = {
+    start: 1,
+    mined: 2,
+    awaited: 3,
+    confirmed: 4,
+    unconfirmed: 5,
+  };
   var savedTxInfo;
   var attempts = 0;
 
   var pollState = stateEnum.start;
 
-  var poll = async function() {
+  var poll = async function () {
     if (pollState === stateEnum.start) {
-      txWeb3.eth.getTransaction(txhash, function(e, txInfo) {
+      txWeb3.eth.getTransaction(txhash, function (e, txInfo) {
         if (e || txInfo == null) {
           return; // XXX silently drop errors
         }
@@ -29,35 +40,35 @@ export const awaitBlockConsensus = async function(web3s, txhash, blockCount, tim
           pollState = stateEnum.mined;
         }
       });
-    }
-    else if (pollState == stateEnum.mined) {
-        txWeb3.eth.getBlockNumber(function (e, blockNum) {
-          if (e) {
-            return; // XXX silently drop errors
-          }
-          if (blockNum >= (blockCount + startBlock)) {
-            pollState = stateEnum.awaited;
-          }
-        });
-    }
-    else if (pollState == stateEnum.awaited) {
-        txWeb3.eth.getTransactionReceipt(txhash, async function(e, receipt) {
-          if (e || receipt == null) {
-            return; // XXX silently drop errors.  TBD callback error?
-          }
-          // confirm we didn't run out of gas
-          // XXX this is where we should be checking a plurality of nodes.  TBD
-          clearInterval(interval);
-          if (receipt.gasUsed >= savedTxInfo.gas) {
-            pollState = stateEnum.unconfirmed;
-            await callback(new Error("Out Of Gas, Not Confirmed!"), null);
-          } else {
-            pollState = stateEnum.confirmed;
-            await callback(null, receipt);
-          }
+    } else if (pollState == stateEnum.mined) {
+      txWeb3.eth.getBlockNumber(function (e, blockNum) {
+        if (e) {
+          return; // XXX silently drop errors
+        }
+        if (blockNum >= blockCount + startBlock) {
+          pollState = stateEnum.awaited;
+        }
+      });
+    } else if (pollState == stateEnum.awaited) {
+      txWeb3.eth.getTransactionReceipt(txhash, async function (e, receipt) {
+        if (e || receipt == null) {
+          return; // XXX silently drop errors.  TBD callback error?
+        }
+        // confirm we didn't run out of gas
+        // XXX this is where we should be checking a plurality of nodes.  TBD
+        clearInterval(interval);
+        console.info("receipt: ", receipt);
+        console.info("savedTxInfo: ", savedTxInfo);
+        if (receipt.gasUsed > savedTxInfo.gas) {
+          pollState = stateEnum.unconfirmed;
+          await callback(new Error("Out Of Gas, Not Confirmed!"), null);
+        } else {
+          pollState = stateEnum.confirmed;
+          await callback(null, receipt);
+        }
       });
     } else {
-      throw(new Error("We Should Never Get Here, Illegal State: " + pollState));
+      throw new Error("We Should Never Get Here, Illegal State: " + pollState);
     }
 
     // note assuming poll interval is 1 second

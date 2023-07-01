@@ -90,7 +90,6 @@ function DashboardDetail() {
   const deleteLoading = false;
   const deleteMutate = (id) => {};
 
-  
   // const {
   //   order_id,
   //   payment_unique_id,
@@ -106,12 +105,10 @@ function DashboardDetail() {
   //   status,
   // } = transaction;
 
-
   React.useEffect(() => {
-    console.log("userTransactions data: ", userTransactions);
-    console.log("item index: ", index);
-    console.log("item data: ", userTransactions[index]);
-
+    // console.log("userTransactions data: ", userTransactions);
+    // console.log("item index: ", index);
+    // console.log("item data: ", userTransactions[index]);
     // setTransaction(userTransactions[index]);
   }, [index, userTransactions]);
   return (
@@ -317,7 +314,6 @@ function DashboardDetail() {
                       >
                         Remove Order
                       </Button>
-                      
                     </Box>
                   </Paper>
                 </Grid>
@@ -331,9 +327,15 @@ function DashboardDetail() {
                       <Box className="sideRight-header-summary"> Summary</Box>
                       <Box className="sideRight-header-time">
                         <span>
-                          {format(new Date(transaction?.created_at || 0), "hh:mmaaaaa'm'")}
+                          {format(
+                            new Date(transaction?.created_at || 0),
+                            "hh:mmaaaaa'm'"
+                          )}
                         </span>
-                        {format(new Date(transaction?.created_at || 0), "MMM dd, yyyy")}
+                        {format(
+                          new Date(transaction?.created_at || 0),
+                          "MMM dd, yyyy"
+                        )}
                       </Box>
                     </Box>
                     <Box className="admin-detail-borderBottom"></Box>

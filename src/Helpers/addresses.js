@@ -9,6 +9,7 @@
 // 0x38 represents 56(decimal) in hexdecimal
 // Funds-receiving wallet => 0xA62d2fD3A96363976188b011eBF47d2e1232959A
 
+// Using a deployed token as USDT on Fantom
 export const supportedTokens = {
   250: [
     {
